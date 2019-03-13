@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 08, 2019 at 06:31 PM
+-- Generation Time: Mar 13, 2019 at 05:55 AM
 -- Server version: 5.7.21
 -- PHP Version: 5.6.35
 
@@ -34,9 +34,6 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `username` varchar(201) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(201) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_type` varchar(201) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created` timestamp NOT NULL,
-  `updated` timestamp NOT NULL,
-  `deleted` timestamp NULL DEFAULT NULL,
   `firstname` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `middlename` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `lastname` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -52,10 +49,10 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`accountid`, `username`, `password`, `user_type`, `created`, `updated`, `deleted`, `firstname`, `middlename`, `lastname`, `contact_number`, `email`) VALUES
-(1, 'admin', 'admin', 'admin', '2019-02-28 23:12:22', '2019-02-28 23:12:22', NULL, 'Eli', 'Angel', 'Garcia', 9177777, 'eliangel77@gmail.com'),
-(2, 'subadmin1', 'subadmin1', 'sub-admin1', '2019-03-01 00:33:18', '2019-03-01 00:33:18', NULL, 'Victoria Bendi', 'Olarte', 'Buse', 91888888, 'bendi9@gmail.com'),
-(3, 'subadmin2', 'subadmin2', 'sub-admin2', '2019-03-01 00:40:21', '2019-03-01 00:40:21', NULL, 'Steven', 'Barry', 'Mangati', 91999999, 'steven10@gmail.com');
+INSERT INTO `accounts` (`accountid`, `username`, `password`, `user_type`, `firstname`, `middlename`, `lastname`, `contact_number`, `email`) VALUES
+(1, 'admin', 'admin', 'admin', 'Eli', 'Angel', 'Garcia', 9177777, 'eliangel77@gmail.com'),
+(2, 'subadmin1', 'subadmin1', 'sub-admin1', 'Victoria Bendi', 'Olarte', 'Buse', 91888888, 'bendi9@gmail.com'),
+(3, 'subadmin2', 'subadmin2', 'sub-admin2', 'Steven', 'Barry', 'Mangati', 91999999, 'steven10@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -68,7 +65,6 @@ CREATE TABLE IF NOT EXISTS `branch` (
   `branchid` int(15) UNSIGNED NOT NULL AUTO_INCREMENT,
   `branch_address` varchar(201) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `branch_name` varchar(201) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated` timestamp NOT NULL,
   PRIMARY KEY (`branchid`),
   UNIQUE KEY `branchid_UNIQUE` (`branchid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -77,10 +73,10 @@ CREATE TABLE IF NOT EXISTS `branch` (
 -- Dumping data for table `branch`
 --
 
-INSERT INTO `branch` (`branchid`, `branch_address`, `branch_name`, `updated`) VALUES
-(1, 'Public Market Baguio City', 'Market', '2019-03-01 01:39:57'),
-(2, 'Porta Vaga Session Road Baguio City', 'Porta', '2019-03-01 01:39:57'),
-(3, NULL, 'Market and Porta', '2019-03-01 01:39:57');
+INSERT INTO `branch` (`branchid`, `branch_address`, `branch_name`) VALUES
+(1, 'Public Market Baguio City', 'Market'),
+(2, 'Porta Vaga Session Road Baguio City', 'Porta'),
+(3, NULL, 'Market and Porta');
 
 -- --------------------------------------------------------
 
@@ -100,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `delivery` (
   `idnumber` int(15) UNSIGNED NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`idnumber`),
   UNIQUE KEY `idnumber_UNIQUE` (`idnumber`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `delivery`
@@ -157,7 +153,6 @@ DROP TABLE IF EXISTS `products`;
 CREATE TABLE IF NOT EXISTS `products` (
   `productid` int(15) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(201) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date_added` timestamp NOT NULL DEFAULT '2019-02-28 23:00:00',
   `status` varchar(201) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `branchid` int(11) NOT NULL,
   PRIMARY KEY (`productid`),
@@ -168,30 +163,30 @@ CREATE TABLE IF NOT EXISTS `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`productid`, `name`, `date_added`, `status`, `branchid`) VALUES
-(1, 'Premium Barako Excelsa', '2019-04-01 01:39:57', NULL, 3),
-(2, 'Arabica Medium Blend', '2019-04-01 01:40:01', NULL, 3),
-(3, 'Barako Blend Coffee', '2019-04-01 01:40:03', NULL, 3),
-(4, 'Benguet', '2019-04-01 01:41:02', NULL, 3),
-(5, 'Barako', '2019-04-01 01:41:19', NULL, 3),
-(6, 'Sagada Dark', '2019-04-01 01:42:03', NULL, 3),
-(7, 'Sagada Medium', '2019-04-01 01:43:05', NULL, 3),
-(8, 'HouseBlendArabica', '2019-04-01 01:44:07', NULL, 3),
-(9, 'Italian Espresso', '2019-04-01 01:44:43', NULL, 3),
-(10, 'Kalinga Medium', '2019-04-01 01:45:13', NULL, 3),
-(11, 'Kalinga Dark', '2019-04-01 01:45:57', NULL, 3),
-(12, 'Hazelnut', '2019-04-01 01:46:08', NULL, 3),
-(13, 'Mocha', '2019-04-01 01:46:48', NULL, 3),
-(14, 'Hazelnut-Vanilla', '2019-04-01 01:47:17', NULL, 3),
-(15, 'Vanilla', '2019-04-01 01:48:00', NULL, 3),
-(16, 'Butterscotch', '2019-04-01 01:48:15', NULL, 3),
-(17, 'Macadamia', '2019-04-01 01:48:42', NULL, 3),
-(18, 'Cinnamon Nut', '2019-04-01 01:49:02', NULL, 3),
-(19, 'Irish Cream', '2019-04-01 01:49:55', NULL, 3),
-(20, 'Caramel', '2019-04-01 01:50:04', NULL, 3),
-(21, 'Cookies and Cream', '2019-04-01 01:50:28', NULL, 3),
-(22, 'Bailey’s Irish Cream', '2019-04-01 01:40:48', NULL, 3),
-(23, 'Double Chocolate', '2019-04-01 01:41:03', NULL, 3);
+INSERT INTO `products` (`productid`, `name`, `status`, `branchid`) VALUES
+(1, 'Premium Barako Excelsa', NULL, 3),
+(2, 'Arabica Medium Blend', NULL, 3),
+(3, 'Barako Blend Coffee', NULL, 3),
+(4, 'Benguet', NULL, 3),
+(5, 'Barako', NULL, 3),
+(6, 'Sagada Dark', NULL, 3),
+(7, 'Sagada Medium', NULL, 3),
+(8, 'HouseBlendArabica', NULL, 3),
+(9, 'Italian Espresso', NULL, 3),
+(10, 'Kalinga Medium', NULL, 3),
+(11, 'Kalinga Dark', NULL, 3),
+(12, 'Hazelnut', NULL, 3),
+(13, 'Mocha', NULL, 3),
+(14, 'Hazelnut-Vanilla', NULL, 3),
+(15, 'Vanilla', NULL, 3),
+(16, 'Butterscotch', NULL, 3),
+(17, 'Macadamia', NULL, 3),
+(18, 'Cinnamon Nut', NULL, 3),
+(19, 'Irish Cream', NULL, 3),
+(20, 'Caramel', NULL, 3),
+(21, 'Cookies and Cream', NULL, 3),
+(22, 'Bailey’s Irish Cream', NULL, 3),
+(23, 'Double Chocolate', NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -269,7 +264,6 @@ CREATE TABLE IF NOT EXISTS `stock` (
   `branchid` int(15) NOT NULL,
   `created` timestamp NOT NULL,
   `updated` timestamp NOT NULL,
-  `deleted` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`stockid`),
   UNIQUE KEY `stockid_UNIQUE` (`stockid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -278,9 +272,9 @@ CREATE TABLE IF NOT EXISTS `stock` (
 -- Dumping data for table `stock`
 --
 
-INSERT INTO `stock` (`stockid`, `productid`, `quantity`, `stockin`, `stockout`, `branchid`, `created`, `updated`, `deleted`) VALUES
-(1, 1, 456.00, 300.00, 55.00, 1, '2017-03-01 12:28:34', '2017-03-01 14:33:02', NULL),
-(2, 2, 621.00, 200.00, 69.00, 1, '2017-03-01 12:28:34', '2017-03-01 12:28:34', NULL);
+INSERT INTO `stock` (`stockid`, `productid`, `quantity`, `stockin`, `stockout`, `branchid`, `created`, `updated`) VALUES
+(1, 1, 456.00, 300.00, 55.00, 1, '2017-03-01 12:28:34', '2017-03-01 14:33:02'),
+(2, 2, 621.00, 200.00, 69.00, 1, '2017-03-01 12:28:34', '2017-03-01 12:28:34');
 
 -- --------------------------------------------------------
 
@@ -295,9 +289,6 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   `supplier_contact_person` varchar(201) COLLATE utf8mb4_unicode_ci NOT NULL,
   `contact_number` varchar(201) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address` varchar(201) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
-  `updated` timestamp NULL DEFAULT NULL,
-  `deleted` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`supplierid`),
   UNIQUE KEY `supplierid_UNIQUE` (`supplierid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -306,9 +297,9 @@ CREATE TABLE IF NOT EXISTS `supplier` (
 -- Dumping data for table `supplier`
 --
 
-INSERT INTO `supplier` (`supplierid`, `supplier_name`, `supplier_contact_person`, `contact_number`, `address`, `created`, `updated`, `deleted`) VALUES
-(1, 'Atok', 'Eli', '09177889900', 'Atok Benguet', '2019-02-28 23:33:02', NULL, NULL),
-(2, 'Sablan', 'Eli', '09166778899', 'Kamog Sablan Baguio City', '2019-02-28 23:36:56', NULL, NULL);
+INSERT INTO `supplier` (`supplierid`, `supplier_name`, `supplier_contact_person`, `contact_number`, `address`) VALUES
+(1, 'Atok', 'Eli', '09177889900', 'Atok Benguet'),
+(2, 'Sablan', 'Eli', '09166778899', 'Kamog Sablan Baguio City');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

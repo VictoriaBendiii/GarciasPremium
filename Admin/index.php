@@ -1,4 +1,5 @@
 <?php
+		session_start();
 ?>
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -6,9 +7,19 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
+<style>
+	.error{
+	  color: red;
+	}
+
+	#remember{
+		color: white;
+	}
+</style>
+
 <!DOCTYPE html>
 <html>
-    
+
 <head>
 	<title>Garcias Premium Coffee</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -27,33 +38,43 @@
 					</div>
 				</div>
 				<div class="d-flex justify-content-center form_container">
-					<form>
+
+					<form action="includes/login.inc.php" method="POST">
+
+
 						<div class="input-group mb-3">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-user"></i></span>
 							</div>
-							<input type="text" name="" class="form-control input_user" value="" placeholder="username">
+							<input type="text" name="uname" class="form-control input_user" value="" placeholder="username"> <!-- name: uname -->
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
-							<input type="password" name="" class="form-control input_pass" value="" placeholder="password">
+							<input type="password" name="pword" class="form-control input_pass" value="" placeholder="password">
 						</div>
 						<div class="form-group">
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="customControlInline">
-								<label class="custom-control-label" for="customControlInline">Remember me</label>
+								<label class="custom-control-label" for="customControlInline" id="remember">Remember me</label>
 							</div>
 						</div>
-					</form>
 				</div>
 				<div class="d-flex justify-content-center mt-3 login_container">
-					 <button onclick="window.location.href='admin/'" type="button" name="button" class="btn login_btn">Login</button>
+					<input type="submit" name="submit" class="btn login_btn" value="login"></input>
+        </form>
 				</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<script>
+    history.pushState(null, null, null);
+    window.addEventListener('popstate', function () {
+        history.pushState(null, null, null);
+    });
+</script>
 </body>
 </html>

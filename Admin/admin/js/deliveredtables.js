@@ -1,4 +1,4 @@
-var app = angular.module('producttable', ['ui.bootstrap']);
+var app = angular.module('deliveredtables', ['ui.bootstrap']);
 app.filter('beginning_data', function() {
     return function(input, begin) {
         if (input) {
@@ -9,7 +9,7 @@ app.filter('beginning_data', function() {
     }
 });
 app.controller('controller', function($scope, $http, $timeout) {
-    $http.get('monitoring/tablepagination.php').success(function(orders) {
+    $http.get('delivered_report_table_s.php').success(function(orders) {
         $scope.file = orders;
         $scope.current_grid = 1;
         $scope.data_limit = 10;

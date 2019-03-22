@@ -1,7 +1,10 @@
+
 <?php
+session_start();
 $dbhandle = new mysqli('localhost', 'root', '', 'garciaspremiumcoffee');
 echo $dbhandle -> connect_error;
-$query = "SELECT * FROM products join stock on products.productid = stock.productid WHERE stock.branchid = '1'";
+$query = "SELECT products.productname, branch.branchid, stock.quantity, stock.stockin, stock.stockout, date
+from ((stock inner join products on stock.productid = products.productid) inner join branch on stock.branchid = branch.branchid) where branch.branchid=1";
 $res = $dbhandle->query($query);
 ?>
 
@@ -88,12 +91,12 @@ $res = $dbhandle->query($query);
         function drawChart() {
 
             var data = google.visualization.arrayToDataTable([
-                ['name', 'quantity'],
+                ['productname', 'quantity'],
 
                 <?php
                 while($row = $res -> fetch_assoc())
                 {
-                    echo "['".$row['name']."',".$row['quantity']."],";
+                    echo "['".$row['productname']."',".$row['quantity']."],";
                 }
                 ?>
             ]);

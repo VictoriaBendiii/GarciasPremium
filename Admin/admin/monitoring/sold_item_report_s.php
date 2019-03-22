@@ -7,11 +7,11 @@ session_start();
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Garcias Premium Coffee</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/datepicker3.css" rel="stylesheet">
-        <link href="css/styles.css" rel="stylesheet">
-        <link href="css/add.css" rel="stylesheet">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/datepicker3.css" rel="stylesheet">
+        <link href="../css/styles.css" rel="stylesheet">
+        <link href="../css/add.css" rel="stylesheet">
 
         <!--Custom Font-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -39,15 +39,15 @@ session_start();
         <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
             <div class="divider"></div>
             <ul class="nav menu">
-                <li ><a href="index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-                <li class="active"><a href="product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
-                <li><a href="notification.html"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-                <li><a href="adeliveries.html"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
-                <li><a href="inventory.html"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-                <li><a href="branch.html"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
-                <li><a href="addproduct.html"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
-                <li><a href="addaccount.php"><em class="fa fa-clone">&nbsp;</em> Add Account </a></li>
-                <li><a href="../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+                <li ><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+                <li class="active"><a href="../product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
+                <li><a href="../notification.html"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
+                <li><a href="../adeliveries.html"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
+                <li><a href="../inventory.html"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
+                <li><a href="../branch.html"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
+                <li><a href="../addproduct.html"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
+                <li><a href="../addaccount.php"><em class="fa fa-clone">&nbsp;</em> Add Account </a></li>
+                <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
 
@@ -68,19 +68,19 @@ session_start();
             </div><!--/.row-->
 
             <div class="btn-group" style="width:100%">
-                <button style="width:33.3%"><a href="product.php">Market</a></button>
-                <button style="width:33.3%"><a href="monitoring/productsub.php">Porta</a></button>
+                <button style="width:33.3%"><a href="../product.php">Market</a></button>
+                <button style="width:33.3%"><a href="productsub.php">Porta</a></button>
             </div>
             <br>
             <div class="btn-group" style="width:100%">
-                <button style="width:33.3%"><a href="monitoring/ordered_report_m.php">Ordered Report</a></button>
-                <button style="width:33.3%"><a href="monitoring/delivered_report_m.php">Delivered Report</a></button>
-                <button style="width:33.3%"><a href="monitoring/sold_item_report_m.php">Sold Item Report</a></button>
+                <button style="width:33.3%"><a href="ordered_report_s.php">Ordered Report</a></button>
+                <button style="width:33.3%"><a href="delivered_report_s.php">Delivered Report</a></button>
+                <button style="width:33.3%"><a href="sold_item_report_s.php">Sold Item Report</a></button>
             </div>
 
 
 
-            <div ng-app="producttable" ng-controller="controller">
+            <div ng-app="solditemtables" ng-controller="controller">
                 <br/>
                 <br/>
                 <div class="row">
@@ -102,10 +102,8 @@ session_start();
                             <th>Branch&nbsp; &nbsp;<a ng-click="sort_with('branch_name');"></a></th>
                             <th>Account Name&nbsp; &nbsp;<a ng-click="sort_with('firstname');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
                             <th>Product Name&nbsp; &nbsp;<a ng-click="sort_with('productname');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
-                            <th>Supplier&nbsp; &nbsp;<a ng-click="sort_with('supplier_name');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
-                            <th>Quantity (Stock)&nbsp; &nbsp;<a ng-click="sort_with('stock');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
-                            <th>Quantity (Sold)&nbsp; &nbsp;<a ng-click="sort_with('sold');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
-                            <th>Time Sold &nbsp; &nbsp;<a ng-click="sort_with('time');"><i class="glyphicon glyphicon-sort-by-attributes"></i></a></th>
+                            <th>Quantity&nbsp; &nbsp;<a ng-click="sort_with('quantity');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
+                            <th>Time Sold&nbsp; &nbsp;<a ng-click="sort_with('time');"><i class="glyphicon glyphicon-sort-by-attributes"></i></a></th>
                         </table>
                     </div>
                 </div>
@@ -117,19 +115,15 @@ session_start();
                                 <th>Branch&nbsp;</th>
                                 <th>Account Name&nbsp;</th>
                                 <th>Product Name&nbsp;</th>
-                                <th>Supplier&nbsp;</th>
-                                <th>Quantity (Stock)&nbsp;</th>
-                                <th>Quantity (Sold)&nbsp;</th>
-                                <th>Time Sold&nbsp;</th>
+                                <th>Quantity&nbsp;</th>
+                                <th>Time sold&nbsp;</th>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="data in searched = (file | filter:search | orderBy : base :reverse) | beginning_data:(current_grid-1)*data_limit | limitTo:data_limit">
                                     <td>{{data.branch_name}}</td>
                                     <td>{{data.firstname}}</td>
                                     <td>{{data.productname}}</td>
-                                    <td>{{data.supplier_name}}</td>
-                                    <td>{{data.stock}}</td>
-                                    <td>{{data.sold}}</td>
+                                    <td>{{data.quantity}}</td>
                                     <td>{{data.time}}</td>
                                 </tr>
                             </tbody>
@@ -153,7 +147,7 @@ session_start();
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.12/angular.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
-            <script src="js/producttable.js"></script>
+            <script src="../js/solditemtables.js"></script>
 
 
 
@@ -171,14 +165,14 @@ session_start();
         </div>	<!--/.main-->
 
 
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/chart.min.js"></script>
-    <script src="js/chart-data.js"></script>
-    <script src="js/easypiechart.js"></script>
-    <script src="js/easypiechart-data.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/custom.js"></script>
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/chart.min.js"></script>
+    <script src="../js/chart-data.js"></script>
+    <script src="../js/easypiechart.js"></script>
+    <script src="../js/easypiechart-data.js"></script>
+    <script src="../js/bootstrap-datepicker.js"></script>
+    <script src="../js/custom.js"></script>
     <script>
         window.onload = function () {
             var chart1 = document.getElementById("line-chart").getContext("2d");

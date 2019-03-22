@@ -1,7 +1,9 @@
 <?php
+session_start();
 $dbhandle = new mysqli('localhost', 'root', '', 'garciaspremiumcoffee');
 echo $dbhandle -> connect_error;
-$query = "SELECT * FROM products join stock on products.productid = stock.productid WHERE stock.branchid = '2'";
+$query = "SELECT products.productname, branch.branchid, stock.quantity, stock.stockin, stock.stockout, date
+from ((stock inner join products on stock.productid = products.productid) inner join branch on stock.branchid = branch.branchid) where branch.branchid=2";
 $res = $dbhandle->query($query);
 ?>
 
@@ -79,36 +81,36 @@ $res = $dbhandle->query($query);
         </div><!--/.row-->
 
         </div>	<!--/.main-->
-	<div style="padding-left: 300px; padding-top: 200px">
-    <script type="text/javascript" src="js/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
+    <div style="padding-left: 300px; padding-top: 200px">
+        <script type="text/javascript" src="js/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
 
-        function drawChart() {
+            function drawChart() {
 
-            var data = google.visualization.arrayToDataTable([
-                ['name', 'quantity'],
+                var data = google.visualization.arrayToDataTable([
+                    ['productname', 'quantity'],
 
-                <?php
-                while($row = $res -> fetch_assoc())
-                {
-                    echo "['".$row['name']."',".$row['quantity']."],";
-                }
-                ?>
-            ]);
+                    <?php
+                    while($row = $res -> fetch_assoc())
+                    {
+                        echo "['".$row['productname']."',".$row['quantity']."],";
+                    }
+                    ?>
+                ]);
 
-            var options = {
-                title: 'Product'
-            };
+                var options = {
+                    title: 'Product'
+                };
 
-            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
-            chart.draw(data, options);
-        }
-    </script>
-    <div id="piechart" style="width: 500px; height: 400px;"></div>
-	</div>
+                chart.draw(data, options);
+            }
+        </script>
+        <div id="piechart" style="width: 500px; height: 400px;"></div>
+    </div>
 
 
 

@@ -1,5 +1,12 @@
-<!DOCTYPE html>
-<html>
+<?php include 'connection.php'; ?>
+<?php 
+$sql = "SELECT *  FROM products";
+$result = mysqli_query($conn, $sql);
+?>
+
+
+<!DOCTYPE php>
+<php>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,7 +34,7 @@
 					<span class="icon-bar"></span></button>
 				<a class="navbar-brand" href="#"><span></span>Admin</a>
 					<br>
-					<p> Eddie Garcia </p>
+					<p> Eddie Garcia Junior </p>
 
 				
 			</div>
@@ -39,10 +46,10 @@
 			<li ><a href="index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
 			<li ><a href="product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
 			<li ><a href="notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-			<li class="active"><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
-			<li><a href="inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
+			<li ><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
+			<li class="active"><a href="inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
 			<li><a href="branch.php"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
-			<li><a href="addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
+		    <li><a href="addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
 			<li><a href="addaccount.php"><em class="fa fa-clone">&nbsp;</em> Add Account </a></li>
 			<li><a href="../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
@@ -54,22 +61,56 @@
 				<li><a href="#">
 					<em class="fa fa-home"></em>
 				</a></li>
-				<li class="active">Admin Deliveries</li>
+				<li class="active">Inventory</li>
 			</ol>
 		</div><!--/.row-->
 		
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Admin Deliveries</h1>
-			</div>
+				<h1 class="page-header">Inventory</h1>
+            </div>
+            
+        </div><!--/.row-->
+        <div class="btn-group" style="width:100%">
+  			<button style="width:33.3%">Market</button>
+  			<button style="width:33.3%">Porta</button>
+             </div>
+             
 
-		</div><!--/.row--> 
+             <div class="box-body table-responsive no-padding">
+     <table class="table table-hover">
+          <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Status</th>
+          </tr>
+          <tr>
+              <?php
 
-		<!-- you can input the data here -->
-		<a href="#fakeLink" class="addbtn black circular">ADD DELIVERY TO MARKET</a>
+                     If($result->num_rows > 0)
+                   {
+                     while($row=mysqli_fetch_array($result))
+                     {  
+
+                ?>
+                  <td><?php echo $row['productid']; ?></td> 
+                  <td><?php echo $row['productname']; ?></td> 
+                  <td> <button type="submit" class="addbtn black circular" name="archive"> <?php echo $row['status']; ?></button></td> 
+                     </tr>
+                  
+                <?php
+
+                }
+                }
+                 ?>
+
+              </tr>
+       </table>
+    </div>
+            
 		</div><!--/.row-->
 	</div>	<!--/.main-->
-
+		
 	
 	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -92,4 +133,4 @@
 	</script>
 		
 </body>
-</html>
+</php>

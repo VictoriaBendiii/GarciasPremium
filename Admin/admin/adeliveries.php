@@ -1,3 +1,9 @@
+<?php
+	session_start();
+
+ ?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +15,7 @@
 	<link href="css/datepicker3.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">
 	<link href="css/add.css" rel="stylesheet">
-	
+
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 	<!--[if lt IE 9]>
@@ -29,7 +35,7 @@
 					<br>
 					<p> Eddie Garcia </p>
 
-				
+
 			</div>
 		</div><!-- /.container-fluid -->
 	</nav>
@@ -38,16 +44,16 @@
 		<ul class="nav menu">
 			<li ><a href="index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
 			<li ><a href="product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
-			<li ><a href="notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
+			<li ><a href="notification.html"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
 			<li class="active"><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
-			<li><a href="inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-			<li><a href="branch.php"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
-			<li><a href="addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
+			<li><a href="inventory.html"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
+			<li><a href="branch.html"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
+			<li><a href="addproduct.html"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
 			<li><a href="addaccount.php"><em class="fa fa-clone">&nbsp;</em> Add Account </a></li>
 			<li><a href="../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
 	</div><!--/.sidebar-->
-		
+
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
@@ -57,20 +63,20 @@
 				<li class="active">Admin Deliveries</li>
 			</ol>
 		</div><!--/.row-->
-		
+
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Admin Deliveries</h1>
 			</div>
 
-		</div><!--/.row--> 
+		</div><!--/.row-->
 
 		<!-- you can input the data here -->
-		<a href="#fakeLink" class="addbtn black circular">ADD DELIVERY TO MARKET</a>
+		<a href="adddeliverymarket.php" class="addbtn black circular">ADD DELIVERY TO MARKET</a>
 		</div><!--/.row-->
 	</div>	<!--/.main-->
 
-	
+
 	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/chart.min.js"></script>
@@ -90,6 +96,6 @@
 	});
 };
 	</script>
-		
+
 </body>
 </html>

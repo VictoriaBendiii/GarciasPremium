@@ -36,14 +36,14 @@
 		<div class="divider"></div>
 		<ul class="nav menu">
 			<li ><a href="index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-			<li ><a href="product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
-			<li ><a href="notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
+			<li ><a href="product.html"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
+			<li ><a href="notification.html"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
 			<li ><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
-			<li ><a href="inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-			<li ><a href="branch.php"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
-			<li class="active"><a href="addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
+			<li ><a href="inventory.html"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
+			<li ><a href="branch.html"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
+			<li class="active"><a href="addproduct.html"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
 			<li><a href="addaccount.php"><em class="fa fa-clone">&nbsp;</em> Add Account </a></li>
-			<li><a href="../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+			<li><a href="login.html"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
 	</div><!--/.sidebar-->
 		
@@ -62,6 +62,32 @@
 				<h1 class="page-header">Add Product</h1>
 			</div>
 		</div><!--/.row-->
+
+		<div class="row">
+            <div class="col-lg-12">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
+                    <form id="contact-form" class="form" action="addprod.php" method="POST" role="form">
+                        <div class="form-group">
+                            <label class="form-label" for="name">Product Name</label>
+                            <input type="text" class="form-control" id="name" name="prodname" placeholder="Product Name"
+                                tabindex="1" required>
+						</div>
+                        <div class="form-group">
+                            <label class="form-label" for="branchid">Branch</label>
+                            <select class="form-control" id="branchid" name="branchid">
+								<option value="1">Market</option>
+                                <option value="2">Porta</option>
+                                <option value="3">Market and Porta</option>
+                            </select>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-start-order" name="add_prod" id="add_prod">ADD NEW PRODUCT</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+		</div>
+		<!--/.row-->
 		
 		</div><!--/.row-->
 	</div>	<!--/.main-->

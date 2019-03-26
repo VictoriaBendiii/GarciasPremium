@@ -21,6 +21,125 @@
 					<button type="button" class="btn btn-default">Physical Count??</button>
 				</div>
 			</div>
+
+			<form class="form-inline">
+				<h3>Spoilage sample</h3>
+				<div class="form-group">
+						<label for="inputState">Product</label>
+						<select id="inputState" class="form-control">
+							<option selected>Choose...</option>
+							<option>Arabica</option>
+							<option>Robusta</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="inputState">Quantity / Kg	</label>
+						<select id="inputState" class="form-control">
+							<option selected>Choose...</option>
+							<option>1</option>
+							<option>2</option>
+						</select>
+					</div>
+					<div class="form-group">
+							<label for="inputState">Options</label>
+						<button type="submit" class="btn"><em class="fa fa-plus" style="font-size: 30px"></em> </button>
+						<button type="submit" class="btn"><em class="fa fa-remove" style="font-size: 30px; color: red;"></em> </button>
+						</select>
+					</div> 	
+			</form>
+
+			<form class="form-inline">
+				<h3>Loss sample</h3>
+				<div class="form-group">
+						<label for="inputState">Product</label>
+						<select id="inputState" class="form-control">
+							<option selected>Choose...</option>
+							<option>Arabica</option>
+							<option>Robusta</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="inputState">Quantity / Kg	</label>
+						<select id="inputState" class="form-control">
+							<option selected>Choose...</option>
+							<option>1</option>
+							<option>2</option>
+						</select>
+					</div>
+					<div class="form-group">
+							<label for="inputState">Options</label>
+						<button type="submit" class="btn"><em class="fa fa-plus" style="font-size: 30px"></em> </button>
+						<button type="submit" class="btn"><em class="fa fa-remove" style="font-size: 30px; color: red;"></em> </button>
+						</select>
+					</div>
+			</form>
+
+			<form class="form-inline">
+				<h3>Return / Exchange sample</h3>
+				<div class="form-group">
+						<label for="inputState">Item</label>
+						<select id="inputState" class="form-control">
+							<option selected>Choose...</option>
+							<option>SOLD ID 1</option>
+							<option>SOLD ID 2</option>
+						</select>
+					</div>
+				<div class="form-group">
+						<label for="inputState">Product</label>
+						<select id="inputState" class="form-control">
+							<option selected>Choose...</option>
+							<option>Arabica</option>
+							<option>Robusta</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="inputState">Quantity / Kg	</label>
+						<select id="inputState" class="form-control">
+							<option selected>Choose...</option>
+							<option>1</option>
+							<option>2</option>
+						</select>
+					</div>
+					<div class="form-group">
+							<label for="inputState">Options</label>
+						<button type="submit" class="btn"><em class="fa fa-plus" style="font-size: 30px"></em> </button>
+						<button type="submit" class="btn"><em class="fa fa-remove" style="font-size: 30px; color: red;"></em> </button>
+						</select>
+					</div>
+
+				<h3>To</h3>
+				<div class="form-group">
+						<label for="inputState">Item</label>
+						<select id="inputState" class="form-control">
+							<option selected>Choose...</option>
+							<option>SOLD ID 1</option>
+							<option>SOLD ID 2</option>
+						</select>
+					</div>
+				<div class="form-group">
+						<label for="inputState">Product</label>
+						<select id="inputState" class="form-control">
+							<option selected>Choose...</option>
+							<option>Arabica</option>
+							<option>Robusta</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="inputState">Quantity / Kg	</label>
+						<select id="inputState" class="form-control">
+							<option selected>Choose...</option>
+							<option>1</option>
+							<option>2</option>
+						</select>
+					</div>
+					<div class="form-group">
+							<label for="inputState">Options</label>
+						<button type="submit" class="btn"><em class="fa fa-plus" style="font-size: 30px"></em> </button>
+						<button type="submit" class="btn"><em class="fa fa-remove" style="font-size: 30px; color: red;"></em> </button>
+						</select>
+					</div>
+			</form>
+
 		</main>
 		
 		</div><!--/.row-->

@@ -1,12 +1,18 @@
 <?php include 'connection.php'; ?>
 <?php 
-$sql = "SELECT *  FROM products";
+$sql = "SELECT * from products ";
+//$sql = "SELECT status, products.productname, stock.quantity as stock, branch.branchid
+//from ((stock left join products on stock.productid = products.productid) 
+//left join branch on stock.branchid = branch.branchid) WHERE status= 'active' AND  branch.branchid ='3'"  ;
+
+
 $result = mysqli_query($conn, $sql);
 ?>
 
 
-<!DOCTYPE php>
-<php>
+<!DOCTYPE HTML>
+<html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,6 +22,8 @@ $result = mysqli_query($conn, $sql);
 	<link href="css/datepicker3.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">
 	<link href="css/add.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
 	
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -74,17 +82,25 @@ $result = mysqli_query($conn, $sql);
         <div class="btn-group" style="width:100%">
   			<button style="width:33.3%">Market</button>
   			<button style="width:33.3%">Porta</button>
+				<button style="width:33.3%">Archived</button>
              </div>
-             
 
-             <div class="box-body table-responsive no-padding">
-     <table class="table table-hover">
+<br>
+<br> 
+
+
+
+    <div class="box-body table-responsive no-padding">
+     		<table class="table table-hover">
           <tr>
-              <th>ID</th>
               <th>Name</th>
-              <th>Status</th>
+              <th>Total Stock</th>
+              <th>Action</th>
           </tr>
           <tr>
+          	<a href="#" class="confirm-delete" data-id="23">Delete</a><br>
+<a href="#" class="confirm-delete" data-id="54">Delete</a>
+						
               <?php
 
                      If($result->num_rows > 0)
@@ -92,10 +108,14 @@ $result = mysqli_query($conn, $sql);
                      while($row=mysqli_fetch_array($result))
                      {  
 
-                ?>
-                  <td><?php echo $row['productid']; ?></td> 
+								?>
+								
+								
+
                   <td><?php echo $row['productname']; ?></td> 
-                  <td> <button type="submit" class="addbtn black circular" name="archive"> <?php echo $row['status']; ?></button></td> 
+                  <td><?php echo $row['productname']; ?></td> 
+									<td> <button type="submit" id = "archive" class="addbtn green " name="archive"> <?php echo $row['status']; ?></button>
+								</td> 
                      </tr>
                   
                 <?php
@@ -112,7 +132,7 @@ $result = mysqli_query($conn, $sql);
 	</div>	<!--/.main-->
 		
 	
-	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/chart.min.js"></script>
 	<script src="js/chart-data.js"></script>
@@ -130,7 +150,23 @@ $result = mysqli_query($conn, $sql);
 	scaleFontColor: "#c5c7cc"
 	});
 };
+
+$('#modal-from-dom').on('show', function() {
+    var id = $(this).data('id'),
+        removeBtn = $(this).find('.danger');
+
+    removeBtn.attr('href', removeBtn.attr('href').replace(/(&|\?)ref=\d*/, '$1ref=' + id));
+    
+    $('#debug-url').html('Delete URL: <strong>' + removeBtn.attr('href') + '</strong>');
+});
+
+$('.confirm-delete').on('click', function(e) {
+    e.preventDefault();
+
+    var id = $(this).data('id');
+    $('#modal-from-dom').data('id', id).modal('show');
+});
 	</script>
 		
 </body>
-</php>
+</html>

@@ -53,7 +53,7 @@ $res = $dbhandle->query($query);
                 <li><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
                 <li><a href="inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
                 <li><a href="branch.php"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
-                <li><a href="addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
+                <li><a href="account/addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
                 <li><a href="addaccount.php"><em class="fa fa-clone">&nbsp;</em> Add Account </a></li>
                 <li><a href="../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>

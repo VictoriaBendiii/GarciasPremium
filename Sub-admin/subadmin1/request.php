@@ -29,6 +29,11 @@
 			</div>
 
 			<!-- Modal -->
+			<?php
+				$sqlreq = "SELECT * FROM products";
+				$result = mysqli_query($conn, $sqlreq);				
+			?>
+
 			<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
@@ -39,7 +44,41 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							asdasdasdas
+							<div class="table-responsive">
+								<table class="table table-bordered table-striped table-sm">
+									<thead>
+										<tr>
+											<th>Product</th>
+											<th>Qty / Kg</th>
+										</tr>
+									</thead>
+									<tbody>
+
+									<?php
+										if($result = mysqli_query($conn, $sqlreq)) {
+											while($row = mysqli_fetch_assoc($result)){ 
+									?>
+										<tr>
+											<td> <?php echo $row["productname"]; ?> </td>
+											<td> 
+											<div class="form-group">
+												<select id="inputState" class="form-control">
+													<option selected>Choose...</option>
+													<option>5</option>
+													<option>10</option>
+												</select>
+											</div>
+											</td>
+										</tr>
+
+									<?php
+											}
+										}
+									?>
+
+									</tbody>
+								</table>
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

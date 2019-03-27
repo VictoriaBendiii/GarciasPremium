@@ -16,6 +16,11 @@
 				<h1 class="h2">Stocks</h1>
 			</div>
 
+			<?php
+				$sql = "SELECT * FROM products INNER JOIN stock ON products.productid = stock.productid";
+				$result = mysqli_query($conn, $sql);				
+			?>
+
 			<div class="table-responsive">
 				<table class="table table-bordered table-striped table-sm">
 					<thead>
@@ -25,14 +30,21 @@
 						</tr>
 					</thead>
 					<tbody>
+
+					<?php
+						if($result = mysqli_query($conn, $sql)) {
+							while($row = mysqli_fetch_assoc($result)){ 
+					?>
 						<tr>
-							<td>data</td>
-							<td>data</td>
+							<td> <?php echo $row["productname"]; ?> </td>
+							<td> <?php echo $row["quantity"]; ?> </td>
 						</tr>
-						<tr>
-							<td>data</td>
-							<td>data</td>
-						</tr>
+
+					<?php
+							}
+						}
+					?>
+
 					</tbody>
 				</table>
 			</div>

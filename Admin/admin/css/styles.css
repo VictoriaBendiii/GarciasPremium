@@ -1031,3 +1031,21 @@ p.back-link {
   margin-bottom: 20px;
   font-size: 12px;
   text-transform: uppercase; }
+
+/* for responsive modal */
+.modal-body {
+    max-height: calc(100vh - 143px);
+    overflow-y: auto; }
+
+/* For table inside modal */
+#tableDrop {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}

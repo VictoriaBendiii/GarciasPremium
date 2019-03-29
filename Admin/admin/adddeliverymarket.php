@@ -4,6 +4,23 @@ session_start()
 
 ?>
 
+<script type="text/javascript">
+		function cloneRow()
+		{
+				var row = document.getElementById("dropdowns");
+				var table = document.getElementById("tableDrop");
+				var clone = row.cloneNode(true);
+				clone.id = "dropdownsclone";
+				table.appendChild(clone);
+		}
+
+		function RemoveOrder(){
+				var td = event.target.parentNode;
+				var tr = td.parentNode;
+				tr.parentNode.removeChild(tr);
+		}
+</script>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,53 +91,81 @@ session_start()
 		<!-- FORM CONTAINER -->
 		<div class="row">
 				<div class="col-lg-12">
-						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
-								<form id="contact-form" class="form" action="delivery.php" method="POST" role="form">
-										<div class="form-group">
-											<label class="form-label" for="product"> Product </label>
-											<select class="form-control" id="product" name="product">
-													<option value="Premium Barako Excelsa">Premium Barako Blend</option>
-													<option value="Arabica Medium Blend"> Arabica Medium Blend   </option>
-													<option value="Benguet"> Benguet </option>
-													<option value="Barako"> Barako </option>
-													<option value="Sagada Dark"> Sagada Dark </option>
-													<option value="Sagada Medium"> Sagada Medium </option>
-													<option value="HouseBlendArabica"> House Blend Arabica   </option>
-													<option value="ItalianEspresso"> Italian Espresso  </option>
-													<option value="KalingaMedium"> Kalinga Medium </option>
-													<option value="KalingaDark"> Kalinga Dark </option>
-													<option value="Hazelnut"> Hazelnut </option>
-													<option value="Mocha"> Mocha </option>
-													<option value="HazelnutVanilla"> Hazelnut Vanilla</option>
-													<option value="Vanilla"> Vanilla </option>
-													<option value="Butterscotch"> Butterscotch</option>
-													<option value="Macadamia"> Macadamia</option>
-													<option value="CinnamonNut"> Cinnamon Nut</option>
-													<option value="Irish Cream"> Irish Cream</option>
-													<option value="Caramel"> Caramel</option>
-													<option value="CookiesAndCream"> Cookies and Cream </option>
-													<option value="BaileysIrishCream"> Bailey's Irish Cream</option>
-											</select>
-										</div>
-										<div class="form-group">
-												<label class="form-label" for="quantity">Quantity (kg)</label>
-												<input type="number" class="form-control" id="quantity" name="quantity"
-														placeholder="e.g. 20" min="1" max = "1000" tabindex="1" required>
-										</div>
-										<div class="form-group">
-											<label class="form-label" for="product"> Supplier </label>
-											<select class="form-control" id="product" name="supplier">
-													<option value="Atok">Atok</option>
-													<option value="Sablan">Sablan</option>
-													<option value="Market">Market</option>
-												</select>
-											</div>
-										<div class="text-center">
-												<input type="submit" class="btn btn-start-order" name="add_delivery" id="add_delivery"></input>
-										</div>
-								</form>
-						</div>
+					<div style="overflow-x:auto;">
+					<table id="tableDrop">
+							<tr>
+									<th>
+											<h5>FROM</h5>
+									</th>
+									<th>
+											<h5>TO</h5>
+									</th>
+									<th>
+											<h5>COFFEE BEAN</h5>
+									</th>
+									<th>
+											<h5>QTY(kg)</h5>
+									</th>
+							</tr>
 
+							<tr id="dropdowns">
+									<th id="from">
+											<select name="from">
+													<option value="sablan">Sablan</option>
+													<option value="atok">Atok</option>
+											</select>
+									</th>
+									<th id="to">
+											<select name="to">
+													<option value="market">Market</option>
+													<option value="porta">Porta Vaga</option>
+											</select>
+									</th>
+									<th id="beans">
+											<select name="beans[]">
+													<option value="premExcelsa">Premium Barako Excelsa</option>
+													<option value="arabmed">Arabica Medium Blend</option>
+													<option value="barako">Barako Blend Coffee</option>
+													<option value="benguet">Benguet</option>
+													<option value="barako">Barako</option>
+													<option value="sagdark">Sagada Dark</option>
+													<option value="sagmed">Sagada Medium</option>
+													<option value="housearab">House Blend Arabica</option>
+													<option value="italesp">Italian Espresso</option>
+													<option value="kalmed">Kalinga Medium</option>
+													<option value="kaldark">Kalinga Dark</option>
+													<option value="hazelnut">Hazelnut</option>
+													<option value="mocha">Mocha</option>
+													<option value="hazelvan">Hazelnut-Vanilla</option>
+													<option value="vanilla">Vanilla</option>
+													<option value="butterscotch">Butterscotch</option>
+													<option value="macadamia">Macadamia</option>
+													<option value="cinnamon">Cinnamon Nut</option>
+													<option value="irish">Irish Cream</option>
+													<option value="caramel">Caramel</option>
+													<option value="cookiescream">Cookies and Cream</option>
+													<option value="baileys">Bailey''s Irish Cream</option>
+													<option value="doublechoco">Double Chocolate</option>
+											</select>
+									</th>
+									<th id="quantity">
+											<input type="text" name="beans[]" placeholder="Enter Quantity">
+									</th>
+									<th id="remove">
+											<input type="button" value="&#10006;" onclick="RemoveOrder()">
+										</th>
+							</tr>
+					</table>
+					</div>
+					<table>
+							<br>
+							<tr>
+									<td><input type="button" onclick="cloneRow()" value="Add Order" class="btn btn-secondary"/></td>
+									<td><input type="submit" name="submit" value="Submit	" class="btn btn-primary"/></td>
+							</tr>
+					</table>
+			</form>
+	</div>
 
 				</div>
 		</div>

@@ -38,7 +38,7 @@ $res = $dbhandle->query($query);
                         <span class="icon-bar"></span></button>
                     <a class="navbar-brand" href="#"><span></span>Admin</a>
                     <br>
-                    <p> Eddie Garcia </p>
+                    <strong> di gumagana session handling ko wtf </strong>
 
 
                 </div>

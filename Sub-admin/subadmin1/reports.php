@@ -17,17 +17,17 @@
 			<form action="reports.php" method="POST">
 				<div class="btn-group btn-group-justified" role="group" aria-label="...">
 					<div class="btn-group" role="group">
-					  <button type="button" class="btn btn-default" name="all_rep" id="all_rep">All Reports</button>
+					  <button type="submit" class="btn btn-default" name="all_rep" id="all_rep">All Reports</button>
 					</div>
 					<div class="btn-group" role="group">
-					  <button type="button" class="btn btn-default" name="ord_rep" id="ord_rep">Ordered Reports</button>
+					  <button type="submit" class="btn btn-default" name="ord_rep" id="ord_rep">Ordered Reports</button>
 					</div>
 					<div class="btn-group" role="group">
-					  <button type="button" class="btn btn-default" name="del_rep" id="del_rep">Delivered Reports</button>
+					  <button type="submit" class="btn btn-default" name="del_rep" id="del_rep">Delivered Reports</button>
 					</div>
 					<div class="btn-group" role="group">
-						<button type="submit" class="btn btn-default" name="sold_rep" id="sold_rep">Sold Reports</button>
-					  </div>
+					  <button type="submit" class="btn btn-default" name="sold_rep" id="sold_rep">Sold Reports</button>
+					</div>
 				  </div>
 				</form>
 			</div>
@@ -78,6 +78,91 @@
 			?>
 
 
+		<?php
+			if (isset($_POST['del_rep'])) {
+				$sqldel = "SELECT delivery.deliveryid, products.productname, delivery.quantity, delivery.time, delivery.status, delivery.supplierid
+				from ((delivery left join products on delivery.productid = products.productid)
+				left join branch on delivery.branchid = branch.branchid) where branch.branchid = 2 and delivery.status = 'delivered'";
+				$result = mysqli_query($conn, $sqldel);
+		?>
+
+			<div class="table-responsive">
+				<table class="table table-bordered table-striped table-sm">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Date & Time</th>
+							<th>Product</th>
+							<th>Quantity</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+
+					<?php
+						if($result = mysqli_query($conn, $sqldel)) {
+							while($row = mysqli_fetch_assoc($result)){ 
+					?>
+						<tr>
+							<td> <?php echo $row["deliveryid"]; ?> </td>
+							<td> <?php echo $row["time"]; ?> </td>
+							<td> <?php echo $row["productname"]; ?> </td>
+							<td> <?php echo $row["quantity"]; ?> </td>
+							<td> <?php echo $row["status"];?> </td>
+						</tr>
+					<?php
+							}
+						}
+					?>
+					</tbody>
+				</table>
+			</div>
+			<?php
+				}
+			?>
+			
+
+		<?php
+			if (isset($_POST['ord_rep'])) {
+				$sqlord = "SELECT delivery.deliveryid, products.productname, delivery.quantity, delivery.time, delivery.status, delivery.supplierid
+				from ((delivery left join products on delivery.productid = products.productid)
+				left join branch on delivery.branchid = branch.branchid) where branch.branchid = 1 and delivery.status = 'accepted'";
+				$result = mysqli_query($conn, $sqlord);
+		?>
+			<div class="table-responsive">
+				<table class="table table-bordered table-striped table-sm">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Date & Time</th>
+							<th>Product</th>
+							<th>Quantity</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+
+					<?php
+						if($result = mysqli_query($conn, $sqlord)) {
+							while($row = mysqli_fetch_assoc($result)){ 
+					?>
+						<tr>
+							<td> <?php echo $row["deliveryid"]; ?> </td>
+							<td> <?php echo $row["time"]; ?> </td>
+							<td> <?php echo $row["productname"]; ?> </td>
+							<td> <?php echo $row["quantity"]; ?> </td>
+							<td> <?php echo $row["status"];?> </td>
+						</tr>
+					<?php
+							}
+						}
+					?>
+					</tbody>
+				</table>
+			</div>
+			<?php
+				}
+			?>
 			
 		</main>
 		

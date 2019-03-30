@@ -1,16 +1,15 @@
-
 <?php
 session_start();
 $dbhandle = new mysqli('localhost', 'root', '', 'garciaspremiumcoffee');
 echo $dbhandle -> connect_error;
 $query = "SELECT products.productname, branch.branchid, stock.quantity, stock.stockin, stock.stockout
-from ((stock inner join products on stock.productid = products.productid) inner join branch on stock.branchid = branch.branchid) where branch.branchid=1";
+from ((stock inner join products on stock.productid = products.productid) inner join branch on stock.branchid = branch.branchid) where branch.branchid=2";
 $res = $dbhandle->query($query);
 ?>
 
 
-<!DOCTYPE html>
-<html>
+<!DOCTYPE php>
+<php>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,43 +74,42 @@ $res = $dbhandle->query($query);
                 </div>
             </div><!--/.row-->
             <div class="btn-group" style="width:100%">
-                <button class="btn btn-primary active" onclick="location.href='index.php'"; style="width:33.3%">Market</button>
-                <button onclick="location.href='subchart.php'"; style="width:33.3%">Porta</button>
-
+                <button onclick="location.href='index.php'"; style="width:33.3%">Market</button>
+                <button class="btn btn-primary active" onclick="location.href='subchart.php'"; style="width:33.3%">Porta</button>
             </div>
         </div><!--/.row-->
 
         </div>	<!--/.main-->
-	<div style="padding-left: 300px; padding-top: 200px">
-    <script type="text/javascript" src="js/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
+    <div style="padding-left: 300px; padding-top: 200px">
+        <script type="text/javascript" src="js/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
 
-        function drawChart() {
+            function drawChart() {
 
-            var data = google.visualization.arrayToDataTable([
-                ['productname', 'quantity'],
+                var data = google.visualization.arrayToDataTable([
+                    ['productname', 'quantity'],
 
-                <?php
-                while($row = $res -> fetch_assoc())
-                {
-                    echo "['".$row['productname']."',".$row['quantity']."],";
-                }
-                ?>
-            ]);
+                    <?php
+                    while($row = $res -> fetch_assoc())
+                    {
+                        echo "['".$row['productname']."',".$row['quantity']."],";
+                    }
+                    ?>
+                ]);
 
-            var options = {
-                title: 'Product'
-            };
+                var options = {
+                    title: 'Product'
+                };
 
-            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
-            chart.draw(data, options);
-        }
-    </script>
-    <div id="piechart" style=" width:100%; height: 400px;"></div>
-	</div>
+                chart.draw(data, options);
+            }
+        </script>
+        <div id="piechart" style=" width:100%; height: 400px;"></div>
+    </div>
 
 
 
@@ -136,4 +134,4 @@ $res = $dbhandle->query($query);
     </script>
 
     </body>
-</html>
+</php>

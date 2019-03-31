@@ -1,5 +1,23 @@
-<!DOCTYPE php>
-<php>
+<?php 
+    session_start();
+
+    include('connection.php');
+
+    // accept or reject
+
+    if(isset($_REQUEST['accept'])){
+        
+        $accept_stat = $_REQUEST['accept'];
+        $deliveryid = $_REQUEST['deliveryid'];
+        
+        $update_request_status = "UPDATE delivery SET status = '$accept_stat' WHERE deliveryid = $deliveryid";
+        
+        mysqli_query($conn, $update_request_status);
+    }
+?>
+
+<!DOCTYPE html>
+<html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,7 +53,7 @@
         <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
             <div class="divider"></div>
             <ul class="nav menu">
-                <li ><a href="index..php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+                <li ><a href="index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
                 <li ><a href="product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
                 <li ><a href="notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
                 <li ><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
@@ -64,9 +82,11 @@
             </div><!--/.row-->
 
         </div><!--/.row-->
-        </div>	<!--/.main-->
-
-    <main role="main" class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+        
+<div>	<!--/.main-->
+ <div>
+    <div role="main" class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+        
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
@@ -90,12 +110,12 @@
                 <form method="post" action="apismsphp">
             <table align="center">
                 <tr>
-                    <td>sender:</td>
-                    <td><input type="text" name="sender" placeholder="enter your name"></td>
+                    <th>sender:</th>
+                    <th><input type="text" name="sender" placeholder="enter your name"></th>
                 </tr>
                 <tr>
-                    <td>number:</td>
-                    <td><input type="text" name="num" placeholder="enter your number"></td>
+                    <th>number:</th>
+                    <th><input type="text" name="num" placeholder="enter your number"></th>
                 </tr>
             </table>
             <table style="width: 50%" id="table">
@@ -170,11 +190,57 @@
         </div>
     </div>
 </div>
-
+<!-- Modal -->
+    <div id="request_table">
+        <table class="table table-dark table-striped">
+            <thead class="thead-dark">
+                <tr>
+                        <th>Order ID</th>
+                        <th>Product Name</th>
+                        <th>From</th>
+                        <th>to</th>
+                        <th>Quantity</th>
+                        <th>Date Requested</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+          
+                    // get requests
+                
+                    $get_branch_request = "SELECT orders.orderid, products.productname, supplier.supplier_name, branch.branchid, branch.branch_name, orders.quantity, orders.time, delivery.deliveryid, delivery.status from ((((orders inner join products on orders.productid = products.productid) inner join supplier on orders.supplierid = supplier.supplierid) inner join branch on orders.branchid = branch.branchid) inner join delivery on orders.deliveryid = delivery.deliveryid) where delivery.status = 'rejected' or delivery.status = 'pending' OR delivery.status = 'accepted'";
+                
+                    $result = mysqli_query($conn, $get_branch_request);
+                
+                    while($rows = mysqli_fetch_array($result)){
+                ?>
+                <tr>
+                        <td><?php echo $rows['orderid']; ?></td>
+                        <td><?php echo $rows['productname']; ?></td>
+                        <td><?php echo $rows['supplier_name']; ?></td>
+                        <td><?php echo $rows['branch_name']; ?></td> 
+                        <td><?php echo $rows['quantity']; ?></td>
+                        <td><?php echo $rows['time']; ?></td>
+                        <td><?php echo $rows['status']; ?></td>
+                        <td>
+                        <a href="branch.php?accept=accepted&deliveryid=<?php echo $rows['deliveryid']; ?>" class="btn btn-success btn-sm">Accept</a>
+                        <a href="branch.php?accept=rejected&deliveryid=<?php echo $rows['deliveryid']; ?>" class="btn btn-danger btn-sm">Reject</a>
+                        </td>
+                </tr>
+                <?php
+                    }
+                ?>
+            </tbody>       
+        </table>
+    </div>
 </br>
-</main>
-
+    </div>
 </div><!--/.row-->
+
+
 </div>	<!--/.main-->
 
 <script src="js/jquery-1.11.1.min.js"></script>
@@ -188,7 +254,7 @@
 <script>
     window.onload = function () {
         var chart1 = document.getElementById("line-chart").getContext("2d");
-        window.myLine = new Chart(chart1).Line(lineChartData, {
+        window.myLine = new Chart(chart1).Line(lineCharthata, {
             responsive: true,
             scaleLineColor: "rgba(0,0,0,.2)",
             scaleGridLineColor: "rgba(0,0,0,.05)",

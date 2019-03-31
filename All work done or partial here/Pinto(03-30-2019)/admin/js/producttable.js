@@ -9,8 +9,8 @@ app.filter('beginning_data', function() {
     }
 });
 app.controller('controller', function($scope, $http, $timeout) {
-    $http.get('monitoring/all_report_m.php').success(function(orders) {
-        $scope.file = orders;
+    $http.get('monitoring/all_report_m.php').success(function(products) {
+        $scope.file = products;
         $scope.current_grid = 1;
         $scope.data_limit = 10;
         $scope.filter_data = $scope.file.length;

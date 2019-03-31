@@ -39,7 +39,7 @@ session_start();
         <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
             <div class="divider"></div>
             <ul class="nav menu">
-                <li ><a href="index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+                <li ><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
                 <li class="active"><a href="product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
                 <li><a href="notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
                 <li><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
@@ -96,9 +96,8 @@ session_start();
                             <option>500</option>
                         </select>
                     </div>
-                    <div class="col-sm-2 pull-right">
-                        <label>Search </label>
-                        <input type="text" class="form-control col-lg-3" ng-model="search" ng-change="filter() placeholder="Search" style="height:50px" >
+                   <div class="col-sm-3 pull-right">
+                        <input type="text" class="form-control input-lg" ng-model="search" ng-change="filter()" placeholder="Search" >
                         </div>
                 </div>
                 <br>
@@ -107,13 +106,14 @@ session_start();
                                 <div class="col-md-12" ng-show="filter_data > 0">
                         <label>Sort By</label>
                         <table class="table table-striped table-bordered">
-                            <th>Branch&nbsp; &nbsp;<a ng-click="sort_with('branch_name');"></a></th>
+                            <!-- <th>Branch&nbsp; &nbsp;<a ng-click="sort_with('branch_name');"></a></th> -->
                             <th>Account Name&nbsp; &nbsp;<a ng-click="sort_with('firstname');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
                             <th>Product Name&nbsp; &nbsp;<a ng-click="sort_with('productname');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
-                            <th>Supplier&nbsp; &nbsp;<a ng-click="sort_with('supplier_name');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
-                            <th>Quantity (Stock)&nbsp; &nbsp;<a ng-click="sort_with('stock');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
-                            <th>Quantity (Sold)&nbsp; &nbsp;<a ng-click="sort_with('sold');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
-                            <th>Time Sold &nbsp; &nbsp;<a ng-click="sort_with('time');"><i class="glyphicon glyphicon-sort-by-attributes"></i></a></th>
+                            <th>Stock&nbsp; &nbsp;<a ng-click="sort_with('quantity');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
+                            <th>Stock In&nbsp; &nbsp;<a ng-click="sort_with('stockin');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
+                            <th>Date In&nbsp; &nbsp;<a ng-click="sort_with('date_in');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
+                            <th>Stock Out&nbsp; &nbsp;<a ng-click="sort_with('stockout');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
+                            <th>Date Out&nbsp; &nbsp;<a ng-click="sort_with('date_out');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
                         </table>
                     </div>
                 </div>
@@ -122,23 +122,25 @@ session_start();
                     <div class="col-md-12" ng-show="filter_data > 0">
                         <table class="table table-striped table-bordered">
                             <thead>
-                                <th>Branch&nbsp;</th>
+                                <!-- <th>Branch&nbsp;</th> -->
                                 <th>Account Name&nbsp;</th>
                                 <th>Product Name&nbsp;</th>
-                                <th>Supplier&nbsp;</th>
-                                <th>Quantity (Stock)&nbsp;</th>
-                                <th>Quantity (Sold)&nbsp;</th>
-                                <th>Time Sold&nbsp;</th>
+                                <th>Stock (in kg)&nbsp;</th>
+                                <th>Stock In(in kg)&nbsp;</th>
+                                <th>Date In&nbsp;</th>
+                                <th>Stock Out(in kg)&nbsp;</th>
+                                <th>Date Out&nbsp;</th>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="data in searched = (file | filter:search | orderBy : base :reverse) | beginning_data:(current_grid-1)*data_limit | limitTo:data_limit">
-                                    <td>{{data.branch_name}}</td>
+                                    <!-- <td>{{data.branch_name}}</td> -->
                                     <td>{{data.firstname}}</td>
                                     <td>{{data.productname}}</td>
-                                    <td>{{data.supplier_name}}</td>
-                                    <td>{{data.stock}}</td>
-                                    <td>{{data.sold}}</td>
-                                    <td>{{data.time}}</td>
+                                    <td>{{data.quantity}}</td>
+                                    <td>{{data.stockin}}</td>
+                                    <td>{{data.date_in}}</td>
+                                    <td>{{data.stockout}}</td>
+                                    <td>{{data.date_out}}</td>
                                 </tr>
                             </tbody>
                         </table>

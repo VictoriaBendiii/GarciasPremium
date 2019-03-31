@@ -69,6 +69,7 @@ session_start();
             <div class="btn-group" style="width:100%">
                 <button onclick="location.href='../product.php'" style="width:33.3%">Market</button>
                 <button class="btn btn-primary active" onclick="location.href='productsub.php'" style="width:33.3%">Porta</button>
+                <button onclick="location.href='delivered_filter_report_s.php'" style="width:33.3%">Filter</button>
             </div>
             <br>
             <div class="btn-group" style="width:100%">
@@ -108,6 +109,7 @@ session_start();
                             <th>Supplier&nbsp; &nbsp;<a ng-click="sort_with('supplier_name');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
                             <th>Quantity&nbsp; &nbsp;<a ng-click="sort_with('quantity');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
                             <th>Time Ordered&nbsp; &nbsp;<a ng-click="sort_with('time');"><i class="glyphicon glyphicon-sort-by-attributes"></i></a></th>
+                            <th>Status&nbsp; &nbsp;<a ng-click="sort_with('status');"><i class="glyphicon glyphicon-sort-by-attributes"></i></a></th>
                         </table>
                     </div>
                 </div>
@@ -122,6 +124,7 @@ session_start();
                                 <th>Supplier&nbsp;</th>
                                 <th>Quantity&nbsp;</th>
                                 <th>Time Ordered&nbsp;</th>
+                                <th>Status&nbsp;</th>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="data in searched = (file | filter:search | orderBy : base :reverse) | beginning_data:(current_grid-1)*data_limit | limitTo:data_limit">
@@ -131,6 +134,7 @@ session_start();
                                     <td>{{data.supplier_name}}</td>
                                     <td>{{data.quantity}}</td>
                                     <td>{{data.time}}</td>
+                                    <td>{{data.status}}</td>
                                 </tr>
                             </tbody>
                         </table>

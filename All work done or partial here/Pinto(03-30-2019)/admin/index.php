@@ -1,10 +1,11 @@
-
 <?php
 session_start();
+
 $dbhandle = new mysqli('localhost', 'root', '', 'garciaspremiumcoffee');
 echo $dbhandle -> connect_error;
 $query = "SELECT products.productname, branch.branchid, stock.quantity, stock.stockin, stock.stockout
 from ((stock inner join products on stock.productid = products.productid) inner join branch on stock.branchid = branch.branchid) where branch.branchid=1";
+
 $res = $dbhandle->query($query);
 ?>
 
@@ -110,7 +111,8 @@ $res = $dbhandle->query($query);
             chart.draw(data, options);
         }
     </script>
-    <div id="piechart" style=" width:100%; height: 400px;"></div>
+    <div id="piechart" 
+        <div id="piechart" style=" width:100%; height: 400px;></div>
 	</div>
 
 

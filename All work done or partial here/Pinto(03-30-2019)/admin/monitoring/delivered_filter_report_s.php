@@ -51,8 +51,8 @@ $result = mysqli_query($connect, $query);
         <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
             <div class="divider"></div>
             <ul class="nav menu">
-                <li ><a href="index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-                <li class="active"><a href="product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
+                <li ><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+                <li class="active"><a href="../product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
                 <li><a href="../notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
                 <li><a href="../adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
                 <li><a href="../inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>

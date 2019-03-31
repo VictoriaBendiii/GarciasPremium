@@ -80,7 +80,7 @@ $result = mysqli_query($conn, $sql);
         <div class="btn-group" style="width:100%">
   			<button  onclick="location.href='inventory.php'"; style="width:33.3%" >Market</button>
   			<button onclick="location.href='inventoryporta.php'"; style="width:33.3%">Porta</button>
-				<button onclick="location.href='inventoryarchive.php'"; style="width:33.3%">Archived</button>
+			<button class="btn btn-primary active" onclick="location.href='inventoryarchive.php'"; style="width:33.3%">Archived</button>
              </div>
 
 <br>

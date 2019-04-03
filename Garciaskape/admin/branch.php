@@ -211,7 +211,7 @@
           
                     // get requests
                 
-                    $get_branch_request = "SELECT orders.orderid, products.productname, supplier.supplier_name, branch.branchid, branch.branch_name, orders.quantity, orders.time, delivery.deliveryid, delivery.status from ((((orders inner join products on orders.productid = products.productid) inner join supplier on orders.supplierid = supplier.supplierid) inner join branch on orders.branchid = branch.branchid) inner join delivery on orders.deliveryid = delivery.deliveryid) where delivery.status = 'rejected' or delivery.status = 'pending' OR delivery.status = 'accepted'";
+                    $get_branch_request = "SELECT orders.orderid, products.productid, supplier.supplier_name, branch.branchid, orders.quantity, orders.time, orders.status from (((orders inner join products on orders.productid = products.productid) inner join supplier on orders.supplierid = supplier.supplierid) inner join branch on orders.branchid = branch.branchid) where orders.status = 'rejected' or orders.status = 'pending' or orders.status = 'accepted'";
                 
                     $result = mysqli_query($conn, $get_branch_request);
                 
@@ -237,7 +237,7 @@
         </table>
     </div>
 </br>
-    </div>
+    </div>o
 </div><!--/.row-->
 
 

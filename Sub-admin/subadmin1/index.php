@@ -40,39 +40,41 @@
 					</tbody>
 				</table>
 
-				<h2>Reports</h2>
+		<?php
+				$sqlrep = "SELECT orders.orderid, orders.time, products.productname, orders.quantity, orders.status 
+				from ((orders left join products on orders.productid = products.productid)
+				left join branch on orders.branchid = branch.branchid) where branch.branchid = 1 order by orders.time desc limit 3";
+				$result = mysqli_query($conn, $sqlrep);
+		?>
+
+			<h2>Reports</h2>
+
 			<div class="table-responsive">
 				<table class="table table-bordered table-striped table-sm">
 					<thead>
 						<tr>
-							<th>ID</th>
-							<th>Date & Time</th>
-							<th>From</th>
-							<th>To</th>
 							<th>Product</th>
 							<th>Quantity</th>
 							<th>Status</th>
+							<th>Date & Time</th>
 						</tr>
 					</thead>
 					<tbody>
+
+					<?php
+						if($result = mysqli_query($conn, $sqlrep)) {
+							while($row = mysqli_fetch_assoc($result)){ 
+					?>
 						<tr>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
+							<td> <?php echo $row["productname"]; ?> </td>
+							<td> <?php echo $row["quantity"]; ?> </td>
+							<td> <?php echo $row["status"];?> </td>
+							<td> <?php echo $row["time"]; ?> </td>
 						</tr>
-						<tr>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-						</tr>
+					<?php
+							}
+						}
+					?>
 					</tbody>
 				</table>
 			</div>

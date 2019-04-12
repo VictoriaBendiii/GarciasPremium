@@ -6,7 +6,7 @@ if (isset($_POST['button'])){
 
     $uname = mysqli_real_escape_string($conn, $_POST['uname']);
     $pword = mysqli_real_escape_string($conn, $_POST['pword']);
-    $rem = $_POST['remember'];
+
 
     if (empty($uname) || empty($pword)) {
       header("Location: ../index.php?login=empty");
@@ -23,7 +23,6 @@ if (isset($_POST['button'])){
           //dehashing
           //VERIFY HERE
           $hashedPwdCheck = null;
-          $adminLocation = "Location: /index.php";
           if($pword == $row['password']){
             $hashedPwdCheck = true;
           }else{
@@ -36,9 +35,16 @@ if (isset($_POST['button'])){
             //LOGIN USER!!
             $_SESSION['u_name'] = $row['username'];
             $_SESSION['u_type'] = $row['user_type'];
-            $_SESSION['e_id'] = $row['employeeid'];
+
+
+            if ($_SESSION['u_type'] == "admin"){
             header("Location: ../admin/index.php");
+          }elseif ($_SESSION['u_type'] == "sub-admin1") {
+            header("Location: ../subadmin1/index.php");
+          }elseif ($_SESSION['u_type'] == "sub-admin2") {
+            header("Location: ../subadmin2/index.php");
           }
+         }
 
         }
       }

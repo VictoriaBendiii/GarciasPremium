@@ -6,8 +6,7 @@ th, td{
 }
 </style>
 <script type="text/javascript">
-		function cloneRow()
-		{
+		function cloneRow(){
 				var row = document.getElementById("dropdowns");
 				var table = document.getElementById("tableDrop");
 				var clone = row.cloneNode(true);
@@ -16,9 +15,14 @@ th, td{
 		}
 
 		function RemoveOrder(){
+			var rownumber = document.getElementById("tableDrop").rows.length;
+			if (rownumber == 2){
+				window.alert("You cannot remove the last order");
+			}	else {
 				var td = event.target.parentNode;
 				var tr = td.parentNode;
 				tr.parentNode.removeChild(tr);
+			}
 		}
 </script>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
@@ -68,6 +72,7 @@ th, td{
 						<div class="modal-body">
 							<div class="table-responsive">
 								<table id="tableDrop">
+
 									<thead>
 										<tr>
 											<th>Product</th>

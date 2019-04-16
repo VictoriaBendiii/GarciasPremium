@@ -40,11 +40,7 @@
 					</div>
 					<div class="form-group">
 						<label for="inputState">Quantity / Kg</label>
-						<select id="inputState" class="form-control">
-							<option selected>Choose...</option>
-							<option>1</option>
-							<option>2</option>
-						</select>
+						<input type ="number" step='0.01'> 
 					</div>
 					<div class="form-group">
 							<label for="inputState">Options</label>
@@ -54,6 +50,7 @@
 					</div>
 				</div>
 			</form>
+			<input type="submit">
 
 		</br>
 		</main>

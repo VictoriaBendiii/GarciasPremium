@@ -35,15 +35,22 @@ if (isset($_POST['button'])){
             //LOGIN USER!!
             $_SESSION['u_name'] = $row['username'];
             $_SESSION['u_type'] = $row['user_type'];
+            $_SESSION['status'] = $row['status'];
 
+            if ($_SESSION['status'] == "active" ){
+              if ($_SESSION['u_type'] == "admin"){
+                header("Location: ../admin/index.php");
+              }elseif ($_SESSION['u_type'] == "sub-admin1") {
+                header("Location: ../subadmin1/index.html");
+              }elseif ($_SESSION['u_type'] == "sub-admin2") {
+                header("Location: ../subadmin2/index.html");
+              }
+            }elseif ($_SESSION['status'] == "deactivated") {
+                echo '<script language="javascript">';
+                echo 'alert("Account is deactivated \nPlease Go Back to the Login Page.");';
+                echo '</script>';
 
-            if ($_SESSION['u_type'] == "admin"){
-            header("Location: ../admin/index.php");
-          }elseif ($_SESSION['u_type'] == "sub-admin1") {
-            header("Location: ../subadmin1/index.php");
-          }elseif ($_SESSION['u_type'] == "sub-admin2") {
-            header("Location: ../subadmin2/index.php");
-          }
+            }
          }
 
         }
@@ -56,7 +63,6 @@ if (isset($_POST['button'])){
   header("Location: ../index.php?login=error");
   exit();
 }
-
 
 
  ?>

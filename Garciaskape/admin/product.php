@@ -1,6 +1,8 @@
 <?php
 session_start();
 ?>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,6 +17,7 @@ session_start();
 
         <!--Custom Font-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
         <!--[if lt IE 9]>
 <script src="js/html5shiv.js"></script>
 <script src="js/respond.min.js"></script>
@@ -96,14 +99,14 @@ session_start();
                             <option>500</option>
                         </select>
                     </div>
-                   <div class="col-sm-3 pull-right">
+                    <div class="col-sm-3 pull-right">
                         <input type="text" class="form-control input-lg" ng-model="search" ng-change="filter()" placeholder="Search" >
-                        </div>
+                    </div>
                 </div>
                 <br>
 
                 <div class="row">
-                                <div class="col-md-12" ng-show="filter_data > 0">
+                    <div class="col-md-12" ng-show="filter_data > 0">
                         <label>Sort By</label>
                         <table class="table table-striped table-bordered">
                             <!-- <th>Branch&nbsp; &nbsp;<a ng-click="sort_with('branch_name');"></a></th> -->
@@ -120,7 +123,7 @@ session_start();
                 <br/>
                 <div class="row">
                     <div class="col-md-12" ng-show="filter_data > 0">
-                        <table class="table table-striped table-bordered">
+                        <table id ="tableExport" class="table table-striped table-bordered">
                             <thead>
                                 <!-- <th>Branch&nbsp;</th> -->
                                 <th>Account Name&nbsp;</th>
@@ -164,13 +167,36 @@ session_start();
             <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.12/angular.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
             <script src="js/producttable.js"></script>
+            <script type="text/javascript">
+                function exportToExcel(tableID, filename = ''){
+                    var downloadurl;
+                    var dataFileType = 'application/vnd.ms-excel';
+                    var tableSelect = document.getElementById(tableID);
+                    var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
 
+                    filename = filename?filename+'.xls':'MarketAllReport.xls';
 
+                    downloadurl = document.createElement("a");
 
+                    document.body.appendChild(downloadurl);
 
+                    if(navigator.msSaveOrOpenBlob){
+                        var blob = new Blob(['\ufeff', tableHTMLData], {
+                            type: dataFileType
+                        });
+                        navigator.msSaveOrOpenBlob( blob, filename);
+                    }else{
 
+                        downloadurl.href = 'data:' + dataFileType + ', ' + tableHTMLData;
+                        downloadurl.download = filename;
+                        downloadurl.click();
+                    }
+                }
 
+            </script>
 
+            <button onclick="exportToExcel('tableExport')" class="btn btn-primary">Export Data To Excel File</button>
+            <br><br>
 
 
 

@@ -117,7 +117,7 @@ session_start();
                 <br/>
                 <div class="row">
                     <div class="col-md-12" ng-show="filter_data > 0">
-                        <table class="table table-striped table-bordered">
+                        <table id="tableExport" class="table table-striped table-bordered">
                             <thead>
                                 <th>Branch&nbsp;</th>
                                 <th>Account Name&nbsp;</th>
@@ -159,6 +159,36 @@ session_start();
             <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.12/angular.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
             <script src="../js/deliveredtablem.js"></script>
+            <script type="text/javascript">
+                function exportToExcel(tableID, filename = ''){
+                    var downloadurl;
+                    var dataFileType = 'application/vnd.ms-excel';
+                    var tableSelect = document.getElementById(tableID);
+                    var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
+
+                    filename = filename?filename+'.xls':'DeliveredReportMarket.xls';
+
+                    downloadurl = document.createElement("a");
+
+                    document.body.appendChild(downloadurl);
+
+                    if(navigator.msSaveOrOpenBlob){
+                        var blob = new Blob(['\ufeff', tableHTMLData], {
+                            type: dataFileType
+                        });
+                        navigator.msSaveOrOpenBlob( blob, filename);
+                    }else{
+
+                        downloadurl.href = 'data:' + dataFileType + ', ' + tableHTMLData;
+                        downloadurl.download = filename;
+                        downloadurl.click();
+                    }
+                }
+
+            </script>
+
+            <button onclick="exportToExcel('tableExport')" class="btn btn-primary">Export Data To Excel File</button>
+            <br><br>
 
 
 

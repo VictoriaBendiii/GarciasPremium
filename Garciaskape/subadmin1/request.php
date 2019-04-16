@@ -1,6 +1,26 @@
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
+<style>
+th, td{
+	padding: 10px;
+}
+</style>
+<script type="text/javascript">
+		function cloneRow()
+		{
+				var row = document.getElementById("dropdowns");
+				var table = document.getElementById("tableDrop");
+				var clone = row.cloneNode(true);
+				clone.id = "dropdownsclone";
+				table.appendChild(clone);
+		}
 
+		function RemoveOrder(){
+				var td = event.target.parentNode;
+				var tr = td.parentNode;
+				tr.parentNode.removeChild(tr);
+		}
+</script>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
@@ -10,7 +30,7 @@
 				<li class="active">Request</li>
 			</ol>
 		</div><!--/.row-->
-		
+
 		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
 				<h1 class="h2">Request</h1>
@@ -19,7 +39,7 @@
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
 					Request Stock
 				</button>
-			</br> 
+			</br>
 			</br>
 			<form action="request.php" method="POST">
 				<div class="btn-group" role="group" aria-label="...">
@@ -33,7 +53,7 @@
 			<!-- Modal -->
 			<?php
 				$sqlreq = "SELECT * FROM products";
-				$result = mysqli_query($conn, $sqlreq);				
+				$result = mysqli_query($conn, $sqlreq);
 			?>
 
 			<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -47,44 +67,62 @@
 						</div>
 						<div class="modal-body">
 							<div class="table-responsive">
-								<table class="table table-bordered table-striped table-sm">
+								<table id="tableDrop">
 									<thead>
 										<tr>
 											<th>Product</th>
 											<th>Qty / Kg</th>
+
+										</tr>
+										<tr id="dropdowns">
+											<th id="beans">
+													<select name="beans[]">
+															<option value="premExcelsa">Premium Barako Excelsa</option>
+															<option value="arabmed">Arabica Medium Blend</option>
+															<option value="barako">Barako Blend Coffee</option>
+															<option value="benguet">Benguet</option>
+															<option value="barako">Barako</option>
+															<option value="sagdark">Sagada Dark</option>
+															<option value="sagmed">Sagada Medium</option>
+															<option value="housearab">House Blend Arabica</option>
+															<option value="italesp">Italian Espresso</option>
+															<option value="kalmed">Kalinga Medium</option>
+															<option value="kaldark">Kalinga Dark</option>
+															<option value="hazelnut">Hazelnut</option>
+															<option value="mocha">Mocha</option>
+															<option value="hazelvan">Hazelnut-Vanilla</option>
+															<option value="vanilla">Vanilla</option>
+															<option value="butterscotch">Butterscotch</option>
+															<option value="macadamia">Macadamia</option>
+															<option value="cinnamon">Cinnamon Nut</option>
+															<option value="irish">Irish Cream</option>
+															<option value="caramel">Caramel</option>
+															<option value="cookiescream">Cookies and Cream</option>
+															<option value="baileys">Baileys Irish Cream</option>
+															<option value="doublechoco">Double Chocolate</option>
+													</select>
+											</th>
+											<th id="quantity">
+													<input type="number" name="beans[]" placeholder="Enter Quantity" min="1" max="1000" size="20">
+											</th>
+											<th id="remove">
+													<input type="button" value="&#10006;" onclick="RemoveOrder()">
+												</th>
 										</tr>
 									</thead>
 									<tbody>
 
-									<?php
-										if($result = mysqli_query($conn, $sqlreq)) {
-											while($row = mysqli_fetch_assoc($result)){ 
-									?>
-										<tr>
-											<td> <?php echo $row["productname"]; ?> </td>
-											<td> 
-											<div class="form-group">
-												<select id="inputState" class="form-control">
-													<option selected>Choose...</option>
-													<option>5</option>
-													<option>10</option>
-												</select>
-											</div>
-											</td>
-										</tr>
 
-									<?php
-											}
-										}
-									?>
 
 									</tbody>
 								</table>
 							</div>
 						</div>
 						<div class="modal-footer">
+							<input type="button" onclick="cloneRow()" value="Add Order" class="btn btn-secondary"/>
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 							<button type="button" class="btn btn-primary">Submit</button>
+
 						</div>
 					</div>
 				</div>
@@ -115,7 +153,7 @@
 
 					<?php
 						if($result = mysqli_query($conn, $sql_pending)) {
-							while($row = mysqli_fetch_assoc($result)){ 
+							while($row = mysqli_fetch_assoc($result)){
 					?>
 						<tr>
 							<td> <?php echo $row["orderid"]; ?> </td>
@@ -160,7 +198,7 @@
 
 					<?php
 						if($result = mysqli_query($conn, $sql_pending)) {
-							while($row = mysqli_fetch_assoc($result)){ 
+							while($row = mysqli_fetch_assoc($result)){
 					?>
 						<tr>
 							<td> <?php echo $row["orderid"]; ?> </td>
@@ -182,9 +220,9 @@
 
 		</br>
 		</main>
-		
+
 		</div><!--/.row-->
 	</div>	<!--/.main-->
-		
+
 </body>
 </html>

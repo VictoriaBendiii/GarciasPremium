@@ -60,7 +60,12 @@
 						<button type="submit" class="btn"><em class="fa fa-plus" style="font-size: 30px"></em> </button>
 						<button type="submit" class="btn"><em class="fa fa-remove" style="font-size: 30px; color: red;"></em> </button>
 						</select>
-					</div> 	
+					</div> 
+					<br>
+					<br>	
+					<div class="text-center">
+                            <button type="submit" class="btn btn-start-order" name="sub_spoil" id="sub_spoil">Submit</button>
+                    </div>
 			</form>
 		<?php
 			}
@@ -104,6 +109,11 @@
 						<button type="submit" class="btn"><em class="fa fa-remove" style="font-size: 30px; color: red;"></em> </button>
 						</select>
 					</div>
+					<br>
+					<br>
+					<div class="text-center">
+                            <button type="submit" class="btn btn-start-order" name="sub_loss" id="sub_loss">Submit</button>
+                    </div>
 			</form>
 		<?php
 			}
@@ -177,6 +187,11 @@
 						<button type="submit" class="btn"><em class="fa fa-remove" style="font-size: 30px; color: red;"></em> </button>
 						</select>
 					</div>
+					<br>
+					<br>
+					<div class="text-center">
+                            <button type="submit" class="btn btn-start-order" name="sub_return" id="sub_return">Submit</button>
+                    </div>
 			</form>
 
 		<?php

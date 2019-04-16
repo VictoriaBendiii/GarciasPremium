@@ -16,34 +16,10 @@
 				<h1 class="h2">Hi Sub Admin!</h1>
 			</div>
 
-			<h2>Physical Count</h2>
-			<div class="table-responsive">
-				<table class="table table-bordered table-striped table-sm">
-					<thead>
-						<tr>
-							<th>Product</th>
-							<th>Quantity</th>
-							<th>Date & Time</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-						</tr>
-						<tr>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-						</tr>
-					</tbody>
-				</table>
-
 		<?php
 				$sqlrep = "SELECT orders.orderid, orders.time, products.productname, orders.quantity, orders.status 
 				from ((orders left join products on orders.productid = products.productid)
-				left join branch on orders.branchid = branch.branchid) where branch.branchid = 1 order by orders.time desc limit 3";
+				left join branch on orders.branchid = branch.branchid) where branch.branchid = 1 order by orders.time desc limit 10";
 				$result = mysqli_query($conn, $sqlrep);
 		?>
 

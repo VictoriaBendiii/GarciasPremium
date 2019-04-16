@@ -41,6 +41,7 @@
 					<div class="form-group">
 						<label for="inputState">Quantity / Kg</label>
 						<input type ="number" step='0.01'> 
+						
 					</div>
 					<div class="form-group">
 							<label for="inputState">Options</label>
@@ -48,6 +49,7 @@
 						<button type="submit" class="btn"><em class="fa fa-remove" style="font-size: 30px; color: red;"></em> </button>
 						</select>
 					</div>
+					<input type="submit">
 				</div>
 			</form>
 			<input type="submit">

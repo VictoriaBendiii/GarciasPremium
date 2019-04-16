@@ -17,7 +17,8 @@
 			</div>
 
 			<?php
-				$sql = "SELECT * FROM products INNER JOIN stock ON products.productid = stock.productid";
+				$sql = "SELECT * from ((stock left join products on stock.productid = products.productid)
+				left join branch on stock.branchid = branch.branchid) where branch.branchid = 1";
 				$result = mysqli_query($conn, $sql);				
 			?>
 

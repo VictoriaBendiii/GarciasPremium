@@ -10,7 +10,7 @@
 				<li class="active">Request</li>
 			</ol>
 		</div><!--/.row-->
-		
+
 		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
 				<h1 class="h2">Request</h1>
@@ -19,7 +19,7 @@
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
 					Request Stock
 				</button>
-			</br> 
+			</br>
 			</br>
 				<div class="btn-group" role="group" aria-label="...">
 					<button type="button" class="btn btn-default">Request from Porta</button>
@@ -31,7 +31,7 @@
 			<!-- Modal -->
 			<?php
 				$sqlreq = "SELECT * FROM products";
-				$result = mysqli_query($conn, $sqlreq);				
+				$result = mysqli_query($conn, $sqlreq);
 			?>
 
 			<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -56,11 +56,11 @@
 
 									<?php
 										if($result = mysqli_query($conn, $sqlreq)) {
-											while($row = mysqli_fetch_assoc($result)){ 
+											while($row = mysqli_fetch_assoc($result)){
 									?>
 										<tr>
 											<td> <?php echo $row["productname"]; ?> </td>
-											<td> 
+											<td>
 											<div class="form-group">
 												<select id="inputState" class="form-control">
 													<option selected>Choose...</option>
@@ -90,9 +90,9 @@
 
 		</br>
 		</main>
-		
+
 		</div><!--/.row-->
 	</div>	<!--/.main-->
-		
+
 </body>
 </html>

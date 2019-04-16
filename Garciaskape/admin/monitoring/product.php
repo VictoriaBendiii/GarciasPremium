@@ -1,19 +1,17 @@
 <?php
 session_start();
 ?>
-
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Garcias Premium Coffee</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/datepicker3.css" rel="stylesheet">
-        <link href="css/styles.css" rel="stylesheet">
-        <link href="css/add.css" rel="stylesheet">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/datepicker3.css" rel="stylesheet">
+        <link href="../css/styles.css" rel="stylesheet">
+        <link href="../css/add.css" rel="stylesheet">
 
         <!--Custom Font-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -43,16 +41,18 @@ session_start();
             <div class="divider"></div>
             <ul class="nav menu">
                 <li ><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-                <li class="active"><a href="product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
-                <li><a href="notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-                <li><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
-                <li><a href="inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-                <li><a href="branch.php"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
-                <li><a href="addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
-                <li><a href="addaccount.php"><em class="fa fa-clone">&nbsp;</em> Add Account </a></li> 
-                <li><a href="../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+                <li class="active"><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
+                <li><a href="../notification/notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
+                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
+                <li><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
+                <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
+                <li><a href="../product/addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
+                <li><a href="../accounts/addaccount.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
+                <li><a href="../supplier/addsupplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
+                <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
+        
 
         <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
             <div class="row">
@@ -72,14 +72,14 @@ session_start();
 
             <div class="btn-group" style="width:100%">
                 <button class="btn btn-primary active" onclick="location.href='product.php'"; style="width:33.3%">Market</button>
-                <button onclick="location.href='monitoring/productsub.php'" style="width:33.3%">Porta</button>
-                <button onclick="location.href='monitoring/all_filter_report_m'"; style="width:33.3%">Filter</button>
+                <button onclick="location.href='productsub.php'" style="width:33.3%">Porta</button>
+                <button onclick="location.href='all_filter_report_m'"; style="width:33.3%">Filter</button>
             </div>
             <br>
             <div class="btn-group" style="width:100%">
-                <button onclick="location.href='monitoring/ordered_report_m.php'" style="width:33.3%">Ordered Report</button>
-                <button onclick="location.href='monitoring/delivered_report_m.php'" style="width:33.3%">Delivered Report</button>
-                <button onclick="location.href='monitoring/sold_item_report_m.php'" style="width:33.3%">Sold Item Report</button>
+                <button onclick="location.href='ordered_report_m.php'" style="width:33.3%">Ordered Report</button>
+                <button onclick="location.href='delivered_report_m.php'" style="width:33.3%">Delivered Report</button>
+                <button onclick="location.href='sold_item_report_m.php'" style="width:33.3%">Sold Item Report</button>
 
             </div>
 
@@ -166,7 +166,7 @@ session_start();
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.12/angular.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
-            <script src="js/producttable.js"></script>
+            <script src="../js/producttable.js"></script>
             <script type="text/javascript">
                 function exportToExcel(tableID, filename = ''){
                     var downloadurl;
@@ -207,14 +207,14 @@ session_start();
         </div>	<!--/.main-->
 
 
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/chart.min.js"></script>
-    <script src="js/chart-data.js"></script>
-    <script src="js/easypiechart.js"></script>
-    <script src="js/easypiechart-data.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/custom.js"></script>
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/chart.min.js"></script>
+    <script src="../js/chart-data.js"></script>
+    <script src="../js/easypiechart.js"></script>
+    <script src="../js/easypiechart-data.js"></script>
+    <script src="../js/bootstrap-datepicker.js"></script>
+    <script src="../js/custom.js"></script>
     <script>
         window.onload = function () {
             var chart1 = document.getElementById("line-chart").getContext("2d");

@@ -41,15 +41,15 @@
         <div class="divider"></div>
         <ul class="nav menu">
             <li><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-            <li><a href="../product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
-            <li><a href="../notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-            <li><a href="../adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
-            <li><a href="../inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-            <li><a href="../branch.php"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
-            <li><a href="../addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
-            <li class="active"><a href="addaccount.php"><em class="fa fa-clone">&nbsp;</em> Add Account </a></li>
-            <li><a href="../supplier/addsupplier.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Supplier</a></li>
-            <li><a href="../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+            <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
+            <li><a href="../notification/notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
+            <li><a href="../deliveries/adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
+            <li><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
+            <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
+            <li><a href="../product/addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
+            <li><a href="../accounts/addaccount.php"><em class="fa fa-toggle-off">&nbsp;</em> Accounts</a></li>
+            <li class="active"><a href="../supplier/addsupplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
+            <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
         </ul>
     </div>
     <!--/.sidebar-->
@@ -67,73 +67,42 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Accounts</h1>
+                <h1 class="page-header">Add Account</h1>
             </div>
         </div>
         <!--/.row-->
 
         <div class="row">
             <div class="col-lg-12">
-                <?php
-				$sql_accounts = "SELECT * from accounts";
-				$result = mysqli_query($conn, $sql_accounts);
-		?>
-
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>User Type</th>
-                                <th>Contact Number</th>
-                                <th>Email</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <?php
-						if($result = mysqli_query($conn, $sql_accounts)) {
-							while($row=mysqli_fetch_array($result)){
-					?>
-                            <tr>
-                                <form action="update.php" method="POST">
-                                    <td> <?php echo $row["firstname"]; ?> </td>
-                                    <td> <?php echo $row["lastname"]; ?> </td>
-                                    <td> <?php echo $row["user_type"]; ?> </td>
-                                    <td> <?php echo $row["contact_number"]; ?> </td>
-                                    <td> <?php echo $row["email"];?> </td>
-                                    <td> <?php echo $row["status"];?> </td>
-                                    
-                                    <td> 
-                                    <?php
-                                        if ($row["status"] == "Deactivated") { 
-                                    ?>
-                                        <a href="update.php?activate=<?php echo $row['accountid']; ?>"
-                                            class="btn btn-info"> Activate </a>
-                                        
-                                    <?php 
-                                }
-                                    else if ($row["status"] == "Active") { ?>
-                                        <a href="update.php?deactivate=<?php echo $row['accountid']; ?>"
-                                            class="btn btn-warning"> Deactivate </a>
-                                        <?php
-                                    }
-                                    ?>
-                                    <a href="update.php?delete=<?php echo $row['accountid']; ?>"
-                                            class="btn btn-danger"> Delete </a>
-                                    </td>
-                            </tr>
-                            <?php
-
-							}
-						}
-					?>
-                        </tbody>
-                    </table>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
+                    <form id="contact-form" class="form" action="process.php" method="POST" role="form">
+                        <div class="form-group">
+                            <label class="form-label" for="name">Supplier Name</label>
+                            <input type="text" class="form-control" id="name" name="supplier_name"
+                                placeholder="supplier_name" tabindex="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="contact_person">Contact Person</label>
+                            <input type="text" class="form-control" id="contact_person" name="contact_person"
+                                placeholder="Supplier Contact Person" tabindex="1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="contact_number">Contact Number</label>
+                            <input type="text" maxlength="11" class="form-control" id="contact_number"
+                                name="contact_number" placeholder="Contact Number: 09123456789" tabindex="1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="address">Address</label>
+                            <input type="text" class="form-control" id="address" name="address"
+                                placeholder="Supplier Address" tabindex="1">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-start-order" name="add_supplier"
+                                id="add_supplier">Submit</button>
+                        </div>
+                    </form>
                 </div>
+
 
             </div>
         </div>
@@ -194,7 +163,38 @@
 
     })(jQuery, window, document);
     </script>
+    <script>
+    var password = document.getElementById("password"),
+        confirm_password = document.getElementById("confirm_password");
 
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+    </script>
+
+    <script>
+    var contact_number = document.getElementById("contact_number").value;
+
+
+    function checkNumber() {
+        if (contact_number.length != 11) {
+            contact_number.setCustomValidity("Please input 11 digit contact number!");
+        } else {
+            contact_number.setCustomValidity('');
+        }
+    }
+
+    contact_number.onchange = checkNumber;
+    contact_number.onkeyup = checkNumber;
+    </script>
+    
 
 </body>
 

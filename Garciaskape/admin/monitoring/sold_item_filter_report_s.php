@@ -1,11 +1,12 @@
 <?php  
 session_start();
-$connect = mysqli_connect("localhost", "root", "", "garciaspremiumcoffee");  
+include '../includes/connection.php';
+
 $query = "SELECT products.productname as sname, branch.branchid, branch.branch_name as bsname, solditem.quantity as sqty, accounts.firstname as asname, solditem.time as t,solditem.status
 from (((solditem left join products on solditem.productid = products.productid)
 left join branch on solditem.branchid = branch.branchid)
 left join accounts on solditem.accountid = accounts.accountid) where branch.branchid = 2";  
-$result = mysqli_query($connect, $query);  
+$result = mysqli_query($conn, $query);  
 ?> 
 
 <!DOCTYPE html>
@@ -51,11 +52,12 @@ $result = mysqli_query($connect, $query);
                 <li ><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
                 <li class="active"><a href="../product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
                 <li><a href="../notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-                <li><a href="../adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
+                <li><a href="../adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
                 <li><a href="../inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-                <li><a href="../branch.php"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
-                <li><a href="../addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
-                <li><a href="../addaccount.php"><em class="fa fa-clone">&nbsp;</em> Add Account </a></li>
+                <li><a href="../branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
+                <li><a href="../addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
+                <li><a href="../accounts/addaccount.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
+                <li><a href="../supplier/addsupplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
                 <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
@@ -79,7 +81,7 @@ $result = mysqli_query($connect, $query);
             </div><!--/.row-->
 
             <div class="btn-group" style="width:100%">
-                <button onclick="location.href='../product.php'" style="width:33.3%">Market</button>
+                <button onclick="location.href='../monitoring/product.php'" style="width:33.3%">Market</button>
                 <button class="btn btn-primary active"  onclick="location.href='../monitoring/productsub.php'" style="width:33.3%">Porta</button>
                 <button class="btn btn-primary active" onclick="location.href='all_filter_report_s.php'" style="width:33.3%">Filter</button>
 

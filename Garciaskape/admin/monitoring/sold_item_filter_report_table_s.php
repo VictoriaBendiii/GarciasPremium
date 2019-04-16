@@ -1,8 +1,8 @@
 <?php  
-//filter.php  
+include '../includes/connection.php';
+
 if(isset($_POST["from_date"], $_POST["to_date"]))  
-{  
-    $connect = mysqli_connect("localhost", "root", "", "garciaspremiumcoffee");  
+{   
     $output = '';  
     $query = "SELECT products.productname as sname, branch.branchid, branch.branch_name as bsname, solditem.quantity as sqty, accounts.firstname as asname, solditem.time as t, solditem.status
 from (((solditem left join products on solditem.productid = products.productid)
@@ -10,7 +10,7 @@ left join branch on solditem.branchid = branch.branchid)
 left join accounts on solditem.accountid = accounts.accountid) 
 where branch.branchid = 2 and solditem.time BETWEEN '".$_POST["from_date"]."' AND '".$_POST["to_date"]."' ";  
 
-    $result = mysqli_query($connect, $query);  
+    $result = mysqli_query($conn, $query);  
     $output .= '  
            <table class="table table-bordered">  
                 <tr>  

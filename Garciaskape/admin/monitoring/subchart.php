@@ -1,24 +1,24 @@
 <?php
 session_start();
-$dbhandle = new mysqli('localhost', 'root', '', 'garciaspremiumcoffee');
-echo $dbhandle -> connect_error;
+include '../includes/connection.php';
+
 $query = "SELECT products.productname, branch.branchid, stock.quantity, stock.stockin, stock.stockout
 from ((stock inner join products on stock.productid = products.productid) inner join branch on stock.branchid = branch.branchid) where branch.branchid=2";
-$res = $dbhandle->query($query);
+$res = $conn->query($query);
 ?>
 
 
-<!DOCTYPE php>
+<!DOCTYPE html>
 <php>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Garcias Premium Coffee</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/datepicker3.css" rel="stylesheet">
-        <link href="css/styles.css" rel="stylesheet">
-        <link href="css/add.css" rel="stylesheet">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/datepicker3.css" rel="stylesheet">
+        <link href="../css/styles.css" rel="stylesheet">
+        <link href="../css/add.css" rel="stylesheet">
 
         <!--Custom Font-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -46,14 +46,14 @@ $res = $dbhandle->query($query);
         <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
             <div class="divider"></div>
             <ul class="nav menu">
-                <li class="active"><a href="index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+                <li class="active"><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
                 <li><a href="product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
                 <li><a href="notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-                <li><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
+                <li><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
                 <li><a href="inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-                <li><a href="branch.php"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
-                <li><a href="addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
-                <li><a href="addaccount.php"><em class="fa fa-clone">&nbsp;</em> Add Account </a></li>
+                <li><a href="branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
+                <li><a href="addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
+                <li><a href="addaccount.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
                 <li><a href="../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
@@ -74,14 +74,14 @@ $res = $dbhandle->query($query);
                 </div>
             </div><!--/.row-->
             <div class="btn-group" style="width:100%">
-                <button onclick="location.href='index.php'"; style="width:33.3%">Market</button>
+                <button onclick="location.href='../index.php'"; style="width:33.3%">Market</button>
                 <button class="btn btn-primary active" onclick="location.href='subchart.php'"; style="width:33.3%">Porta</button>
             </div>
         </div><!--/.row-->
 
         </div>	<!--/.main-->
     <div style="padding-left: 300px; padding-top: 200px">
-        <script type="text/javascript" src="js/loader.js"></script>
+        <script type="text/javascript" src="../js/loader.js"></script>
         <script type="text/javascript">
             google.charts.load('current', {'packages':['corechart']});
             google.charts.setOnLoadCallback(drawChart);

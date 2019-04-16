@@ -4,27 +4,6 @@
 th, td{
 	padding: 10px;
 }
-.butn {
-	-webkit-border-radius: 7;
-	-moz-border-radius: 7;
-	border-radius: 7px;
-	font-family: Arial;
-	color: #ffffff;
-	font-size: 15px;
-	background: #1ed147;
-	padding: 7px 14px 7px 14px;
-	text-decoration: none;
-}
-
-.butn:hover {
-	background: "dark green";
-	background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-	background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-	background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-	background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-	background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
-	text-decoration: none;
-}
 </style>
 <script type="text/javascript">
 		function cloneRow(){

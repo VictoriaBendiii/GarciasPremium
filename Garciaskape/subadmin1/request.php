@@ -6,19 +6,22 @@ th, td{
 }
 </style>
 <script type="text/javascript">
-		function cloneRow()
-		{
+		function cloneRow(){
 				var row = document.getElementById("dropdowns");
 				var table = document.getElementById("tableDrop");
 				var clone = row.cloneNode(true);
 				clone.id = "dropdownsclone";
 				table.appendChild(clone);
 		}
-
 		function RemoveOrder(){
+			var rownumber = document.getElementById("tableDrop").rows.length;
+			if (rownumber == 2){
+				window.alert("You cannot remove the last order");
+			}	else {
 				var td = event.target.parentNode;
 				var tr = td.parentNode;
 				tr.parentNode.removeChild(tr);
+			}
 		}
 </script>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
@@ -54,13 +57,17 @@ th, td{
 			<?php
 				$sqlreq = "SELECT * FROM products";
 				$result = mysqli_query($conn, $sqlreq);
+				$option = "";
+				while($row = mysqli_fetch_array($result)){
+					$option = $option."<option>$row[1]</option>";
+				}
 			?>
 
 			<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+							<h5 class="modal-title" id="exampleModalLongTitle">Request Stock</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
@@ -68,6 +75,7 @@ th, td{
 						<div class="modal-body">
 							<div class="table-responsive">
 								<table id="tableDrop">
+
 									<thead>
 										<tr>
 											<th>Product</th>
@@ -76,31 +84,11 @@ th, td{
 										</tr>
 										<tr id="dropdowns">
 											<th id="beans">
-													<select name="beans[]">
-															<option value="premExcelsa">Premium Barako Excelsa</option>
-															<option value="arabmed">Arabica Medium Blend</option>
-															<option value="barako">Barako Blend Coffee</option>
-															<option value="benguet">Benguet</option>
-															<option value="barako">Barako</option>
-															<option value="sagdark">Sagada Dark</option>
-															<option value="sagmed">Sagada Medium</option>
-															<option value="housearab">House Blend Arabica</option>
-															<option value="italesp">Italian Espresso</option>
-															<option value="kalmed">Kalinga Medium</option>
-															<option value="kaldark">Kalinga Dark</option>
-															<option value="hazelnut">Hazelnut</option>
-															<option value="mocha">Mocha</option>
-															<option value="hazelvan">Hazelnut-Vanilla</option>
-															<option value="vanilla">Vanilla</option>
-															<option value="butterscotch">Butterscotch</option>
-															<option value="macadamia">Macadamia</option>
-															<option value="cinnamon">Cinnamon Nut</option>
-															<option value="irish">Irish Cream</option>
-															<option value="caramel">Caramel</option>
-															<option value="cookiescream">Cookies and Cream</option>
-															<option value="baileys">Baileys Irish Cream</option>
-															<option value="doublechoco">Double Chocolate</option>
-													</select>
+													
+												<select name="beans[]">
+													<?php echo $option;?>
+												</select>
+													
 											</th>
 											<th id="quantity">
 													<input type="number" name="beans[]" placeholder="Enter Quantity" min="1" max="1000" size="20">

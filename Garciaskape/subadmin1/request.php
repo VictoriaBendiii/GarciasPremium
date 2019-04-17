@@ -1,3 +1,4 @@
+<?php $page = 'request'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 <style>
@@ -133,8 +134,7 @@ th, td{
 
 		<?php
 			if (isset($_POST['pending'])) {
-				$deliverySql = "SELECT * FROM garciaspremiumcoffee.orders where
-											 branchid='1' and status ='accepted' or 'rejected'; ";
+				$sql_pending = "SELECT * FROM garciaspremiumcoffee.orders where branchid='1' and status ='pending'; ";
 				$result = mysqli_query($conn, $sql_pending);
 		?>
 
@@ -196,6 +196,7 @@ th, td{
 							<th>Product ID</th>
 							<th>Quantity</th>
 							<th>Status</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>

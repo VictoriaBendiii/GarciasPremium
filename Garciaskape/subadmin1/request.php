@@ -1,3 +1,4 @@
+<?php $page = 'request'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 <style>
@@ -13,6 +14,7 @@ th, td{
 				clone.id = "dropdownsclone";
 				table.appendChild(clone);
 		}
+
 		function RemoveOrder(){
 			var rownumber = document.getElementById("tableDrop").rows.length;
 			if (rownumber == 2){
@@ -24,6 +26,7 @@ th, td{
 			}
 		}
 </script>
+
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
@@ -46,28 +49,19 @@ th, td{
 			</br>
 			<form action="request.php" method="POST">
 				<div class="btn-group" role="group" aria-label="...">
-					<button type="submit" class="btn btn-default">Request from Porta</button>
-					<button type="submit" class="btn btn-default"  name="pending" id="pending">Ordered items</button>
-					<button type="submit" class="btn btn-default"  name="accepted" id="accepted">Delivered items</button>
+					<input type="submit" class="btn btn-default" value="Request from Porta"></input>
+					<input type="submit" class="btn btn-default"  name="pending" id="pending" value = "Ordered Reports"></input>
+					<input type="submit" class="btn btn-default"  name="accepted" id="accepted" value = "Delivered Items"></input>
 				</div>
 			</form>
-			</div>
 
-			<!-- Modal -->
-			<?php
-				$sqlreq = "SELECT * FROM products";
-				$result = mysqli_query($conn, $sqlreq);
-				$option = "";
-				while($row = mysqli_fetch_array($result)){
-					$option = $option."<option>$row[1]</option>";
-				}
-			?>
+			</div>
 
 			<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLongTitle">Request Stock</h5>
+							<h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
@@ -84,11 +78,31 @@ th, td{
 										</tr>
 										<tr id="dropdowns">
 											<th id="beans">
-													
-												<select name="beans[]">
-													<?php echo $option;?>
-												</select>
-													
+													<select name="beans[]">
+															<option value="premExcelsa">Premium Barako Excelsa</option>
+															<option value="arabmed">Arabica Medium Blend</option>
+															<option value="barako">Barako Blend Coffee</option>
+															<option value="benguet">Benguet</option>
+															<option value="barako">Barako</option>
+															<option value="sagdark">Sagada Dark</option>
+															<option value="sagmed">Sagada Medium</option>
+															<option value="housearab">House Blend Arabica</option>
+															<option value="italesp">Italian Espresso</option>
+															<option value="kalmed">Kalinga Medium</option>
+															<option value="kaldark">Kalinga Dark</option>
+															<option value="hazelnut">Hazelnut</option>
+															<option value="mocha">Mocha</option>
+															<option value="hazelvan">Hazelnut-Vanilla</option>
+															<option value="vanilla">Vanilla</option>
+															<option value="butterscotch">Butterscotch</option>
+															<option value="macadamia">Macadamia</option>
+															<option value="cinnamon">Cinnamon Nut</option>
+															<option value="irish">Irish Cream</option>
+															<option value="caramel">Caramel</option>
+															<option value="cookiescream">Cookies and Cream</option>
+															<option value="baileys">Baileys Irish Cream</option>
+															<option value="doublechoco">Double Chocolate</option>
+													</select>
 											</th>
 											<th id="quantity">
 													<input type="number" name="beans[]" placeholder="Enter Quantity" min="1" max="1000" size="20">
@@ -99,9 +113,11 @@ th, td{
 										</tr>
 									</thead>
 									<tbody>
-
-
-
+										<?php
+											$conn = mysqli_connect("localhost", "root", "", "garciaspremiumcoffee");
+											$sqlreq = "SELECT * FROM products";
+											$result = mysqli_query($conn, $sqlreq);
+										?>
 									</tbody>
 								</table>
 							</div>
@@ -118,9 +134,7 @@ th, td{
 
 		<?php
 			if (isset($_POST['pending'])) {
-				$sql_pending = "SELECT delivery.orderid, products.productname, delivery.quantity, delivery.time, delivery.status, delivery.supplierid
-				from ((delivery left join products on delivery.productid = products.productid)
-				left join branch on delivery.branchid = branch.branchid) where branch.branchid = 1 and delivery.status = 'pending'";
+				$sql_pending = "SELECT * FROM garciaspremiumcoffee.orders where branchid='1' and status ='pending'; ";
 				$result = mysqli_query($conn, $sql_pending);
 		?>
 
@@ -163,10 +177,12 @@ th, td{
 
 		<?php
 			if (isset($_POST['accepted'])) {
+				$deliverySql = "SELECT * FROM garciaspremiumcoffee.orders where
+											 branchid='1' and status ='accepted' or 'rejected'; ";
 				$sql_pending = "SELECT delivery.orderid, products.productname, delivery.quantity, delivery.time, delivery.status, delivery.supplierid
 				from ((delivery left join products on delivery.productid = products.productid)
 				left join branch on delivery.branchid = branch.branchid) where branch.branchid = 1 and delivery.status = 'accepted'";
-				$result = mysqli_query($conn, $sql_pending);
+				$result = mysqli_query($conn, $deliverySql);
 		?>
 
 			<h2>Accepted/Rejected Orders</h2>
@@ -177,24 +193,28 @@ th, td{
 						<tr>
 							<th>ID</th>
 							<th>Date & Time</th>
-							<th>Product</th>
+							<th>Product ID</th>
 							<th>Quantity</th>
 							<th>Status</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
 
 					<?php
-						if($result = mysqli_query($conn, $sql_pending)) {
+						if($result = mysqli_query($conn, $deliverySql)) {
 							while($row = mysqli_fetch_assoc($result)){
 					?>
 						<tr>
 							<td> <?php echo $row["orderid"]; ?> </td>
 							<td> <?php echo $row["time"]; ?> </td>
-							<td> <?php echo $row["productname"]; ?> </td>
+							<td> <?php echo $row["productid"]; ?> </td>
 							<td> <?php echo $row["quantity"]; ?> </td>
 							<td> <?php echo $row["status"];?> </td>
+							<td> <input type = "submit" href="#" class="butn" value = "Accept"> </input></td>
 						</tr>
+
+
 					<?php
 							}
 						}

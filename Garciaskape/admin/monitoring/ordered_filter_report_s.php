@@ -1,6 +1,7 @@
 <?php  
 session_start();
-$connect = mysqli_connect("localhost", "root", "", "garciaspremiumcoffee");  
+include '../includes/connection.php';
+
 $query = "SELECT products.productname as oname, branch.branchid, branch.branch_name as boname, orders.quantity as oqty, supplier.supplier_name as soname , delivery.deliveryid, accounts.firstname as aoname, orders.time as t
 from (((((orders inner join products on orders.productid = products.productid) 
 left join branch on orders.branchid = branch.branchid) 
@@ -8,7 +9,7 @@ left join supplier on orders.supplierid = supplier.supplierid)
 left join delivery on orders.deliveryid = delivery.deliveryid)
 left join accounts on orders.accountid = accounts.accountid) 
 where branch.branchid = 2";  
-$result = mysqli_query($connect, $query);  
+$result = mysqli_query($conn, $query);  
 ?> 
 
 <!DOCTYPE html>
@@ -52,13 +53,14 @@ $result = mysqli_query($connect, $query);
             <div class="divider"></div>
             <ul class="nav menu">
                 <li ><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-                <li class="active"><a href="../product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
-                <li><a href="../notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-                <li><a href="../adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
-                <li><a href="../inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-                <li><a href="../branch.php"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
-                <li><a href="../addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
-                <li><a href="../addaccount.php"><em class="fa fa-clone">&nbsp;</em> Add Account </a></li>
+                <li class="active"><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
+                <li><a href="../notification/notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
+                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
+                <li><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
+                <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
+                <li><a href="../product/addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
+                <li><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
+                <li><a href="../supplier/addsupplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
                 <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
@@ -82,7 +84,7 @@ $result = mysqli_query($connect, $query);
             </div><!--/.row-->
 
             <div class="btn-group" style="width:100%">
-                <button onclick="location.href='../product.php'" style="width:33.3%">Market</button>
+                <button onclick="location.href='../monitoring/product.php'" style="width:33.3%">Market</button>
                 <button class="btn btn-primary active" onclick="location.href='../monitoring/productsub.php'" style="width:33.3%">Porta</button>
                 <button class="btn btn-primary active" onclick="location.href='all_filter_report_s.php'" style="width:33.3%">Filter</button>
 
@@ -157,7 +159,7 @@ $result = mysqli_query($connect, $query);
 
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.12/angular.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
-                <script src="js/producttable.js"></script>
+                <script src="../js/producttable.js"></script>
 
             </div>
 

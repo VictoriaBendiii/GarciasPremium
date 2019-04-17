@@ -1,7 +1,7 @@
-
 <?php
 session_start();
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,13 +41,14 @@ session_start();
             <div class="divider"></div>
             <ul class="nav menu">
                 <li ><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-                <li class="active"><a href="../product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
-                <li><a href="../notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-                <li><a href="../adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
-                <li><a href="../inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-                <li><a href="../branch.php"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
-                <li><a href="../addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
-                <li><a href="../addaccount.php"><em class="fa fa-clone">&nbsp;</em> Add Account </a></li>
+                <li class="active"><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
+                <li><a href="../notification/notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
+                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
+                <li><a href="../inventoryinventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
+                <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
+                <li><a href="../product/addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
+                <li><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
+                <li><a href="../supplier/addsupplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
                 <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
@@ -69,7 +70,7 @@ session_start();
             </div><!--/.row-->
 
             <div class="btn-group" style="width:100%">
-                <button onclick="location.href='../product.php'" style="width:33.3%">Market</button>
+                <button onclick="location.href='product.php'" style="width:33.3%">Market</button>
                 <button class="btn btn-primary active" onclick="location.href='productsub.php'" style="width:33.3%">Porta</button>
                 <button onclick="location.href='all_filter_report_s.php'" style="width:33.3%">Filter</button>
                 
@@ -87,7 +88,6 @@ session_start();
             <div ng-app="producttablesub" ng-controller="controller">
                 <br/>
                 <br/>
-                
                 <div class="row">
                     <div class="col-sm-2 pull-left">
                         <label>Page Size</label>
@@ -123,7 +123,7 @@ session_start();
                 <br/>
                 <div class="row">
                     <div class="col-md-12" ng-show="filter_data > 0">
-                        <table class="table table-striped table-bordered">
+                        <table id="tableExport" class="table table-striped table-bordered">
                             <thead>
                                 <!-- <th>Branch&nbsp;</th> -->
                                 <th>Account Name&nbsp;</th>
@@ -167,6 +167,38 @@ session_start();
             <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.12/angular.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
             <script src="../js/producttablesub.js"></script>
+            <script type="text/javascript">
+                function exportToExcel(tableID, filename = ''){
+                    var downloadurl;
+                    var dataFileType = 'application/vnd.ms-excel';
+                    var tableSelect = document.getElementById(tableID);
+                    var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
+
+                    filename = filename?filename+'.xls':'PortaAllReport.xls';
+
+                    downloadurl = document.createElement("a");
+
+                    document.body.appendChild(downloadurl);
+
+                    if(navigator.msSaveOrOpenBlob){
+                        var blob = new Blob(['\ufeff', tableHTMLData], {
+                            type: dataFileType
+                        });
+                        navigator.msSaveOrOpenBlob( blob, filename);
+                    }else{
+
+                        downloadurl.href = 'data:' + dataFileType + ', ' + tableHTMLData;
+                        downloadurl.download = filename;
+                        downloadurl.click();
+                    }
+                }
+
+            </script>
+
+            <button onclick="exportToExcel('tableExport')" class="btn btn-primary">Export Data To Excel File</button>
+            <br><br>
+
+
 
 
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'connection.php';
+include '../includes/connection.php';
 date_default_timezone_set('Asia/Manila');
 
 if(isset($_POST['add_delivery'])){

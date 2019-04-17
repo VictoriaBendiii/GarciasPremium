@@ -1,3 +1,4 @@
+<?php $page = 'stocks'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 

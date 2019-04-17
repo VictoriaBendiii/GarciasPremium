@@ -1,19 +1,10 @@
-<?php include 'connection.php'; ?>
+<?php include '../includes/connection.php'; ?>
 <?php 
+$sql = "SELECT * from products WHERE status='archived' ";
 
-//fetch query
-$sql = "SELECT products.productname,products.productid, stock.quantity as stock, branch.branchid, products.status
-from ((stock left join products on stock.productid = products.productid) 
-left join branch on stock.branchid = branch.branchid) where (branch.branchid = 1  OR branch.branchid = 3) AND products.status = 'active'; ";
+
+
 $result = mysqli_query($conn, $sql);
-
-//update query
-if(isset($_POST['active'])){
-
-$productid = $_POST['productid'];
-$updateproduct =("UPDATE products SET status = 'archive' WHERE products.productid='$productid'");
-mysqli_query($conn, $updateproduct);
-}
 ?>
 
 
@@ -24,11 +15,11 @@ mysqli_query($conn, $updateproduct);
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Garcias Premium Coffee</title>
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/font-awesome.min.css" rel="stylesheet">
-	<link href="css/datepicker3.css" rel="stylesheet">
-	<link href="css/styles.css" rel="stylesheet">
-	<link href="css/add.css" rel="stylesheet">
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/font-awesome.min.css" rel="stylesheet">
+	<link href="../css/datepicker3.css" rel="stylesheet">
+	<link href="../css/styles.css" rel="stylesheet">
+	<link href="../css/add.css" rel="stylesheet">
 
 	
 	<!--Custom Font-->
@@ -58,15 +49,16 @@ mysqli_query($conn, $updateproduct);
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<div class="divider"></div>
 		<ul class="nav menu">
-			<li ><a href="index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-			<li ><a href="product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
-			<li ><a href="notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-			<li ><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
-			<li class="active"><a href="inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-			<li><a href="branch.php"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
-		    <li><a href="addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
-			<li><a href="addaccount.php"><em class="fa fa-clone">&nbsp;</em> Add Account </a></li>
-			<li><a href="../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+			<li ><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+			<li ><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
+			<li ><a href="../notification/notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
+			<li ><a href="../deliveries/adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
+			<li class="active"><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
+			<li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
+		    <li><a href="../product/addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
+			<li><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
+			<li><a href="../supplier/addsupplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
+			<li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
 	</div><!--/.sidebar-->
 		
@@ -82,12 +74,12 @@ mysqli_query($conn, $updateproduct);
 		
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Inventory</h1>
+				<h1 class="page-header">Inventory Archived</h1>
             </div>
             
         </div><!--/.row-->
         <div class="btn-group" style="width:100%">
-  			<button onclick="location.href='inventory.php'"; style="width:33.3%">Market</button>
+  			<button  onclick="location.href='inventory.php'"; style="width:33.3%" >Market</button>
   			<button onclick="location.href='inventoryporta.php'"; style="width:33.3%">Porta</button>
 				<button onclick="location.href='inventoryarchive.php'"; style="width:33.3%">Archived</button>
              </div>
@@ -95,24 +87,23 @@ mysqli_query($conn, $updateproduct);
 <br>
 <br> 
 <div class="bs-example">
-        <!-- Modal HTML -->
+    <!-- Button HTML (to Trigger Modal) -->   
+    
+    <!-- Modal HTML -->
     <div id="myModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Archive Confirmation</h4>
+                    <h4 class="modal-title">Active Confirmation</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Do you want to archive this product?</p>
-                    <p class="text-warning"><small>Product will be move in archived products</small></p>
+                    <p>Do you want to activate this product?</p>
+                    <p class="text-warning"><small>Product will be move in active products</small></p>
                 </div>
                 <div class="modal-footer">
-					<form action ="" method="POST">
-					<input type="submit" name="active" class="btn btn-success btn-sm" >Archive</a>
-                    <a href="" class="btn btn-danger btn-sm" data-dismiss="modal">Close</a>
-					</form>
-					
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Yes</button>
                 </div>
             </div>
         </div>
@@ -123,8 +114,9 @@ mysqli_query($conn, $updateproduct);
     <div class="box-body table-responsive no-padding">
      		<table class="table table-hover">
           <tr>
+		 	  <th>Branch ID</th>
               <th>Name</th>
-              <th>Total Stock (kg)</th>
+              <th>Total Stock</th>
               <th>Action</th>
           </tr>
           <tr>
@@ -140,10 +132,10 @@ mysqli_query($conn, $updateproduct);
 								?>
 								
 								
-					
+				  <td><?php echo $row['branchid']; ?></td> 			
                   <td><?php echo $row['productname']; ?></td> 
-                  <td <?php if($row['stock'] <= 50): ?> style="background-color:red;" <?php endif; ?>><?php echo $row['stock']; ?></td> 
-			      <td> <button type="submit" id = "archive" onclick="confirmation() " class="addbtn green " name="archive" > <?php echo $row['status']; ?></button>
+                  <td>0</td>
+				  <td> <button type="submit" id = "archive" onclick="confirmation() " class="addbtn green " name="archive" > <?php echo $row['status']; ?></button>
 								</td> 
                      </tr>
                   
@@ -162,13 +154,13 @@ mysqli_query($conn, $updateproduct);
 		
 	
 	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/chart.min.js"></script>
-	<script src="js/chart-data.js"></script>
-	<script src="js/easypiechart.js"></script>
-	<script src="js/easypiechart-data.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
-	<script src="js/custom.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/chart.min.js"></script>
+	<script src="../js/chart-data.js"></script>
+	<script src="../js/easypiechart.js"></script>
+	<script src="../js/easypiechart-data.js"></script>
+	<script src="../js/bootstrap-datepicker.js"></script>
+	<script src="../js/custom.js"></script>
 
 	<script type="text/javascript">
 $(document).ready(function(){
@@ -176,8 +168,6 @@ $(document).ready(function(){
 		$("#myModal").modal('show');
 	});
 });
-
-
 </script>
 	<script>
 
@@ -190,18 +180,6 @@ $(document).ready(function(){
 	scaleFontColor: "#c5c7cc"
 	});
 };
-
-jQuery('#yesarchive').click(function(){
-    jQuery.ajax({
-         type:'POST',
-         url:'invetory.php',
-         data:{'updated':true},
-         dataType:'json'
-         success:function(data){
-          alert(data.error);
-         }
-    });
-    });
 	</script>
 
 		

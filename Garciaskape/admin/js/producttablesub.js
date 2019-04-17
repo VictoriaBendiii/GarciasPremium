@@ -9,7 +9,7 @@ app.filter('beginning_data', function() {
     }
 });
 app.controller('controller', function($scope, $http, $timeout) {
-    $http.get('tablepaginationsub.php').success(function(orders) {
+    $http.get('all_report_s.php').success(function(orders) {
         $scope.file = orders;
         $scope.current_grid = 1;
         $scope.data_limit = 10;

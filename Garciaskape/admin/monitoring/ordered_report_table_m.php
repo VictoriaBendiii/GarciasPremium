@@ -1,7 +1,7 @@
 <?php 
 session_start();
+include '../includes/connection.php';
 
-$database = mysqli_connect('localhost', 'root', '', 'garciaspremiumcoffee');
 
 $query = "SELECT products.productname, branch.branchid, branch.branch_name, orders.quantity, supplier.supplier_name, delivery.deliveryid, accounts.firstname, orders.time
 from (((((orders inner join products on orders.productid = products.productid) 
@@ -12,7 +12,7 @@ left join accounts on orders.accountid = accounts.accountid)
 where branch.branchid = 1";
 
 
-$result = $database->query($query) or die($database->error . __LINE__);
+$result = $conn->query($query) or die($conn->error . __LINE__);
 $fetch_data = array();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {

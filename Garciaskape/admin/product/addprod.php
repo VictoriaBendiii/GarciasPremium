@@ -1,4 +1,4 @@
-<?php include 'connect.php'; ?>
+<?php include '../includes/connect.php'; ?>
 <?php
 
 //echo "loaded process";

@@ -24,7 +24,7 @@
 
 			<form class="form-inline" id="cust">
 				<div class="form-group">
-						<label for="inputState">Product</label>
+						<<label for="inputState">Product</label>
 						<select id="inputState" class="form-control">
 							<option selected>Choose...</option>
 					<?php

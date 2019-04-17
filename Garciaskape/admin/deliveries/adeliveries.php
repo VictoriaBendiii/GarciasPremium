@@ -1,4 +1,3 @@
-
 <?php
 if(isset($_POST['abc'])){
     // Authorisation details.
@@ -28,18 +27,23 @@ if(isset($_POST['abc'])){
 
 <?php
 
-$hostname = "localhost";
-$username = "root";
-$password = "";
-$databaseName = "garciaspremiumcoffee";
+include '../includes/connection.php';
 
-$connect = mysqli_connect($hostname, $username, $password, $databaseName);
 $query = "SELECT * FROM products";
 
-$result1 = mysqli_query($connect, $query);
+$result1 = mysqli_query($conn, $query);
 
 if (!$result1) {
-    printf("Error: %s\n", mysqli_error($connect));
+    printf("Error: %s\n", mysqli_error($conn));
+    exit();
+}
+
+$query2 = "SELECT * FROM supplier";
+
+$result2 = mysqli_query($conn, $query2);
+
+if (!$result2) {
+    printf("Error: %s\n", mysqli_error($conn));
     exit();
 }
 
@@ -52,11 +56,11 @@ if (!$result1) {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Garcias Premium Coffee</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../css/datepicker3.css" rel="stylesheet">
-        <link href="../css/styles.css" rel="stylesheet">
-        <link href="../css/add.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/datepicker3.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
+        <link href="css/add.css" rel="stylesheet">
 
         <!--Custom Font-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -111,12 +115,12 @@ if (!$result1) {
                 <li ><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
                 <li ><a href="../notification/notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
                 <li class="active"><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
-                <li ><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-                <li ><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
-                <li ><a href="../product/addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
-                <li ><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
+                <li><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
+                <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
+                <li><a href="../product/addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
+                <li><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
                 <li><a href="../supplier/addsupplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
-                <li ><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+                <li><a href="../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
 
@@ -141,7 +145,7 @@ if (!$result1) {
         <main role="main" class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
                 <!-- Button trigger modal -->
-                <button type="button" class="addbtn black circular" data-toggle="modal" data-target="#exampleModalCenter">
+                <button type="button" class="addbtn black circular" data-toggle="modal" data-target="#ModalCenter">
                     ADD DELIVERY TO MARKET
                 </button>
                 <br> 
@@ -149,11 +153,11 @@ if (!$result1) {
             </div>
 
             <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Add Deliveries</h5>
+                            <h5 class="modal-title" id="ModalLongTitle">Add Deliveries</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -162,23 +166,19 @@ if (!$result1) {
                             <form method="post" action="adeliveries.php">
                                 <table align="center">
                                     <tr>
-                                        <td>sender:</td>
-                                        <td><input type="text" name="sender" placeholder="enter your name"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>number:</td>
-                                        <td><input type="text" name="num" placeholder="enter your number"></td>
+                                        <td>Supplier:</td>
+                                        <th id="num">
+                                            <select name="num">
+                                                <?php while($row1 = mysqli_fetch_array($result2)):;?>
+                                                <option value="<?php echo $row1[3];?>"><?php echo $row1[1], " - " , $row1[3];?></option>
+                                                <?php endwhile;?>
+                                            </select>
+                                        </th>  
                                     </tr>
                                 </table>
                                 <div style="overflow-x:auto;">
                                     <table id="tableDrop">
-                                        <tr>
-                                            <th>
-                                                <h5>FROM</h5>
-                                            </th>
-                                            <th>
-                                                <h5>TO</h5>
-                                            </th>
+                                        <tr>                                        
                                             <th>
                                                 <h5>COFFEE BEAN</h5>
                                             </th>
@@ -190,19 +190,7 @@ if (!$result1) {
                                             </th>
                                         </tr>
 
-                                        <tr id="dropdowns">
-                                            <th id="from">
-                                                <select name="from">
-                                                    <option value="sablan">Sablan</option>
-                                                    <option value="atok">Atok</option>
-                                                </select>
-                                            </th>
-                                            <th id="to">
-                                                <select name="to">
-                                                    <option value="market">Market</option>
-                                                    <option value="porta">Porta Vaga</option>
-                                                </select>
-                                            </th>
+                                        <tr id="dropdowns">                                          
                                             <th id="beans">
                                                 <select name="beans[]">
                                                     <?php while($row1 = mysqli_fetch_array($result1)):;?>
@@ -237,14 +225,14 @@ if (!$result1) {
             <br>
         </main>
 
-        <script src="../js/jquery-1.11.1.min.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/chart.min.js"></script>
-        <script src="../js/chart-data.js"></script>
-        <script src="../js/easypiechart.js"></script>
-        <script src="../js/easypiechart-data.js"></script>
-        <script src="../js/bootstrap-datepicker.js"></script>
-        <script src="../js/custom.js"></script>
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/chart.min.js"></script>
+        <script src="js/chart-data.js"></script>
+        <script src="js/easypiechart.js"></script>
+        <script src="js/easypiechart-data.js"></script>
+        <script src="js/bootstrap-datepicker.js"></script>
+        <script src="js/custom.js"></script>
         <script>
             window.onload = function () {
                 var chart1 = document.getElementById("line-chart").getContext("2d");

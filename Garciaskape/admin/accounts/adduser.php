@@ -1,4 +1,4 @@
-<?php include '../connection.php'; ?>
+<?php include '../includes/connection.php'; ?>
 <?php
 
 if (isset($_POST['add_user'])) {
@@ -26,8 +26,10 @@ if (isset($_POST['add_user'])) {
     array_push($errors, "The two passwords do not match");
   }
 
+  $hash_password = password_hash($password, PASSWORD_DEFAULT);
+
   	$sql = "INSERT INTO accounts (username, email, password, user_type, firstname, middlename, lastname, contact_number, status) 
-          VALUES('$username', '$email', '$password', '$usertype','$firstname', '$middlename', '$lastname', '$contact_number',  '$status')";
+          VALUES('$username', '$email', '$hash_password', '$usertype','$firstname', '$middlename', '$lastname', '$contact_number',  '$status')";
     
    mysqli_query($conn, $sql);
    header("Location: addaccount.php");    

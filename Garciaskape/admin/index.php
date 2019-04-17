@@ -53,7 +53,7 @@ $res = $conn->query($query);
                 <li><a href="inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
                 <li><a href="branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
                 <li><a href="product/addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
-                <li><a href="accounts/addaccount.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
+                <li><a href="accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
                 <li><a href="supplier/addsupplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
                 <li><a href="../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>

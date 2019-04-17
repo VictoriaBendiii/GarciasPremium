@@ -46,7 +46,7 @@
             <li><a href="../deliveries/adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
             <li><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
             <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
-            <li><a href="../product/addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
+            <li><a href="../product/accounts.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
             <li><a href="../accounts/addaccount.php"><em class="fa fa-toggle-off">&nbsp;</em> Accounts</a></li>
             <li class="active"><a href="../supplier/addsupplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
             <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
@@ -60,14 +60,14 @@
                 <li><a href="#">
                         <em class="fa fa-home"></em>
                     </a></li>
-                <li class="active">Add Account</li>
+                <li class="active">Add Supplier</li>
             </ol>
         </div>
         <!--/.row-->
 
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Add Account</h1>
+                <h1 class="page-header">Add Supplier</h1>
             </div>
         </div>
         <!--/.row-->

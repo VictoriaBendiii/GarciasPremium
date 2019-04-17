@@ -10,6 +10,7 @@
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/datepicker3.css" rel="stylesheet">
     <link href="../css/styles.css" rel="stylesheet">
+    <link href="../css/add.css" rel="stylesheet">
 
     <!--Custom Font-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i"
@@ -47,9 +48,9 @@
             <li><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
             <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
             <li><a href="../product/addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
-            <li class="active"><a href="../accounts/addaccount.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
+            <li class="active"><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
             <li><a href="../supplier/addsupplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
-            <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+            <li><a href="includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
         </ul>
     </div>
     <!--/.sidebar-->
@@ -71,6 +72,11 @@
             </div>
         </div>
         <!--/.row-->
+        <div class="btn-group" style="width:100%">
+                <button onclick="location.href='accounts.php'" style="width:33.3%">Accounts</button>
+                 <button class="btn btn-primary active" onclick="location.href='addaccount.php'" style="width:33.3%">Add Account</button>
+        </div>
+            <br><br>
 
         <div class="row">
             <div class="col-lg-12">

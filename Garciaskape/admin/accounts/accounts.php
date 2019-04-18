@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<?php include '../includes/connection.php'; ?>
+<?php include '../connection.php'; ?>
 <html>
 
 <head>
@@ -10,7 +10,6 @@
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/datepicker3.css" rel="stylesheet">
     <link href="../css/styles.css" rel="stylesheet">
-    <link href="../css/add.css" rel="stylesheet">
 
     <!--Custom Font-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i"
@@ -45,14 +44,14 @@
         <div class="divider"></div>
         <ul class="nav menu">
             <li><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-            <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
-            <li><a href="../notification/notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-            <li><a href="../deliveries/adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
-            <li><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-            <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
-            <li><a href="../product/addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
-            <li class="active"><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
-            <li><a href="../supplier/addsupplier.php"><em class="fa fa-toggle-off">&nbsp;</em> Suppliers</a></li>
+            <li><a href="../product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
+            <li><a href="../notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
+            <li><a href="../adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
+            <li><a href="../inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
+            <li><a href="../branch.php"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
+            <li><a href="../addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
+            <li class="active"><a href="addaccount.php"><em class="fa fa-clone">&nbsp;</em> Add Account </a></li>
+            <li><a href="../supplier/addsupplier.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Supplier</a></li>
             <li><a href="../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
         </ul>
     </div>
@@ -75,11 +74,6 @@
             </div>
         </div>
         <!--/.row-->
-         <div class="btn-group" style="width:100%">
-                <button class="btn btn-primary active" onclick="location.href='accounts.php'" style="width:33.3%">Accounts</button>
-                <button onclick="location.href='addaccount.php'" style="width:33.3%">Add Accounts</button>
-        </div>
-            <br><br>
 
         <div class="row">
             <div class="col-lg-12">
@@ -123,7 +117,7 @@
                                         <a href="update.php?activate=<?php echo $row['accountid']; ?>"
                                             class="btn btn-info"> Activate </a>
                                         <?php 
-                                    }
+                                }
                                     else if ($row["status"] == "Active") { ?>
                                         <a href="update.php?deactivate=<?php echo $row['accountid']; ?>"
                                             class="btn btn-warning"> Deactivate </a>
@@ -133,6 +127,7 @@
                                         <button type="button" class="btn btn-success" data-toggle="modal"
                                             data-target="#myModal"> Edit
                                         </button>
+
                                         <!-- Modal -->
                                         <div class="modal fade" id="myModal" role="dialog">
                                             <div class="modal-dialog">
@@ -168,60 +163,61 @@
 
 
                                                             </div>
-                                                        </form>                                            
+                                                        </form>
                                                         <div class="modal-footer">
                                                             <a href="update.php?edit=<?php echo $row['accountid']; ?>"
-                                                        type="button" class="btn btn-success"
-                                                        data-toggle="modal" data-target="#myModal"> Update
-                                                        </a>
-                                                        <button type="button" class="btn btn-default"
-                                                            data-dismiss="modal">Close</button>
+                                                                type="button" class="btn btn-success"
+                                                                data-toggle="modal" data-target="#myModal"> Update
+                                                            </a>
+                                                            <button type="button" class="btn btn-default"
+                                                                data-dismiss="modal">Close</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                </div>
 
-                <!-- End of Modal -->
-                <a href="update.php?delete=<?php echo $row['accountid']; ?>" class="btn btn-danger"> Delete </a>
-                </td>
-                </form>
+                                        <!-- End of Modal -->
+                                        <a href="update.php?delete=<?php echo $row['accountid']; ?>"
+                                            class="btn btn-danger"> Delete </a>
+                                    </td>
+                                </form>
 
-                </tr>
-                <?php
+                            </tr>
+                            <?php
 							}
 						}
 					?>
-                </tbody>
-                </table>
+                        </tbody>
+                    </table>
 
+                    <!--/.row-->
+
+                </div>
                 <!--/.row-->
-
             </div>
-            <!--/.row-->
-        </div>
-        <!--/.main-->
+            <!--/.main-->
 
 
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
-        </script>
-        <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
-        <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css" rel="stylesheet"
-            type="text/css" />
-        <script type="text/javascript">
-        $(function() {
-            $("#dialog").dialog({
-                modal: true,
-                autoOpen: false,
-                title: "jQuery Dialog",
-                width: 300,
-                height: 150
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+            </script>
+            <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
+            <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css" rel="stylesheet"
+                type="text/css" />
+            <script type="text/javascript">
+            $(function() {
+                $("#dialog").dialog({
+                    modal: true,
+                    autoOpen: false,
+                    title: "jQuery Dialog",
+                    width: 300,
+                    height: 150
+                });
+                $("#btnShow").click(function() {
+                    $('#dialog').dialog('open');
+                });
             });
-            $("#btnShow").click(function() {
-                $('#dialog').dialog('open');
-            });
-        });
-        </script>
+            </script>
 
 </body>
 

@@ -1,7 +1,5 @@
-<?php include '../includes/connection.php'; ?>
+<?php include '../connection.php'; ?>
 <?php
-
-session_start();
 $firstname='';
 if (isset($_GET['activate'])){
 
@@ -38,9 +36,6 @@ else if (isset($_GET['edit'])){
 	if (count(result) == 1) {
 		$rows = mysqli_fetch_array($result);
 		$firstname = $row['firstname'];
-		$lastname = $row['lastname'];
-		$user_type = $row['user_type'];
-		
 
 	}
 	mysqli_query($conn, $sql_query);

@@ -1,4 +1,11 @@
-<?php $page = 'request'; ?>
+<?php
+session_start();
+
+$username = $_SESSION['u_name'];
+$branchid = $_SESSION['branchid'];
+
+
+?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 <style>
@@ -8,8 +15,8 @@ th, td{
 </style>
 <script type="text/javascript">
 		function cloneRow(){
-				var row = document.getElementById("dropdowns");
 				var table = document.getElementById("tableDrop");
+				var row = document.getElementById("dropdowns");
 				var clone = row.cloneNode(true);
 				clone.id = "dropdownsclone";
 				table.appendChild(clone);
@@ -134,7 +141,9 @@ th, td{
 
 		<?php
 			if (isset($_POST['pending'])) {
-				$sql_pending = "SELECT * FROM garciaspremiumcoffee.orders where branchid='1' and status ='pending'; ";
+				$sql_pending = "SELECT idnumber, deliveryid, products.productname, delivery.quantity, branch.branchid, orderid, time, delivery.status
+				from ((delivery left join products on delivery.productid = products.productid)
+				left join branch on delivery.branchid = branch.branchid) where branch.branchid ='1' and delivery.status ='pending'; ";
 				$result = mysqli_query($conn, $sql_pending);
 		?>
 
@@ -177,12 +186,12 @@ th, td{
 
 		<?php
 			if (isset($_POST['accepted'])) {
-				$deliverySql = "SELECT * FROM garciaspremiumcoffee.orders where
-											 branchid='1' and status ='accepted' or 'rejected'; ";
-				$sql_pending = "SELECT delivery.orderid, products.productname, delivery.quantity, delivery.time, delivery.status, delivery.supplierid
-				from ((delivery left join products on delivery.productid = products.productid)
-				left join branch on delivery.branchid = branch.branchid) where branch.branchid = 1 and delivery.status = 'accepted'";
-				$result = mysqli_query($conn, $deliverySql);
+				// $sql_pending = "SELECT * FROM garciaspremiumcoffee.orders where
+				// 							 branchid='1' and status ='accepted' or 'rejected'; ";
+				$sql_pending = "SELECT orderid, products.productname, orders.quantity, orders.time, orders.status, supplier.supplierid from
+				(((orders inner join products on orders.productid = products.productid) inner join supplier on orders.supplierid = supplier.supplierid )
+				inner join branch on orders.branchid = branch.branchid) where orders.status = 'accepted';";
+				$result = mysqli_query($conn, $sql_pending);
 		?>
 
 			<h2>Accepted/Rejected Orders</h2>
@@ -192,26 +201,29 @@ th, td{
 					<thead>
 						<tr>
 							<th>ID</th>
-							<th>Date & Time</th>
-							<th>Product ID</th>
+							<th>Product Name</th>
 							<th>Quantity</th>
+							<th>Date & Time</th>
 							<th>Status</th>
-							<th>Action</th>
+							<th>Supplier ID</th>
 						</tr>
 					</thead>
 					<tbody>
 
 					<?php
-						if($result = mysqli_query($conn, $deliverySql)) {
+
+						if($result = mysqli_query($conn, $sql_pending)) {
 							while($row = mysqli_fetch_assoc($result)){
 					?>
 						<tr>
 							<td> <?php echo $row["orderid"]; ?> </td>
-							<td> <?php echo $row["time"]; ?> </td>
-							<td> <?php echo $row["productid"]; ?> </td>
+							<td> <?php echo $row["productname"]; ?> </td>
 							<td> <?php echo $row["quantity"]; ?> </td>
+							<td> <?php echo $row["time"]; ?> </td>
 							<td> <?php echo $row["status"];?> </td>
-							<td> <input type = "submit" href="#" class="butn" value = "Accept"> </input></td>
+							<td> <?php echo $row["supplierid"];?> </td>
+							<td> <form action="accept.php" method="POST"><input type="submit" name="accept" value = "Accept" method="post"> </input></form></td>
+
 						</tr>
 
 

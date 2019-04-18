@@ -1,4 +1,11 @@
-<?php $page = 'reports'; ?>
+<?php
+session_start();
+
+$username = $_SESSION['u_name'];
+$branchid = $_SESSION['branchid'];
+
+
+?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 
@@ -11,7 +18,7 @@
 				<li class="active">Reports</li>
 			</ol>
 		</div><!--/.row-->
-		
+
 		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
 				<h1 class="h2">Reports</h1>
@@ -36,7 +43,7 @@
 		</br>
 		<?php
 			if (isset($_POST['all_rep'])) {
-				$sqlsold = "SELECT orders.orderid, orders.time, products.productname, orders.quantity, orders.status 
+				$sqlsold = "SELECT orders.orderid, orders.time, products.productname, orders.quantity, orders.status
 				from ((orders left join products on orders.productid = products.productid)
 				left join branch on orders.branchid = branch.branchid) where branch.branchid = 1";
 				$result = mysqli_query($conn, $sqlsold);
@@ -58,7 +65,7 @@
 
 					<?php
 						if($result = mysqli_query($conn, $sqlsold)) {
-							while($row = mysqli_fetch_assoc($result)){ 
+							while($row = mysqli_fetch_assoc($result)){
 					?>
 						<tr>
 							<td> <?php echo $row["productname"]; ?> </td>
@@ -102,7 +109,7 @@
 
 					<?php
 						if($result = mysqli_query($conn, $sqlsold)) {
-							while($row = mysqli_fetch_assoc($result)){ 
+							while($row = mysqli_fetch_assoc($result)){
 					?>
 						<tr>
 							<td> <?php echo $row["productname"]; ?> </td>
@@ -146,7 +153,7 @@
 
 					<?php
 						if($result = mysqli_query($conn, $sqldel)) {
-							while($row = mysqli_fetch_assoc($result)){ 
+							while($row = mysqli_fetch_assoc($result)){
 					?>
 						<tr>
 							<td> <?php echo $row["productname"]; ?> </td>
@@ -173,7 +180,7 @@
 				left join branch on orders.branchid = branch.branchid) where branch.branchid = 1 and orders.status = 'accepted'";
 				$result = mysqli_query($conn, $sqlord);
 		?>
-		
+
 			<h2>Ordered Reports</h2>
 
 			<div class="table-responsive">
@@ -190,7 +197,7 @@
 
 					<?php
 						if($result = mysqli_query($conn, $sqlord)) {
-							while($row = mysqli_fetch_assoc($result)){ 
+							while($row = mysqli_fetch_assoc($result)){
 					?>
 						<tr>
 							<td> <?php echo $row["productname"]; ?> </td>
@@ -208,11 +215,11 @@
 		<?php
 			}
 		?>
-			
+
 		</main>
-		
+
 		</div><!--/.row-->
 	</div>	<!--/.main-->
-		
+
 </body>
 </html>

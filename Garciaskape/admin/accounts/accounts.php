@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <?php include '../connection.php'; ?>
+<?php include 'update.php'; ?>
+
 <html>
 
 <head>
@@ -86,6 +88,7 @@
                     <table class="table table-bordered table-striped table-sm">
                         <thead>
                             <tr>
+                                <th>Username</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>User Type</th>
@@ -103,6 +106,7 @@
 					?>
                             <tr>
                                 <form action="update.php" method="POST">
+                                    <td> <?php echo $row["username"]; ?> </td>
                                     <td> <?php echo $row["firstname"]; ?> </td>
                                     <td> <?php echo $row["lastname"]; ?> </td>
                                     <td> <?php echo $row["user_type"]; ?> </td>
@@ -117,19 +121,19 @@
                                         <a href="update.php?activate=<?php echo $row['accountid']; ?>"
                                             class="btn btn-info"> Activate </a>
                                         <?php 
-                                }
+                                    }
                                     else if ($row["status"] == "Active") { ?>
                                         <a href="update.php?deactivate=<?php echo $row['accountid']; ?>"
                                             class="btn btn-warning"> Deactivate </a>
                                         <?php
                                     }
                                     ?>
-                                        <button type="button" class="btn btn-success" data-toggle="modal"
-                                            data-target="#myModal"> Edit
-                                        </button>
+
+                                        <a href="#edit<?php echo $row['accountid'];?>" data-toggle="modal"
+                                            class="btn btn-success" data-toggle="modal">Edit</a>
 
                                         <!-- Modal -->
-                                        <div class="modal fade" id="myModal" role="dialog">
+                                        <div id="edit<?php echo $row['accountid']; ?>" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
 
                                                 <!-- Modal content-->
@@ -140,44 +144,81 @@
                                                         <h4 class="modal-title">Edit Account</h4>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form action="update.php" method="POST">
+                                                        <form method="POST" action="editaccount.php">
                                                             <div class="form-group">
+                                                                <input type="hidden" name="edit_item_id"
+                                                                    value="<?php echo $row['accountid']; ?>">
+                                                                <label>Username</label>
+                                                                <input type="text" name="username" class="form-control"
+                                                                    value="<?php echo $row['username']; ?>"
+                                                                    placeholder="Enter Username">
+                                                                <label>Password</label>
+                                                                <input type="password" name="password"
+                                                                    class="form-control"
+                                                                    value="<?php echo $row['password']; ?>"
+                                                                    placeholder="Enter Last Name">
+                                                                <label>Confirm Password</label>
+                                                                <input type="password" class="form-control"
+                                                                    id="confirm_password" name="confirm_password"
+                                                                    placeholder="Password"
+                                                                    value="<?php echo $row['password']; ?>" required>
                                                                 <label>First Name</label>
-                                                                <input type="text" name="firstname" class="form-control"
-                                                                    value="<?php echo $row["firstname"]; ?>"
-                                                                    placeholder="Enter name">
+                                                                <input type="hidden" name="accountid" id="accountid"
+                                                                    class="form-control"
+                                                                    value="<?php echo $row['accountid']; ?>">
+                                                                <input type="text" name="firstname" id="firstname"
+                                                                    class="form-control"
+                                                                    value="<?php echo $row['firstname']; ?>"
+                                                                    placeholder="Enter First Name">
                                                                 <label>Last Name</label>
                                                                 <input type="text" name="lastname" class="form-control"
-                                                                    value="<?php echo $row["lastname"]; ?>"
-                                                                    placeholder="Enter name">
+                                                                    value="<?php echo $row['lastname']; ?>"
+                                                                    placeholder="Enter Last Name">
                                                                 <label>User type</label>
-                                                                <input type="text" name="lastname" class="form-control"
-                                                                    value="<?php echo $row["user_type"]; ?>"
-                                                                    readonly="readonly">
                                                                 <select class="form-control" name="usertype"
                                                                     class="form-control">
+                                                                    <option value="<?php echo $row['user_type']; ?>"
+                                                                        selected>
+                                                                        <?php 
+                                                                        if ($row['user_type'] == 'sub-admin1') {
+                                                                            echo 'Sub-admin Market';
+                                                                        } else if ($row['user_type'] == 'sub-admin2') {
+                                                                            echo 'Sub-admin Porta';
+                                                                        }  else if ($row['user_type'] == 'admin') {
+                                                                            echo 'Admin';
+                                                                        } ?></option>
                                                                     <option value="admin">Admin</option>
                                                                     <option value="subadmin1">Sub-admin Market</option>
                                                                     <option value="subadmin2">Sub-admin Porta</option>
                                                                 </select>
+                                                                <label>Contact Number</label>
+                                                                <input type="text" maxlength="11" class="form-control"
+                                                                    id="contact_number" name="contact_number"
+                                                                    placeholder="Contact Number"
+                                                                    value="<?php echo $row['contact_number']; ?>"
+                                                                    maxlength="11">
+                                                                <label>Email</label>
+                                                                <input type="email" class="form-control" id="email"
+                                                                    name="email" placeholder="Email"
+                                                                    value="<?php echo $row['email']; ?>">
+                                                            </div>
 
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-success"
+                                                                    name="edit_account"
+                                                                    id="edit_account ">Update</button>
 
+                                                                <button type="button" class="btn btn-default"
+                                                                    data-dismiss="modal">Close</button>
                                                             </div>
                                                         </form>
-                                                        <div class="modal-footer">
-                                                            <a href="update.php?edit=<?php echo $row['accountid']; ?>"
-                                                                type="button" class="btn btn-success"
-                                                                data-toggle="modal" data-target="#myModal"> Update
-                                                            </a>
-                                                            <button type="button" class="btn btn-default"
-                                                                data-dismiss="modal">Close</button>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- End of Modal -->
+
                                         <a href="update.php?delete=<?php echo $row['accountid']; ?>"
                                             class="btn btn-danger"> Delete </a>
                                     </td>

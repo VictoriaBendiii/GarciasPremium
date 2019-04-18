@@ -119,8 +119,8 @@
                             <label class="form-label" for="usertype">User type</label>
                             <select class="form-control" id="usertype" name="usertype">
                                 <option value="admin">Admin</option>
-                                <option value="subadmin1">Sub-admin Market</option>
-                                <option value="subadmin2">Sub-admin Porta</option>
+                                <option value="sub-admin1">Sub-admin Market</option>
+                                <option value="sub-admin2">Sub-admin Porta</option>
                             </select>
                         </div>
                         <div class="text-center">

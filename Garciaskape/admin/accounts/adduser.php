@@ -13,7 +13,17 @@ if (isset($_POST['add_user'])) {
   $usertype = mysqli_real_escape_string($conn, $_POST['usertype']);
   $email = mysqli_real_escape_string($conn, $_POST['email']);
   $status = "Active";
-
+  $branchid;
+  if ($usertype == "sub-admin1") {
+    $branchid =1;
+    echo 'OK';
+  } else if ($usertype == "sub-admin2") {
+    $branchid =2;
+    echo 'OK';
+  } else {
+    $branchid =3;
+    echo 'OK';
+  }
   if (empty($username)) { 
     array_push($errors, "Username is required");
   }
@@ -26,15 +36,18 @@ if (isset($_POST['add_user'])) {
     array_push($errors, "The two passwords do not match");
   }
 
-  $hash = password_hash($password, PASSWORD_DEFAULT);
+  $hash_password = password_hash($password, PASSWORD_DEFAULT);
+echo 'OK';
+  
 
-  	$sql = "INSERT INTO accounts (username, email, password, user_type, firstname, middlename, lastname, contact_number, status) 
-          VALUES('$username', '$email', '$hash', '$usertype','$firstname', '$middlename', '$lastname', '$contact_number',  '$status')";
+  	$sql = "INSERT INTO accounts (username, email, password, user_type, firstname, middlename, lastname, contact_number, status, branchid) 
+          VALUES('$username', '$email', '$hash_password', '$usertype','$firstname', '$middlename', '$lastname', '$contact_number',  '$status', '$branchid')";
     
-   mysqli_query($conn, $sql);
-   header("Location: addaccount.php");    
-
-
+    if ($conn->query($sql) === TRUE) {
+      echo "New record created successfully";
+  } else {
+      echo "Error: " . $sql . "<br>" . $conn->error;
+  }
     $conn->close();
 }
 

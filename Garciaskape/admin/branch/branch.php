@@ -2,18 +2,19 @@
     session_start();
 
     include('../includes/connection.php');
-
-    // accept or reject
+     // accept or reject
 
     if(isset($_REQUEST['accept'])){
         
         $accept_stat = $_REQUEST['accept'];
-        $deliveryid = $_REQUEST['deliveryid'];
+        $orderid = $_REQUEST['orderid'];
         
-        $update_request_status = "UPDATE delivery SET status = '$accept_stat' WHERE deliveryid = $deliveryid";
+        $update_request_status = "UPDATE orders SET status = '$accept_stat' WHERE orderid = '$orderid'";
         
         mysqli_query($conn, $update_request_status);
     }
+    
+
 ?>
 
 <!DOCTYPE html>
@@ -119,7 +120,7 @@
           
                     // get requests
                 
-                    $get_branch_request = "SELECT orders.orderid, products.productname, supplier.supplier_name, branch.branchid, branch.branch_name, orders.quantity, orders.time, delivery.deliveryid, delivery.status from ((((orders inner join products on orders.productid = products.productid) inner join supplier on orders.supplierid = supplier.supplierid) inner join branch on orders.branchid = branch.branchid) inner join delivery on orders.deliveryid = delivery.deliveryid) where delivery.status = 'rejected' or delivery.status = 'pending' OR delivery.status = 'accepted'";
+                    $get_branch_request = "SELECT orders.orderid, products.productid, supplier.supplier_name, branch.branchid, orders.quantity, orders.time, orders.status from (((orders inner join products on orders.productid = products.productid) inner join supplier on orders.supplierid = supplier.supplierid) inner join branch on orders.branchid = branch.branchid) where orders.status = 'rejected' or orders.status = 'pending' or orders.status = 'accepted';";
                 
                     $result = mysqli_query($conn, $get_branch_request);
                 
@@ -127,15 +128,15 @@
                 ?>
                 <tr>
                         <td><?php echo $rows['orderid']; ?></td>
-                        <td><?php echo $rows['productname']; ?></td>
+                        <td><?php echo $rows['productid']; ?></td>
                         <td><?php echo $rows['supplier_name']; ?></td>
-                        <td><?php echo $rows['branch_name']; ?></td> 
+                        <td><?php echo $rows['branchid']; ?></td> 
                         <td><?php echo $rows['quantity']; ?></td>
                         <td><?php echo $rows['time']; ?></td>
                         <td><?php echo $rows['status']; ?></td>
                         <td>
-                        <a href="branch.php?accept=accepted&deliveryid=<?php echo $rows['deliveryid']; ?>" class="btn btn-success btn-sm">Accept</a>
-                        <a href="branch.php?accept=rejected&deliveryid=<?php echo $rows['deliveryid']; ?>" class="btn btn-danger btn-sm">Reject</a>
+                        <a href="branch.php?accept=accepted&orderid=<?php echo $rows['orderid']; ?>" class="btn btn-success btn-sm">Accept</a>
+                        <a href="branch.php?accept=rejected&orderid=<?php echo $rows['orderid']; ?>" class="btn btn-danger btn-sm">Reject</a>
                         </td>
                 </tr>
                 <?php
@@ -165,7 +166,7 @@
             responsive: true,
             scaleLineColor: "rgba(0,0,0,.2)",
             scaleGridLineColor: "rgba(0,0,0,.05)",
-            scaleFontColor: "#c5c7cc"
+            scaleFontColor: "#c5c7cc" 
         });
     };
 </script>

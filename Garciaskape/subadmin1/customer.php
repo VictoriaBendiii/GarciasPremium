@@ -1,3 +1,12 @@
+<?php
+$page = 'customer';
+session_start();
+
+$username = $_SESSION['u_name'];
+$branchid = $_SESSION['branch_id'];
+
+
+?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 		

@@ -21,10 +21,10 @@
 					  <button type="submit" class="btn btn-default" name="all_rep" id="all_rep">All Reports</button>
 					</div>
 					<div class="btn-group" role="group">
-					  <button type="submit" class="btn btn-default" name="ord_rep" id="ord_rep">Ordered Reports</button>
+					  <button type="submit" class="btn btn-default" name="ord_rep" id="ord_rep">Order Reports</button>
 					</div>
 					<div class="btn-group" role="group">
-					  <button type="submit" class="btn btn-default" name="del_rep" id="del_rep">Delivered Reports</button>
+					  <button type="submit" class="btn btn-default" name="del_rep" id="del_rep">Delivery Reports</button>
 					</div>
 					<div class="btn-group" role="group">
 					  <button type="submit" class="btn btn-default" name="sold_rep" id="sold_rep">Sold Reports</button>
@@ -124,9 +124,9 @@
 
 		<?php
 			if (isset($_POST['del_rep'])) {
-				$sqldel = "SELECT delivery.deliveryid, products.productname, delivery.quantity, delivery.time, delivery.status, delivery.supplierid
-				from ((delivery left join products on delivery.productid = products.productid)
-				left join branch on delivery.branchid = branch.branchid) where branch.branchid = 2 and delivery.status = 'delivered'";
+				$sqldel = "SELECT products.productname, delivery.quantity, delivery.status, delivery.time 
+				FROM delivery inner join products on delivery.productid = products.productid
+				where delivery.branchid = '1'";
 				$result = mysqli_query($conn, $sqldel);
 		?>
 
@@ -168,9 +168,13 @@
 
 		<?php
 			if (isset($_POST['ord_rep'])) {
-				$sqlord = "SELECT orders.orderid, products.productname, orders.quantity, orders.time, orders.status, orders.supplierid
-				from ((orders left join products on orders.productid = products.productid)
-				left join branch on orders.branchid = branch.branchid) where branch.branchid = 1 and orders.status = 'accepted'";
+				$sqlord = "SELECT products.productname, orders.quantity, orders.status, orders.time FROM orders 
+				inner join products on orders.productid = products.productid
+				where orders.branchid = '1' and (orders.status = 'accepted' or orders.status = 'pending' )
+				UNION
+				SELECT products.productname, delivery.quantity, delivery.status, delivery.time FROM delivery
+				inner join products on delivery.productid = products.productid
+				where delivery.branchid = '1' and delivery.status = 'delivered'";
 				$result = mysqli_query($conn, $sqlord);
 		?>
 

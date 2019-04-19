@@ -50,8 +50,8 @@ th, td{
 			<form action="request.php" method="POST">
 				<div class="btn-group" role="group" aria-label="...">
 					<button type="submit" class="btn btn-default">Request from Porta</button>
-					<button type="submit" class="btn btn-default" name="pending" id="pending">Ordered items</button>
-					<button type="submit" class="btn btn-default" name="accepted" id="accepted">Delivered items</button>
+					<button type="submit" class="btn btn-default" name="pending" id="pending">Order items</button>
+					<button type="submit" class="btn btn-default" name="accepted" id="accepted">Delivery items</button>
 				</div>
 			</form>
 			</div>
@@ -152,9 +152,9 @@ th, td{
 
 		<?php
 			if (isset($_POST['pending'])) {
-				$sql_pending = "SELECT delivery.orderid, products.productname, delivery.quantity, delivery.time, delivery.status, delivery.supplierid
-				from ((delivery left join products on delivery.productid = products.productid)
-				left join branch on delivery.branchid = branch.branchid) where branch.branchid = 1 and delivery.status = 'pending'";
+				$sql_pending = "SELECT products.productname, orders.orderid, orders.quantity, orders.status, orders.time FROM orders 
+				inner join products on orders.productid = products.productid
+				where orders.branchid = '1' and orders.status = 'pending'";
 				$result = mysqli_query($conn, $sql_pending);
 		?>
 
@@ -197,9 +197,9 @@ th, td{
 
 		<?php
 			if (isset($_POST['accepted'])) {
-				$sql_pending = "SELECT delivery.orderid, products.productname, delivery.quantity, delivery.time, delivery.status, delivery.supplierid
-				from ((delivery left join products on delivery.productid = products.productid)
-				left join branch on delivery.branchid = branch.branchid) where branch.branchid = 1 and delivery.status = 'accepted'";
+				$sql_pending = "SELECT products.productname, orders.orderid, orders.quantity, orders.status, orders.time FROM orders 
+				inner join products on orders.productid = products.productid
+				where orders.branchid = '1' and orders.status = 'accepted'";
 				$result = mysqli_query($conn, $sql_pending);
 		?>
 

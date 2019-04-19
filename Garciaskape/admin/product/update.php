@@ -13,7 +13,7 @@ if(isset($_POST['edit_product'])){
     $_SESSION['message']="".$productname." has been edited!";
     $_SESSION['msg_type']="success";
 
-    header('location: addproduct.php'); 
+    header('location: products.php'); 
 }
 
 if (isset($_GET['activate'])){
@@ -36,16 +36,7 @@ if (isset($_GET['deactivate'])){
     header("location: products.php");
 }
 
-if (isset($_GET['delete'])){
-
-    $id = $_GET['delete'];
-    $sql_query ="DELETE FROM products WHERE productid=$id";
-    mysqli_query($conn, $sql_query);
-    $_SESSION['message'] = "Product has been deleted!";
-    $_SESSION['msg_type'] = "danger";
-
-    header("location: product.php");
-} 
+ 
 
 
 ?>

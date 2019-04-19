@@ -81,7 +81,7 @@ th, td{
 										<tr id="dropdowns">
 											<th id="beans">
 													
-												<select name="prodname" id="prodname">
+												<select name="prodname[]" id="prodname">
 													<?php
 													
 														$sqlreq = "SELECT * FROM products";
@@ -90,13 +90,14 @@ th, td{
 														
 														while ($row = mysqli_fetch_array($result)) {
 														echo "<option value='". $row['productid'] ."'>". $row['productname'] ."</option>";
-														}
+														
+													}
 													?>
 												</select>
 													
 											</th>
 											<th id="quantity">
-													<input type="number" name="prodquan" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" size="20">
+													<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" size="20">
 											</th>
 											<th id="remove">
 													<input type="button" value="&#10006;" onclick="RemoveOrder()">
@@ -112,7 +113,7 @@ th, td{
 							</div>
 						</div>
 						<div class="modal-footer">
-							<input type="button" onclick="cloneRow()" value="Add Order" class="btn btn-secondary"/>
+							<input type="button" onclick="cloneRow()" name="add" id="add" value="Add Order" class="btn btn-secondary"/>
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 							<button type="submit" class="btn btn-primary" name="sub" id="sub">Submit</button>
 						</div>
@@ -125,8 +126,6 @@ th, td{
 
 			if (isset($_POST['sub'])) {
 
-				$prodname = mysqli_real_escape_string($conn, $_POST['prodname']);
-				$prodquan = mysqli_real_escape_string($conn, $_POST['prodquan']);
 				$status = "pending";
 
 				$sql_ord = "SELECT orderid from orders order by orderid desc limit 1";
@@ -136,10 +135,15 @@ th, td{
 				$res = $row['orderid'];
 				$res++;
 
-				$sql_sub = "INSERT INTO orders (orderid, stockid, productid, quantity, solditemid, deliveryid, supplierid, branchid, accountid, time, status)
+				foreach (array_combine($_POST['prodname'] , $_POST['prodquan']) as $prodname => $prodquan){
+					
+					$sql_sub = "INSERT INTO orders (orderid, stockid, productid, quantity, solditemid, deliveryid, supplierid, branchid, accountid, time, status)
 							VALUES ('$res', NULL, '$prodname', '$prodquan', NULL, NULL, NULL, '$branchid', '$accountid', SYSDATE(), '$status')";
-				
-				mysqli_query($conn, $sql_sub);
+					
+					mysqli_query($conn, $sql_sub);
+					
+					
+				}
 			}
 
 		?>

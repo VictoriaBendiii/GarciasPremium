@@ -35,6 +35,8 @@ if (isset($_POST['button'])){
               $_SESSION['status'] = $row['status'];       // SESSION VARIABLES IF U GUYS NEED JUST
               $_SESSION['account_id'] = $row['accountid'];       // SESSION VARIABLES IF U GUYS NEED JUST
               $_SESSION['branch_id'] = $row['branchid'];
+              $_SESSION['f_name'] = $row['firstname'];
+              $_SESSION['l_name'] = $row['lastname'];
               /*
               This part:
               1. checks if the user loggin  in has an inactive or active account.

@@ -13,23 +13,23 @@ if(isset($_POST['edit_account'])){
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     if ($password != $confirm_password) {
         array_push($errors, "The two passwords do not match");
-      }
-    
-      $hash_password = password_hash($password, PASSWORD_DEFAULT);
-    
-          $sql = "UPDATE accounts WHERE username='$username', 
+    }
+
+    $hash_password = password_hash($password, PASSWORD_DEFAULT);
+
+    $sql = "UPDATE accounts WHERE username='$username', 
           password='$hash_password', 
           firstname='$firstname',
           lastname='$username', 
           user_type='$usertype',
           contact_number='$contact_number',
           email='$email'";
-        
-        mysqli_query($conn, $sql);
-        header("location: accounts.php");  
- 
-    
-    
-        $conn->close();
-    }
-    ?>
+
+    mysqli_query($conn, $sql);
+    header("location: accounts.php");  
+
+
+
+    $conn->close();
+}
+?>

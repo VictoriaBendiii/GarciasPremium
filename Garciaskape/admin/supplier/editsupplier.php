@@ -7,18 +7,18 @@ if(isset($_POST['edit_supplier'])){
     $contact_number = mysqli_real_escape_string($conn, $_POST['contact_number']);
     $address = mysqli_real_escape_string($conn, $_POST['adress']);
 
-   
-           $sql = "UPDATE supplier SET supplier_name='$supplier_name', 
+
+    $sql = "UPDATE supplier SET supplier_name='$supplier_name', 
           supplier_contact_person='$supplier_contact_person', 
           contact_number='$contact_number',
           address='$address' 
       WHERE supplierid='$id'";
-        
-        mysqli_query($conn, $sql);
-        header("location: supplier.php");  
- 
-    
-    
-        $conn->close();
-    }
-    ?>
+
+    mysqli_query($conn, $sql);
+    header("location: supplier.php");  
+
+
+
+    $conn->close();
+}
+?>

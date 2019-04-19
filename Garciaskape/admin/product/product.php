@@ -107,11 +107,11 @@
                                 <tr>
                                     <form action="update.php" method="POST">
                                         <td> <?php echo $row["productname"]; ?> </td>
-                                        
+
 
                                         <td>
-                                     
-                                           
+
+
                                             <a href="#edit<?php echo $row['productid'];?>" data-toggle="modal"
                                                class="btn btn-success" data-toggle="modal">Edit</a>
 
@@ -135,7 +135,7 @@
                                                                     <input type="text" name="productname" class="form-control"
                                                                            value="<?php echo $row['productname']; ?>"
                                                                            placeholder="Enter Product Name">
-                                                                    
+
                                                                 </div>
 
                                                                 <div class="modal-footer">
@@ -154,7 +154,7 @@
 
                                             <!-- End of Modal -->
 
-                                             <a href="update.php?delete=<?php echo $row['productid']; ?>"
+                                            <a href="update.php?delete=<?php echo $row['productid']; ?>"
                                                class="btn btn-danger"> Delete </a>
                                         </td>
                                     </form>

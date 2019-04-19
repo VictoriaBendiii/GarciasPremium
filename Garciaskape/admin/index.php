@@ -82,59 +82,59 @@ $res = $conn->query($query);
         </div><!--/.row-->
 
         </div>	<!--/.main-->
-	<div style="padding-left: 300px; padding-top: 200px">
-    <script type="text/javascript" src="js/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
+    <div style="padding-left: 300px; padding-top: 200px">
+        <script type="text/javascript" src="js/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
 
-        function drawChart() {
+            function drawChart() {
 
-            var data = google.visualization.arrayToDataTable([
-                ['productname', 'quantity'],
+                var data = google.visualization.arrayToDataTable([
+                    ['productname', 'quantity'],
 
-                <?php
-                while($row = $res -> fetch_assoc())
-                {
-                    echo "['".$row['productname']."',".$row['quantity']."],";
-                }
-                ?>
-            ]);
+                    <?php
+                    while($row = $res -> fetch_assoc())
+                    {
+                        echo "['".$row['productname']."',".$row['quantity']."],";
+                    }
+                    ?>
+                ]);
 
-            var options = {
-                title: 'Product'
-            };
+                var options = {
+                    title: 'Product'
+                };
 
-            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
-            chart.draw(data, options);
-        }
-    </script>
-    <div id="piechart" 
-        <div id="piechart" style=" width:100%; height: 400px;></div>
-	</div>
+                chart.draw(data, options);
+            }
+        </script>
+        <div id="piechart" 
+             <div id="piechart" style=" width:100%; height: 400px;></div>
+    </div>
 
 
 
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/chart.min.js"></script>
-    <script src="js/chart-data.js"></script>
-    <script src="js/easypiechart.js"></script>
-    <script src="js/easypiechart-data.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/custom.js"></script>
-    <script>
-        window.onload = function () {
-            var chart1 = document.getElementById("line-chart").getContext("2d");
-            window.myLine = new Chart(chart1).Line(lineChartData, {
-                responsive: true,
-                scaleLineColor: "rgba(0,0,0,.2)",
-                scaleGridLineColor: "rgba(0,0,0,.05)",
-                scaleFontColor: "#c5c7cc"
-            });
-        };
-    </script>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/chart.min.js"></script>
+<script src="js/chart-data.js"></script>
+<script src="js/easypiechart.js"></script>
+<script src="js/easypiechart-data.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<script src="js/custom.js"></script>
+<script>
+    window.onload = function () {
+        var chart1 = document.getElementById("line-chart").getContext("2d");
+        window.myLine = new Chart(chart1).Line(lineChartData, {
+            responsive: true,
+            scaleLineColor: "rgba(0,0,0,.2)",
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            scaleFontColor: "#c5c7cc"
+        });
+    };
+</script>
 
-    </body>
+</body>
 </html>

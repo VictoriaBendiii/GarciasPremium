@@ -1,4 +1,4 @@
-<?php include '../connection.php'; ?>
+<?php include '../includes/connection.php'; ?>
 <?php
 
 if (isset($_POST['add_user'])) {
@@ -16,13 +16,13 @@ if (isset($_POST['add_user'])) {
   $branchid;
   if ($usertype == "sub-admin1") {
     $branchid =1;
-    echo 'OK';
+    header('Location: accounts.php');
   } else if ($usertype == "sub-admin2") {
     $branchid =2;
-    echo 'OK';
+    header('Location: accounts.php');
   } else {
     $branchid =3;
-    echo 'OK';
+    header('Location: accounts.php');
   }
   if (empty($username)) { 
     array_push($errors, "Username is required");
@@ -37,7 +37,7 @@ if (isset($_POST['add_user'])) {
   }
 
   $hash_password = password_hash($password, PASSWORD_DEFAULT);
-echo 'OK';
+
   
 
   	$sql = "INSERT INTO accounts (username, email, password, user_type, firstname, middlename, lastname, contact_number, status, branchid) 

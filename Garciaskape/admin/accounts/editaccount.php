@@ -1,4 +1,4 @@
-<?php include '../connection.php'; ?>
+<?php include '../includes/connection.php'; ?>
 <?php
 
 if(isset($_POST['edit_account'])){

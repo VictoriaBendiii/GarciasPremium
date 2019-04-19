@@ -1,4 +1,4 @@
-<?php include '../connection.php'; ?>
+<?php include '../includes/connection.php'; ?>
 <?php
 
 session_start();
@@ -75,7 +75,7 @@ if(isset($_POST['edit_account'])){
 		  WHERE accountid='$id'";
         
 		mysqli_query($conn, $sql);
-		header("ocation: accounts.php");  
+		header("location: accounts.php");  
  
     
     

@@ -1,4 +1,4 @@
-<?php include '../includes/connect.php'; ?>
+<?php include '../includes/connection.php'; ?>
 <?php
 
 //echo "loaded process";
@@ -12,15 +12,15 @@ if (isset($_POST['add_prod'])) {
   $branchid = mysqli_real_escape_string($conn, $_POST['branchid']);
   //echo "received branchid";
 
-  	$sql = "INSERT INTO products (name, status, branchid) 
-          VALUES('$prodname', '$status', '$branchid')";
+  	$sql = "INSERT INTO products (productname, branchid,status) 
+          VALUES('$prodname','$branchid' ,'$status' )";
           
   	//$_SESSION['username'] = $username;
   	//$_SESSION['success'] = "You are now logged in";
   	//header('location: index.php');
  
     if(mysqli_query($conn, $sql)) {
-       header('location: index.php');
+       header('location: product.php');
     } else {
         echo "failed" ;
     }

@@ -48,10 +48,8 @@ if (isset($_POST['button'])){
                 }elseif ($_SESSION['u_type'] == "sub-admin2") {
                   header("Location: ../subadmin2/index.php");
                 }
-              }elseif ($_SESSION['status'] == "deactivated") {
-                  echo '<script language="javascript">';
-                  echo 'alert("Account is deactivated \nPlease Go Back to the Login Page.");';
-                  echo '</script>';
+              }elseif ($_SESSION['status'] == "Deactivated") {
+                   echo "<script type='text/javascript'>  alert('Account Deactivated /nPlease Go back to the login page.'); </script>" ;
 
               }
            }else{

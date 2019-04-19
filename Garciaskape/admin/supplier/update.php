@@ -8,14 +8,14 @@ if (isset($_GET['activate'])){
     $id = $_GET['activate'];
     $sql_query = "UPDATE supplier SET status='active' WHERE supplierid=$id";
     mysqli_query($conn, $sql_query);
-    header("location: suppliers.php");
+    header("location: supplier.php");
 
 } else if (isset($_GET['deactivate'])){
 
     $id = $_GET['deactivate'];
     $sql_query ="UPDATE supplier SET status='deactivated' WHERE supplierid=$id";
     mysqli_query($conn, $sql_query);
-    header("location: suppliers.php");
+    header("location: supplier.php");
 }
 if (isset($_GET['delete'])){
 
@@ -25,7 +25,7 @@ if (isset($_GET['delete'])){
     $_SESSION['message'] = "Supplier account has been deleted!";
     $_SESSION['msg_type'] = "danger";
 
-    header("location: suppliers.php");
+    header("location: supplier.php");
 }
 
 
@@ -48,7 +48,7 @@ if(isset($_POST['edit_supplier'])){
     mysqli_query($conn, $sql);
     $_SESSION['message']="Account of ".$supplier_name. " has been edited!";
     $_SESSION['msg_type']="success";
-    header("location: suppliers.php");  
+    header("location: supplier.php");  
 
 
 

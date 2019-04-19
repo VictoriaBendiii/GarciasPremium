@@ -49,7 +49,7 @@
             <li><a href="../deliveries/adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
             <li><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
             <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
-            <li class="active"><a href="../product/products.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a>
+            <li class="active"><a href="../product/product.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a>
             </li>
             <li><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
             <li><a href="../supplier/supplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
@@ -76,7 +76,7 @@
         </div>
         <!--/.row-->
         <div class="btn-group" style="width:100%">
-            <button onclick="location.href='products.php'" style="width:33.3%">Products</button>
+            <button onclick="location.href='product.php'" style="width:33.3%">Products</button>
             <button class="btn btn-primary active" onclick="location.href='addproduct.php'" style="width:33.3%">Add
                 Product</button>
             <button onclick="location.href='archivedproducts.php'" style="width:33.3%">Archived Products</button>

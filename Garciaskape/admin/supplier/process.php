@@ -7,6 +7,7 @@ if (isset($_POST['add_supplier'])) {
   $contact_person = mysqli_real_escape_string($conn, $_POST['contact_person']);
   $contact_number = mysqli_real_escape_string($conn, $_POST['contact_number']);
   $address = mysqli_real_escape_string($conn, $_POST['address']);
+  $status = 'active';
   
 
   if (empty($supplier_name)) { 
@@ -25,13 +26,13 @@ if (isset($_POST['add_supplier'])) {
     array_push($errors, "Address is needed!"); 
   }
 
-  	$sql = "INSERT INTO supplier (supplier_name, supplier_contact_person, contact_number, address) 
-          VALUES('$supplier_name', '$contact_person', '$contact_number','$address')";
+  	$sql = "INSERT INTO supplier (supplier_name, supplier_contact_person, contact_number, address, status) 
+          VALUES('$supplier_name', '$contact_person', '$contact_number','$address', '$status')";
     
     mysqli_query($conn, $sql);
 
   
-  //	header('location: ../index.php'); 
+  header('location: addsupplier.php'); 
 
 
     $conn->close();

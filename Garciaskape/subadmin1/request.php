@@ -1,8 +1,10 @@
 <?php
+$page = 'request';
 session_start();
 
 $username = $_SESSION['u_name'];
-$branchid = $_SESSION['branchid'];
+$branchid = $_SESSION['branch_id'];
+$accountid = $_SESSION['account_id'];
 
 
 ?>
@@ -13,15 +15,15 @@ th, td{
 	padding: 10px;
 }
 </style>
+
 <script type="text/javascript">
 		function cloneRow(){
-				var table = document.getElementById("tableDrop");
 				var row = document.getElementById("dropdowns");
+				var table = document.getElementById("tableDrop");
 				var clone = row.cloneNode(true);
 				clone.id = "dropdownsclone";
 				table.appendChild(clone);
 		}
-
 		function RemoveOrder(){
 			var rownumber = document.getElementById("tableDrop").rows.length;
 			if (rownumber == 2){
@@ -56,19 +58,21 @@ th, td{
 			</br>
 			<form action="request.php" method="POST">
 				<div class="btn-group" role="group" aria-label="...">
-					<input type="submit" class="btn btn-default" value="Request from Porta"></input>
-					<input type="submit" class="btn btn-default"  name="pending" id="pending" value = "Ordered Reports"></input>
-					<input type="submit" class="btn btn-default"  name="accepted" id="accepted" value = "Delivered Items"></input>
+					<button type="submit" class="btn btn-default">Request from Porta</button>
+					<button type="submit" class="btn btn-default" name="pending" id="pending">Ordered items</button>
+					<button type="submit" class="btn btn-default" name="accepted" id="accepted">Delivered items</button>
 				</div>
 			</form>
-
 			</div>
 
+			<!-- Modal -->
+
+			<form action="request.php" method="POST">
 			<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+							<h5 class="modal-title" id="exampleModalLongTitle">Request Stock</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
@@ -85,34 +89,23 @@ th, td{
 										</tr>
 										<tr id="dropdowns">
 											<th id="beans">
-													<select name="beans[]">
-															<option value="premExcelsa">Premium Barako Excelsa</option>
-															<option value="arabmed">Arabica Medium Blend</option>
-															<option value="barako">Barako Blend Coffee</option>
-															<option value="benguet">Benguet</option>
-															<option value="barako">Barako</option>
-															<option value="sagdark">Sagada Dark</option>
-															<option value="sagmed">Sagada Medium</option>
-															<option value="housearab">House Blend Arabica</option>
-															<option value="italesp">Italian Espresso</option>
-															<option value="kalmed">Kalinga Medium</option>
-															<option value="kaldark">Kalinga Dark</option>
-															<option value="hazelnut">Hazelnut</option>
-															<option value="mocha">Mocha</option>
-															<option value="hazelvan">Hazelnut-Vanilla</option>
-															<option value="vanilla">Vanilla</option>
-															<option value="butterscotch">Butterscotch</option>
-															<option value="macadamia">Macadamia</option>
-															<option value="cinnamon">Cinnamon Nut</option>
-															<option value="irish">Irish Cream</option>
-															<option value="caramel">Caramel</option>
-															<option value="cookiescream">Cookies and Cream</option>
-															<option value="baileys">Baileys Irish Cream</option>
-															<option value="doublechoco">Double Chocolate</option>
-													</select>
+													
+												<select name="prodname" id="prodname">
+													<?php
+													
+														$sqlreq = "SELECT * FROM products";
+														$result = mysqli_query($conn, $sqlreq);
+														$row = mysqli_num_rows($result);
+														
+														while ($row = mysqli_fetch_array($result)) {
+														echo "<option value='". $row['productid'] ."'>". $row['productname'] ."</option>";
+														}
+													?>
+												</select>
+													
 											</th>
 											<th id="quantity">
-													<input type="number" name="beans[]" placeholder="Enter Quantity" min="1" max="1000" size="20">
+													<input type="number" name="prodquan" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" size="20">
 											</th>
 											<th id="remove">
 													<input type="button" value="&#10006;" onclick="RemoveOrder()">
@@ -120,11 +113,9 @@ th, td{
 										</tr>
 									</thead>
 									<tbody>
-										<?php
-											$conn = mysqli_connect("localhost", "root", "", "garciaspremiumcoffee");
-											$sqlreq = "SELECT * FROM products";
-											$result = mysqli_query($conn, $sqlreq);
-										?>
+
+
+
 									</tbody>
 								</table>
 							</div>
@@ -132,18 +123,46 @@ th, td{
 						<div class="modal-footer">
 							<input type="button" onclick="cloneRow()" value="Add Order" class="btn btn-secondary"/>
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Submit</button>
-
+							<button type="submit" class="btn btn-primary" name="sub" id="sub">Submit</button>
 						</div>
 					</div>
 				</div>
 			</div>
+			</form>
+
+		<?php
+
+			if (isset($_POST['sub'])) {
+
+				$prodname = mysqli_real_escape_string($conn, $_POST['prodname']);
+				$prodquan = mysqli_real_escape_string($conn, $_POST['prodquan']);
+				$status = "pending";
+
+				$sql_ord = "SELECT orderid from orders order by orderid desc limit 1";
+				$result = (int)$sql_ord;
+				$result++;
+
+
+				$sql_sub = "INSERT INTO orders (orderid, stockid, productid, quantity, solditemid, deliveryid, supplierid, branchid, accountid, time, status)
+							VALUES ('$result', NULL, '$prodname', '$prodquan', NULL, NULL, NULL, '$branchid', '$accountid', SYSDATE(), '$status')";
+				
+				//mysqli_query($conn, $sql_sub);
+				if ($conn->query($sql_sub) === TRUE) {
+					echo "New record created successfully";
+				} else {
+					echo "Error: " . $sql_sub . "<br>" . $conn->error;
+				}
+			}
+
+		?>
+
+		
 
 		<?php
 			if (isset($_POST['pending'])) {
-				$sql_pending = "SELECT idnumber, deliveryid, products.productname, delivery.quantity, branch.branchid, orderid, time, delivery.status
+				$sql_pending = "SELECT delivery.orderid, products.productname, delivery.quantity, delivery.time, delivery.status, delivery.supplierid
 				from ((delivery left join products on delivery.productid = products.productid)
-				left join branch on delivery.branchid = branch.branchid) where branch.branchid ='1' and delivery.status ='pending'; ";
+				left join branch on delivery.branchid = branch.branchid) where branch.branchid = 1 and delivery.status = 'pending'";
 				$result = mysqli_query($conn, $sql_pending);
 		?>
 
@@ -186,11 +205,9 @@ th, td{
 
 		<?php
 			if (isset($_POST['accepted'])) {
-				// $sql_pending = "SELECT * FROM garciaspremiumcoffee.orders where
-				// 							 branchid='1' and status ='accepted' or 'rejected'; ";
-				$sql_pending = "SELECT orderid, products.productname, orders.quantity, orders.time, orders.status, supplier.supplierid from
-				(((orders inner join products on orders.productid = products.productid) inner join supplier on orders.supplierid = supplier.supplierid )
-				inner join branch on orders.branchid = branch.branchid) where orders.status = 'accepted';";
+				$sql_pending = "SELECT delivery.orderid, products.productname, delivery.quantity, delivery.time, delivery.status, delivery.supplierid
+				from ((delivery left join products on delivery.productid = products.productid)
+				left join branch on delivery.branchid = branch.branchid) where branch.branchid = 1 and delivery.status = 'accepted'";
 				$result = mysqli_query($conn, $sql_pending);
 		?>
 
@@ -201,32 +218,25 @@ th, td{
 					<thead>
 						<tr>
 							<th>ID</th>
-							<th>Product Name</th>
-							<th>Quantity</th>
 							<th>Date & Time</th>
+							<th>Product</th>
+							<th>Quantity</th>
 							<th>Status</th>
-							<th>Supplier ID</th>
 						</tr>
 					</thead>
 					<tbody>
 
 					<?php
-
 						if($result = mysqli_query($conn, $sql_pending)) {
 							while($row = mysqli_fetch_assoc($result)){
 					?>
 						<tr>
 							<td> <?php echo $row["orderid"]; ?> </td>
+							<td> <?php echo $row["time"]; ?> </td>
 							<td> <?php echo $row["productname"]; ?> </td>
 							<td> <?php echo $row["quantity"]; ?> </td>
-							<td> <?php echo $row["time"]; ?> </td>
 							<td> <?php echo $row["status"];?> </td>
-							<td> <?php echo $row["supplierid"];?> </td>
-							<td> <form action="accept.php" method="POST"><input type="submit" name="accept" value = "Accept" method="post"> </input></form></td>
-
 						</tr>
-
-
 					<?php
 							}
 						}

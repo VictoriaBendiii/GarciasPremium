@@ -8,13 +8,17 @@ if (isset($_GET['activate'])){
     $id = $_GET['activate'];
     $sql_query = "UPDATE accounts SET status='Active' WHERE accountid=$id";
     mysqli_query($conn, $sql_query);
-   header("location: accounts.php");
+     $_SESSION['message']="Account of has been activated!";
+     $_SESSION['msg_type']="success";
+    header("location: accounts.php");
 
 } else if (isset($_GET['deactivate'])){
 
     $id = $_GET['deactivate'];
     $sql_query ="UPDATE accounts SET status='Deactivated' WHERE accountid=$id";
     mysqli_query($conn, $sql_query);
+    $_SESSION['message'] = "Account has been deactivated!";
+    $_SESSION['msg_type'] = "danger";
     header("location: accounts.php");
 }
 

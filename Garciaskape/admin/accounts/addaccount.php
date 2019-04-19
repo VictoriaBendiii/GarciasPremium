@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<?php include '../includes/connection.php'; ?>
+<?php include '../includes/connection.php';
+session_start();
+include 'adduser.php';
+
+?>
 <html>
 
 <head>
@@ -10,6 +14,7 @@
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/datepicker3.css" rel="stylesheet">
     <link href="../css/styles.css" rel="stylesheet">
+    <link href="../css/add.css" rel="stylesheet">
 
     <!--Custom Font-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i"
@@ -31,7 +36,7 @@
                     <span class="icon-bar"></span></button>
                 <a class="navbar-brand" href="#"><span></span>Admin</a>
                 <br>
-                <p> Eddie Garcia </p>
+                <p> <?php $f_name = $_SESSION['firstname']; $l_name = $_SESSION['lastname'];  echo "$f_name $l_name "; ?> </p>
 
 
             </div>
@@ -40,15 +45,16 @@
     <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
         <div class="divider"></div>
         <ul class="nav menu">
-            <li><a href="index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-            <li><a href="product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
-            <li><a href="notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-            <li><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Admin Deliveries</a></li>
-            <li><a href="inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-            <li><a href="branch.php"><em class="fa fa-clone">&nbsp;</em> Branch Stock Request </a></li>
-            <li><a href="addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Add Product</a></li>
-            <li class="active"><a href="addaccount.php"><em class="fa fa-clone">&nbsp;</em> Add Account </a></li>
-            <li><a href="includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+            <li><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+                <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
+                <li><a href="../notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
+                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
+                <li><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
+                <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
+                <li><a href="../product/product.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
+                <li class="active"><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
+                <li><a href="../supplier/supplier.php"><em class="fa fa-toggle-off">&nbsp;</em> Suppliers</a></li>
+                <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
         </ul>
     </div>
     <!--/.sidebar-->
@@ -70,6 +76,23 @@
             </div>
         </div>
         <!--/.row-->
+        <!-- ALERT -->
+        <?php require_once 'adduser.php' ?>
+                        <?php
+                                if (isset($_SESSION['message'])): ?>
+                        <div class="alert alert-<?=$_SESSION['msg_type']?>">
+                        <?php
+                            echo $_SESSION['message'];
+                            unset($_SESSION['message']); 
+                        ?>
+                        </div>
+                        <?php endif ?>
+        <!-- ALERT -->
+        <div class="btn-group" style="width:100%">
+                <button onclick="location.href='accounts.php'" style="width:33.3%">Accounts</button>
+                <button class="btn btn-primary active" onclick="location.href='addaccount.php'" style="width:33.3%">Add Accounts</button>
+            </div>
+            <br><br>
 
         <div class="row">
             <div class="col-lg-12">
@@ -140,14 +163,14 @@
     </div>
     <!--/.main-->
 
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/chart.min.js"></script>
-    <script src="js/chart-data.js"></script>
-    <script src="js/easypiechart.js"></script>
-    <script src="js/easypiechart-data.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/custom.js"></script>
+     <script src="../js/jquery-1.11.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/chart.min.js"></script>
+    <script src="../js/chart-data.js"></script>
+    <script src="../js/easypiechart.js"></script>
+    <script src="../js/easypiechart-data.js"></script>
+    <script src="../js/bootstrap-datepicker.js"></script>
+    <script src="../js/custom.js"></script>
     <script>
     window.onload = function() {
         var chart1 = document.getElementById("line-chart").getContext("2d");

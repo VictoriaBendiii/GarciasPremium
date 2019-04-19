@@ -9,6 +9,7 @@ left join branch on stock.branchid = branch.branchid) where branch.branchid = 2 
 
 
 $result = mysqli_query($conn, $sql);
+session_start();
 ?>
 
 
@@ -44,7 +45,7 @@ $result = mysqli_query($conn, $sql);
                         <span class="icon-bar"></span></button>
                     <a class="navbar-brand" href="#"><span></span>Admin</a>
                     <br>
-                    <p> Eddie Garcia Junior </p>
+                    <p> <?php $f_name = $_SESSION['firstname']; $l_name = $_SESSION['lastname'];  echo "$f_name $l_name "; ?></p>
 
 
                 </div>

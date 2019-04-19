@@ -33,7 +33,7 @@
                         <span class="icon-bar"></span></button>
                     <a class="navbar-brand" href="#"><span></span>Admin</a>
                     <br>
-                    <p> Eddie Garcia </p>
+                    <p> <?php $f_name = $_SESSION['firstname']; $l_name = $_SESSION['lastname'];  echo "$f_name $l_name "; ?> </p>
 
 
                 </div>
@@ -48,9 +48,9 @@
                 <li ><a href="../deliveries/adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
                 <li ><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
                 <li class="active"><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
-                <li><a href="../product/addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
+                <li><a href="../product/product.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
                 <li><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
-                <li><a href="../supplier/addsupplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
+                <li><a href="../supplier/supplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
                 <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
@@ -92,11 +92,11 @@
         <table class="table table-dark table-striped">
             <thead class="thead-dark">
                 <tr>
-                        <th>Order ID</th>
+                        
                         <th>Product Name</th>
                         <th>From</th>
-                        <th>to</th>
-                        <th>Quantity</th>
+                       
+                        <th>Quantity(kg)</th>
                         <th>Date Requested</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -108,17 +108,17 @@
           
                     // get requests
                 
-                    $get_branch_request = "SELECT orders.orderid, products.productid, supplier.supplier_name, branch.branchid, orders.quantity, orders.time, orders.status from (((orders inner join products on orders.productid = products.productid) inner join supplier on orders.supplierid = supplier.supplierid) inner join branch on orders.branchid = branch.branchid) where orders.status = 'rejected' or orders.status = 'pending' or orders.status = 'accepted';";
+                    $get_branch_request = "SELECT orders.orderid, products.productname, supplier.supplier_name, branch.branchid, orders.quantity, orders.time, orders.status from (((orders inner join products on orders.productid = products.productid) inner join supplier on orders.supplierid = supplier.supplierid) inner join branch on orders.branchid = branch.branchid) where orders.status = 'rejected' or orders.status = 'pending' or orders.status = 'accepted';";
                 
                     $result = mysqli_query($conn, $get_branch_request);
                 
                     while($rows = mysqli_fetch_array($result)){
                 ?>
                 <tr>
-                        <td><?php echo $rows['orderid']; ?></td>
-                        <td><?php echo $rows['productid']; ?></td>
+                        
+                        <td><?php echo $rows['productname']; ?></td>
                         <td><?php echo $rows['supplier_name']; ?></td>
-                        <td><?php echo $rows['branchid']; ?></td> 
+                        
                         <td><?php echo $rows['quantity']; ?></td>
                         <td><?php echo $rows['time']; ?></td>
                         <td><span id="status-<?php echo $rows['orderid']; ?>"><?php echo $rows['status']; ?></span></td>

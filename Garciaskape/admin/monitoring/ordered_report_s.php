@@ -30,7 +30,7 @@ session_start();
                         <span class="icon-bar"></span></button>
                     <a class="navbar-brand" href="#"><span></span>Admin</a>
                     <br>
-                    <p> Eddie Garcia </p>
+                   <p> <?php $f_name = $_SESSION['firstname']; $l_name = $_SESSION['lastname'];  echo "$f_name $l_name "; ?></p>
 
                 </div>
             </div><!-- /.container-fluid -->
@@ -74,7 +74,7 @@ session_start();
             </div>
             <br>
             <div class="btn-group" style="width:100%">
-                <button class="btn btn-primary active" onclick="location.href='ordered_report_s.php'" style="width:33.3%">Ordered Report</button>
+                <button class="btn btn-primary active" onclick="location.href='ordered_report_s.php'" style="width:33.3%">Order Report</button>
                 <button onclick="location.href='delivered_report_s.php'" style="width:33.3%">Delivery Report</button>
                 <button onclick="location.href='sold_item_report_s.php'" style="width:33.3%">Sold Item Report</button>
             </div>

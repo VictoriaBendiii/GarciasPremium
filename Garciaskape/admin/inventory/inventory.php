@@ -14,6 +14,7 @@ if(isset($_POST['active'])){
     $updateproduct =("UPDATE products SET status = 'archive' WHERE products.productid='$productid'");
     mysqli_query($conn, $updateproduct);
 }
+session_start();
 ?>
 
 
@@ -49,7 +50,7 @@ if(isset($_POST['active'])){
                         <span class="icon-bar"></span></button>
                     <a class="navbar-brand" href="#"><span></span>Admin</a>
                     <br>
-                    <p> Eddie Garcia Junior </p>
+                    <p> <?php $f_name = $_SESSION['firstname']; $l_name = $_SESSION['lastname'];  echo "$f_name $l_name "; ?></p>
 
 
                 </div>

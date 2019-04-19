@@ -42,9 +42,11 @@ if (isset($_POST['add_user'])) {
 
   	$sql = "INSERT INTO accounts (username, email, password, user_type, firstname, middlename, lastname, contact_number, status, branchid) 
           VALUES('$username', '$email', '$ecnrypt_password', '$usertype','$firstname', '$middlename', '$lastname', '$contact_number',  '$status', '$branchid')";
-    
+    $_SESSION['message']="Account ".$username. " created";
+    $_SESSION['msg_type']="success";
+
     mysqli_query($conn, $sql);
-    header("location: addaccount.php");
+    header("location: account.php");
 }
 
 ?>

@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,7 +29,7 @@
                         <span class="icon-bar"></span></button>
                     <a class="navbar-brand" href="#"><span></span>Admin</a>
                     <br>
-                    <p> Eddie Garcia </p>
+                    <p> <?php $f_name = $_SESSION['firstname']; $l_name = $_SESSION['lastname'];  echo "$f_name $l_name "; ?></p>
 
 
                 </div>

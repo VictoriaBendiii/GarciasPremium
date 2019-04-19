@@ -44,7 +44,7 @@ $result = mysqli_query($conn, $query);
                         <span class="icon-bar"></span></button>
                     <a class="navbar-brand" href="#"><span></span>Admin</a>
                     <br>
-                    <p> Eddie Garcia </p>
+                    <p> <?php $f_name = $_SESSION['firstname']; $l_name = $_SESSION['lastname'];  echo "$f_name $l_name "; ?></p>
 
 
                 </div>
@@ -92,7 +92,7 @@ $result = mysqli_query($conn, $query);
             </div>
             <br>
             <div class="btn-group" style="width:100%">
-                <button onclick="location.href='ordered_filter_report_m.php'" style="width:33.3%">Ordered Report</button>
+                <button onclick="location.href='ordered_filter_report_m.php'" style="width:33.3%">Order Report</button>
                 <button  onclick="location.href='delivered_filter_report_m.php'" style="width:33.3%">Delivery Report</button>
                 <button onclick="location.href='sold_item_filter_report_m.php'" style="width:33.3%">Sold Item Report</button>
             </div>

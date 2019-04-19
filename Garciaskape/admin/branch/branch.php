@@ -1,8 +1,8 @@
 <?php 
-session_start();
+    session_start();
 
-include('../includes/connection.php');
-// accept or reject
+    include('../includes/connection.php');
+     // accept or reject
 ?>
 
 <!DOCTYPE html>
@@ -48,9 +48,9 @@ include('../includes/connection.php');
                 <li ><a href="../deliveries/adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
                 <li ><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
                 <li class="active"><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
-                <li><a href="../product/product.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
+                <li><a href="../product/addproduct.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
                 <li><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
-                <li><a href="../supplier/supplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
+                <li><a href="../supplier/addsupplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
                 <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
@@ -72,74 +72,74 @@ include('../includes/connection.php');
             </div><!--/.row-->
 
         </div><!--/.row-->
+        
+<div>	<!--/.main-->
+ <div>
+    <div role="main" class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+        
+       
 
-        <div>	<!--/.main-->
-            <div>
-                <div role="main" class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
 
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div id="request_table">
+        <table class="table table-dark table-striped">
+            <thead class="thead-dark">
+                <tr>
+                        <th>Order ID</th>
+                        <th>Product Name</th>
+                        <th>From</th>
+                        <th>to</th>
+                        <th>Quantity</th>
+                        <th>Date Requested</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+          
+                    // get requests
+                
+                    $get_branch_request = "SELECT orders.orderid, products.productid, supplier.supplier_name, branch.branchid, orders.quantity, orders.time, orders.status from (((orders inner join products on orders.productid = products.productid) inner join supplier on orders.supplierid = supplier.supplierid) inner join branch on orders.branchid = branch.branchid) where orders.status = 'rejected' or orders.status = 'pending' or orders.status = 'accepted';";
+                
+                    $result = mysqli_query($conn, $get_branch_request);
+                
+                    while($rows = mysqli_fetch_array($result)){
+                ?>
+                <tr>
+                        <td><?php echo $rows['orderid']; ?></td>
+                        <td><?php echo $rows['productid']; ?></td>
+                        <td><?php echo $rows['supplier_name']; ?></td>
+                        <td><?php echo $rows['branchid']; ?></td> 
+                        <td><?php echo $rows['quantity']; ?></td>
+                        <td><?php echo $rows['time']; ?></td>
+                        <td><span id="status-<?php echo $rows['orderid']; ?>"><?php echo $rows['status']; ?></span></td>
+                        <td>
+                        <button data-id="<?php echo $rows['orderid']; ?>" class="btn btn-success btn-sm acceptbtn">Accept</button>
+                        <button data-id="<?php echo $rows['orderid']; ?>" class="btn btn-danger btn-sm rejectbtn">Reject</button>
+                        </td>
+                </tr>
+                <?php
+                    }
+                ?>
+            </tbody>       
+        </table>
+    </div>
+    </div>
+</div><!--/.row-->
 
+</div>	<!--/.main-->
+</div>	<!--/.main-->
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Modal -->
-                    <div id="request_table">
-                        <table class="table table-dark table-striped">
-                            <thead class="thead-dark">
-                                <tr>
-
-                                    <th>Product Name</th>
-                                    <th>From</th>
-                                    <th>to</th>
-                                    <th>Quantity</th>
-                                    <th>Date Requested</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-
-                                // get requests
-
-                                $get_branch_request = "SELECT orders.orderid, products.productname, supplier.supplier_name, branch.branchid, orders.quantity, orders.time, orders.status from (((orders inner join products on orders.productid = products.productid) inner join supplier on orders.supplierid = supplier.supplierid) inner join branch on orders.branchid = branch.branchid) where orders.status = 'rejected' or orders.status = 'pending' or orders.status = 'accepted';";
-
-                                $result = mysqli_query($conn, $get_branch_request);
-
-                                while($rows = mysqli_fetch_array($result)){
-                                ?>
-                                <tr>
-
-                                    <td><?php echo $rows['productname']; ?></td>
-                                    <td><?php echo $rows['supplier_name']; ?></td>
-                                    <td><?php echo $rows['branchid']; ?></td> 
-                                    <td><?php echo $rows['quantity']; ?></td>
-                                    <td><?php echo $rows['time']; ?></td>
-                                    <td><span id="status-<?php echo $rows['orderid']; ?>"><?php echo $rows['status']; ?></span></td>
-                                    <td>
-                                        <button data-id="<?php echo $rows['orderid']; ?>" class="btn btn-success btn-sm acceptbtn">Accept</button>
-                                        <button data-id="<?php echo $rows['orderid']; ?>" class="btn btn-danger btn-sm rejectbtn">Reject</button>
-                                    </td>
-                                </tr>
-                                <?php
-                                }
-                                ?>
-                            </tbody>       
-                        </table>
-                    </div>
-                </div>
-            </div><!--/.row-->
-
-        </div>	<!--/.main-->
-        </div>	<!--/.main-->
-
-    <script src="../js/jquery-1.11.1.min.js"></script>
+<script src="../js/jquery-1.11.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/chart.min.js"></script>
     <script src="../js/chart-data.js"></script>
@@ -147,48 +147,46 @@ include('../includes/connection.php');
     <script src="../js/easypiechart-data.js"></script>
     <script src="../js/bootstrap-datepicker.js"></script>
     <script src="../js/custom.js"></script>
-    <script>
-        window.onload = function () {
-            var chart1 = document.getElementById("line-chart").getContext("2d");
-            window.myLine = new Chart(chart1).Line(lineCharthata, {
-                responsive: true,
-                scaleLineColor: "rgba(0,0,0,.2)",
-                scaleGridLineColor: "rgba(0,0,0,.05)",
-                scaleFontColor: "#c5c7cc" 
-            });
-        };
-    </script>
-    <script type="text/javascript">
-
-
-        $('.acceptbtn').on('click', function(){
-            var orderid= $(this).data('id');
-            $.get('updatestatus.php?accept=accepted&orderid='+orderid, function(data){
-
+<script>
+    window.onload = function () {
+        var chart1 = document.getElementById("line-chart").getContext("2d");
+        window.myLine = new Chart(chart1).Line(lineCharthata, {
+            responsive: true,
+            scaleLineColor: "rgba(0,0,0,.2)",
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            scaleFontColor: "#c5c7cc" 
+        });
+    };
+</script>
+<script type="text/javascript">
+    
+    
+    $('.acceptbtn').on('click', function(){
+        var orderid= $(this).data('id');
+                $.get('updatestatus.php?accept=accepted&orderid='+orderid, function(data){
+                
                 if(parseInt(data)==1){
                     $('#status-'+orderid).html('accepted');
                 }else{
-                    alert('Status is not updated!');
-                }
-
-
-            });
+                    alert('Status is already accepted!');
+                } 
         });
-
-        $('.rejectbtn').on('click', function(){
-            var orderid= $(this).data('id');
-            $.get('updatestatus.php?reject=rejected&orderid='+orderid, function(data){
-
+    });
+    
+    $('.rejectbtn').on('click', function(){
+        var orderid= $(this).data('id');
+                $.get('updatestatus.php?reject=rejected&orderid='+orderid, function(data){
+                    
                 if(parseInt(data)==1){
                     $('#status-'+orderid).html('rejected');
                 }else{
-                    alert('Status is not updated!');
+                    alert('Status is already rejected!');
                 }
-            });
         });
+    });
+    
 
+</script>
 
-    </script>
-
-    </body>
+</body>
 </html>

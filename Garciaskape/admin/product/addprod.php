@@ -1,29 +1,21 @@
-<?php include '../includes/connection.php'; ?>
+<?php include '../includes/connect.php'; ?>
 <?php
 
-//echo "loaded process";
-// REGISTER USER
+
 if (isset($_POST['add_prod'])) {
-    // receive all input values from the form
-    $prodname = mysqli_real_escape_string($conn, $_POST['prodname']);
-    //echo "received prodname";
-    $status = "Active";
-    //declare the status into "Active";
-    $branchid = mysqli_real_escape_string($conn, $_POST['branchid']);
-    //echo "received branchid";
 
-    $sql = "INSERT INTO products (productname, branchid,status) 
-          VALUES('$prodname','$branchid' ,'$status' )";
+  $prodname = mysqli_real_escape_string($conn, $_POST['prodname']);
 
-    //$_SESSION['username'] = $username;
-    //$_SESSION['success'] = "You are now logged in";
-    //header('location: index.php');
+  $status = "Active";
 
-    if(mysqli_query($conn, $sql)) {
-        header('location: product.php');
-    } else {
-        echo "failed" ;
-    }
+  $branchid = 3;
+
+
+  	$sql = "INSERT INTO products (name, status, branchid) 
+          VALUES('$prodname', '$status', '$branchid')";
+          
+          mysqli_query($conn, $sql_query);
+          header("location: addproduct.php");
 
     $conn->close();
 }

@@ -111,7 +111,7 @@ include 'adduser.php';
                         <div class="form-group">
                             <label class="form-label" for="password">Confirm Password</label>
                             <input type="password" class="form-control" id="confirm_password" name="confirm_password"
-                                placeholder="Password" tabindex="1" required>
+                                placeholder="Confirm Password" tabindex="1" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="lastname">Last Name</label>
@@ -126,7 +126,7 @@ include 'adduser.php';
                         <div class="form-group">
                             <label class="form-label" for="middlename">Middle Name</label>
                             <input type="text" class="form-control" id="middlename" name="middlename"
-                                placeholder="First Name" tabindex="1">
+                                placeholder="Middle Name" tabindex="1">
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="contact_number">Contact Number</label>

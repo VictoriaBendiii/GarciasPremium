@@ -124,7 +124,7 @@ $result = mysqli_query($conn, $query);
                                     <th>Account Name&nbsp;</th>
                                     <th>Product Name&nbsp;</th>
                                     <th>Supplier&nbsp;</th>
-                                    <th>Quantity&nbsp;</th>
+                                    <th>Quantity (in kg)&nbsp;</th>
                                     <th>Time Ordered&nbsp;</th>
                                 </tr>
                                 <tr ng-repeat="data in searched = (file | filter:search | orderBy : base :reverse) | beginning_data:(current_grid-1)*data_limit | limitTo:data_limit">

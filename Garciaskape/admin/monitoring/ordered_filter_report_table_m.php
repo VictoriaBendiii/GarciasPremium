@@ -21,7 +21,7 @@ where branch.branchid = 1 and orders.time BETWEEN '".$_POST["from_date"]."' AND 
                                <th width="23%">Account Name</th>  
                                <th width="10%">Product Name</th>  
                                <th width="12%">Supplier</th>
-                               <th width="10%">Quantity</th>
+                               <th width="10%">Quantity (in kg)</th>
                                <th width="20%">Time Ordered</th> 
                 </tr>  
       ';  

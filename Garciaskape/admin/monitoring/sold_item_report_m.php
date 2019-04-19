@@ -108,7 +108,7 @@ session_start();
                             <th>Branch&nbsp; &nbsp;<a ng-click="sort_with('branch_name');"></a></th>
                             <th>Account Name&nbsp; &nbsp;<a ng-click="sort_with('firstname');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
                             <th>Product Name&nbsp; &nbsp;<a ng-click="sort_with('productname');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
-                            <th>Quantity&nbsp; &nbsp;<a ng-click="sort_with('quantity');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
+                            <th>Quantity (in kg)&nbsp; &nbsp;<a ng-click="sort_with('quantity');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
                             <th>Time Sold&nbsp; &nbsp;<a ng-click="sort_with('time');"><i class="glyphicon glyphicon-sort-by-attributes"></i></a></th>
                             <th>Status&nbsp; &nbsp;<a ng-click="sort_with('status');"><i class="glyphicon glyphicon-sort-by-attributes"></i></a></th>
                         </table>
@@ -122,7 +122,7 @@ session_start();
                                 <th>Branch&nbsp;</th>
                                 <th>Account Name&nbsp;</th>
                                 <th>Product Name&nbsp;</th>
-                                <th>Quantity&nbsp;</th>
+                                <th>Quantity (in kg)&nbsp;</th>
                                 <th>Time sold&nbsp;</th>
                                  <th>Status&nbsp;</th>
                             </thead>

@@ -120,7 +120,7 @@ session_start();
                 <table class="table table-hover">
                     <tr>
                         <th>Name</th>
-                        <th>Total Stock</th>
+                        <th>Total Stock (kg)</th>
                         <th>Action</th>
                     </tr>
                     <tr>

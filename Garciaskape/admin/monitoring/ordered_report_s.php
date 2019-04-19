@@ -108,7 +108,7 @@ session_start();
                             <th>Account Name&nbsp; &nbsp;<a ng-click="sort_with('firstname');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
                             <th>Product Name&nbsp; &nbsp;<a ng-click="sort_with('productname');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
                             <th>Supplier&nbsp; &nbsp;<a ng-click="sort_with('supplier_name');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
-                            <th>Quantity&nbsp; &nbsp;<a ng-click="sort_with('quantity');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
+                            <th>Quantity (in kg)&nbsp; &nbsp;<a ng-click="sort_with('quantity');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
                             <th>Time Ordered&nbsp; &nbsp;<a ng-click="sort_with('time');"><i class="glyphicon glyphicon-sort-by-attributes"></i></a></th>
                         </table>
                     </div>

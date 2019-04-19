@@ -125,7 +125,7 @@ $result = mysqli_query($conn, $query);
                                     <th width="10%">Account Name</th>  
                                     <th width="20%">Product Name</th>  
                                     <th width="20%">Supplier</th>
-                                    <th width="10%">Quantity</th>
+                                    <th width="10%">Quantity (in kg)</th>
                                     <th width="20%">Time Ordered</th> 
                                     <th width="10%">Status</th>
                                 </tr>

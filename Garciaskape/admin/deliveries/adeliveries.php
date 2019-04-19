@@ -199,7 +199,7 @@ if (!$result2) {
                                                 </select>
                                             </th>
                                             <th id="quantity">
-                                                <input type="text" name="beans[]" placeholder="enter quantity">
+                                                <input type="text" name="beans[]" placeholder="Enter Quantity">
                                             </th>
                                             <th id="remove">
                                                 <input type="button" value="&#10006;" onclick="RemoveOrder()">

@@ -18,7 +18,7 @@ where branch.branchid = 1 and solditem.time BETWEEN '".$_POST["from_date"]."' AN
                                <th width="10%">Branch</th>  
                                <th width="15%">Account Name</th>  
                                <th width="25%">Product Name</th>  
-                               <th width="10%">Quantity</th>
+                               <th width="10%">Quantity (in kg)</th>
                                <th width="20%">Time Sold</th> 
 
                 </tr>  

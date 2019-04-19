@@ -89,7 +89,7 @@ session_start();
                             <div class="form-group">
                                 <label class="form-label" for="name">Supplier Name</label>
                                 <input type="text" class="form-control" id="name" name="supplier_name"
-                                       placeholder="supplier_name" tabindex="1" required>
+                                       placeholder="Supplier Name" tabindex="1" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="contact_person">Contact Person</label>

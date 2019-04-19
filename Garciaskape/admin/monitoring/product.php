@@ -112,10 +112,10 @@ session_start();
                             <!-- <th>Branch&nbsp; &nbsp;<a ng-click="sort_with('branch_name');"></a></th> -->
                             <th>Account Name&nbsp; &nbsp;<a ng-click="sort_with('firstname');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
                             <th>Product Name&nbsp; &nbsp;<a ng-click="sort_with('productname');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
-                            <th>Stock&nbsp; &nbsp;<a ng-click="sort_with('quantity');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
-                            <th>Stock In&nbsp; &nbsp;<a ng-click="sort_with('stockin');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
+                            <th>Stock (in kg)&nbsp; &nbsp;<a ng-click="sort_with('quantity');"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a></th>
+                            <th>Stock In (in kg)&nbsp; &nbsp;<a ng-click="sort_with('stockin');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
                             <th>Date In&nbsp; &nbsp;<a ng-click="sort_with('date_in');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
-                            <th>Stock Out&nbsp; &nbsp;<a ng-click="sort_with('stockout');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
+                            <th>Stock Out (in kg)&nbsp; &nbsp;<a ng-click="sort_with('stockout');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
                             <th>Date Out&nbsp; &nbsp;<a ng-click="sort_with('date_out');"><i class="glyphicon glyphicon-sort-by-order"></i></a></th>
                         </table>
                     </div>

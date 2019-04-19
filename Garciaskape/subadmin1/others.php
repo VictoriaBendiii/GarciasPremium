@@ -1,12 +1,4 @@
-<?php
-$page = 'others';
-session_start();
-
-$username = $_SESSION['u_name'];
-$branchid = $_SESSION['branch_id'];
-
-
-?>
+<?php $page = 'others'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 

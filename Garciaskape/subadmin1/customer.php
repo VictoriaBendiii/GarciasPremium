@@ -1,6 +1,7 @@
 <?php $page = 'customer'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
+<<<<<<< HEAD
 <?php
 function customersold($conn){
 	$output = '';
@@ -15,6 +16,8 @@ return $output;
 }
 
 ?>
+=======
+>>>>>>> 0bbf79ef52e087371e54acdba2bb93a03d47eb62
 		
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">

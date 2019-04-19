@@ -1,13 +1,4 @@
-<?php
-$page = 'request';
-session_start();
-
-$username = $_SESSION['u_name'];
-$branchid = $_SESSION['branch_id'];
-$accountid = $_SESSION['account_id'];
-
-
-?>
+<?php $page = 'request'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 <style>
@@ -139,19 +130,16 @@ th, td{
 				$status = "pending";
 
 				$sql_ord = "SELECT orderid from orders order by orderid desc limit 1";
-				$result = (int)$sql_ord;
-				$result++;
-
+				$result = mysqli_query($conn, $sql_ord);
+				$row = mysqli_num_rows($result);
+				$row = mysqli_fetch_array($result);
+				$res = $row['orderid'];
+				$res++;
 
 				$sql_sub = "INSERT INTO orders (orderid, stockid, productid, quantity, solditemid, deliveryid, supplierid, branchid, accountid, time, status)
-							VALUES ('$result', NULL, '$prodname', '$prodquan', NULL, NULL, NULL, '$branchid', '$accountid', SYSDATE(), '$status')";
+							VALUES ('$res', NULL, '$prodname', '$prodquan', NULL, NULL, NULL, '$branchid', '$accountid', SYSDATE(), '$status')";
 				
-				//mysqli_query($conn, $sql_sub);
-				if ($conn->query($sql_sub) === TRUE) {
-					echo "New record created successfully";
-				} else {
-					echo "Error: " . $sql_sub . "<br>" . $conn->error;
-				}
+				mysqli_query($conn, $sql_sub);
 			}
 
 		?>

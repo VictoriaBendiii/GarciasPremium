@@ -6,44 +6,26 @@ session_start();
 if (isset($_GET['activate'])){
 
     $id = $_GET['activate'];
-    $sql_query = "UPDATE accounts SET status='Active' WHERE accountid=$id";
+    $sql_query = "UPDATE supplier SET status='active' WHERE supplierid=$id";
     mysqli_query($conn, $sql_query);
-    header("location: accounts.php");
+    header("location: suppliers.php");
 
 } else if (isset($_GET['deactivate'])){
 
     $id = $_GET['deactivate'];
-    $sql_query ="UPDATE accounts SET status='Deactivated' WHERE accountid=$id";
+    $sql_query ="UPDATE supplier SET status='deactivated' WHERE supplierid=$id";
     mysqli_query($conn, $sql_query);
-    header("location: accounts.php");
+    header("location: suppliers.php");
 }
 if (isset($_GET['delete'])){
 
     $id = $_GET['delete'];
     $sql_query ="DELETE FROM supplier WHERE supplierid=$id";
     mysqli_query($conn, $sql_query);
-    $_SESSION['message'] = "Account has been deleted!";
+    $_SESSION['message'] = "Supplier account has been deleted!";
     $_SESSION['msg_type'] = "danger";
 
-    header("location: supplier.php");
-}
-
-else if (isset($_GET['edit'])){
-
-    $id = $_GET['edit'];
-    $sql_query ="SELECT * FROM supplier WHERE supplierid=$id";
-    $result = mysqli_query($conn, $sql_query);
-
-
-    if (count($result) == 1) {
-        $row = mysqli_fetch_array($result);
-        $supplier_name= $row['supplier_name'];
-        $supplier_contact_person = $row['supplier_contact_person'];
-        $contact_number = $row['contact_number'];
-        $address = $row['address'];
-    }
-    mysqli_query($conn, $sql_query);
-    header("location: supplier.php");
+    header("location: suppliers.php");
 }
 
 
@@ -64,7 +46,9 @@ if(isset($_POST['edit_supplier'])){
 		  WHERE supplierid='$id'";
 
     mysqli_query($conn, $sql);
-    header("location: supplier.php");  
+    $_SESSION['message']="Account of ".$supplier_name. " has been edited!";
+    $_SESSION['msg_type']="success";
+    header("location: suppliers.php");  
 
 
 

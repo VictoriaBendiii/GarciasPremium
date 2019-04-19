@@ -3,18 +3,6 @@
 
     include('../includes/connection.php');
      // accept or reject
-
-    if(isset($_REQUEST['accept'])){
-        
-        $accept_stat = $_REQUEST['accept'];
-        $orderid = $_REQUEST['orderid'];
-        
-        $update_request_status = "UPDATE orders SET status = '$accept_stat' WHERE orderid = '$orderid'";
-        
-        mysqli_query($conn, $update_request_status);
-    }
-    
-
 ?>
 
 <!DOCTYPE html>
@@ -133,10 +121,10 @@
                         <td><?php echo $rows['branchid']; ?></td> 
                         <td><?php echo $rows['quantity']; ?></td>
                         <td><?php echo $rows['time']; ?></td>
-                        <td><?php echo $rows['status']; ?></td>
+                        <td><span id="status-<?php echo $rows['orderid']; ?>"><?php echo $rows['status']; ?></span></td>
                         <td>
-                        <a href="branch.php?accept=accepted&orderid=<?php echo $rows['orderid']; ?>" class="btn btn-success btn-sm">Accept</a>
-                        <a href="branch.php?accept=rejected&orderid=<?php echo $rows['orderid']; ?>" class="btn btn-danger btn-sm">Reject</a>
+                        <button data-id="<?php echo $rows['orderid']; ?>" class="btn btn-success btn-sm acceptbtn">Accept</button>
+                        <button data-id="<?php echo $rows['orderid']; ?>" class="btn btn-danger btn-sm rejectbtn">Reject</button>
                         </td>
                 </tr>
                 <?php
@@ -169,6 +157,37 @@
             scaleFontColor: "#c5c7cc" 
         });
     };
+</script>
+<script type="text/javascript">
+    
+    
+    $('.acceptbtn').on('click', function(){
+        var orderid= $(this).data('id');
+                $.get('updatestatus.php?accept=accepted&orderid='+orderid, function(data){
+                
+                if(parseInt(data)==1){
+                    $('#status-'+orderid).html('accepted');
+                }else{
+                    alert('Status is not updated!');
+                }
+                
+                
+        });
+    });
+    
+    $('.rejectbtn').on('click', function(){
+        var orderid= $(this).data('id');
+                $.get('updatestatus.php?reject=rejected&orderid='+orderid, function(data){
+                    
+                if(parseInt(data)==1){
+                    $('#status-'+orderid).html('rejected');
+                }else{
+                    alert('Status is not updated!');
+                }
+        });
+    });
+    
+
 </script>
 
 </body>

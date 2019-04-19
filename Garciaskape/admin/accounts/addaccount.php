@@ -116,12 +116,12 @@ include 'adduser.php';
                         <div class="form-group">
                             <label class="form-label" for="lastname">Last Name</label>
                             <input type="text" class="form-control" id="lastname" name="lastname"
-                                placeholder="Last Name" tabindex="1">
+                                placeholder="Last Name" tabindex="1" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="firstname">First Name</label>
                             <input type="text" class="form-control" id="firstname" name="firstname"
-                                placeholder="First Name" tabindex="1">
+                                placeholder="First Name" tabindex="1" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="middlename">Middle Name</label>
@@ -130,13 +130,13 @@ include 'adduser.php';
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="contact_number">Contact Number</label>
-                            <input type="text" maxlength="11" class="form-control" id="contact_number" name="contact_number"
-                                placeholder="Contact Number" tabindex="1" maxlength="11">
+                            <input type="text" class="form-control" id="contact_number" name="contact_number"
+                                placeholder="Contact Number" tabindex="1" maxlength="13" minlength="13" value="+63" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Email"
-                                tabindex="1">
+                                tabindex="1" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="usertype">User type</label>
@@ -230,12 +230,12 @@ include 'adduser.php';
     </script>
 
 <script>
-    var contact_number = document.getElementById("contact_number").value;
+    var contact_number = document.getElementById("contact_number");
         
 
     function checkNumber() {
-        if (contact_number.length != 11) {
-            contact_number.setCustomValidity("Please input 11 digit contact number!");
+        if (contact_number.length < 13) {
+            contact_number.setCustomValidity("Please input 12 digit contact number!");
         } else {
             contact_number.setCustomValidity('');
         }
@@ -244,7 +244,6 @@ include 'adduser.php';
     contact_number.onchange = checkNumber;
     contact_number.onkeyup = checkNumber;
     </script>
-
 </body>
 
 </html>

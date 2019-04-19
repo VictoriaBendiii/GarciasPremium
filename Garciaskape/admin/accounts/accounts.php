@@ -203,7 +203,7 @@
                                                                     id="contact_number" name="contact_number"
                                                                     placeholder="Contact Number"
                                                                     value="<?php echo $row['contact_number']; ?>"
-                                                                    maxlength="11">
+                                                                    maxlength="13" minlength="13">
                                                                 <label>Email</label>
                                                                 <input type="email" class="form-control" id="email"
                                                                     name="email" placeholder="Email"

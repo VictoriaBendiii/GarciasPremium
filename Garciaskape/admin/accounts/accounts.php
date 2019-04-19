@@ -84,7 +84,7 @@
             <br><br>
         <!-- ALERT -->
         
-        <?php require_once 'adduser.php' ?>
+        <?php require_once 'update.php' ?>
                         <?php
                                 if (isset($_SESSION['message'])): ?>
                         <div class="alert alert-<?=$_SESSION['msg_type']?>">
@@ -135,13 +135,13 @@
 
                                     <td>
                                         <?php
-                                        if ($row["status"] == "Deactivated") { 
+                                        if ($row["status"] == "deactivated") { 
                                     ?>
                                         <a href="update.php?activate=<?php echo $row['accountid']; ?>"
                                             class="btn btn-info"> Activate </a>
                                         <?php 
                                     }
-                                    else if ($row["status"] == "Active") { ?>
+                                    else if ($row["status"] == "active") { ?>
                                         <a href="update.php?deactivate=<?php echo $row['accountid']; ?>"
                                             class="btn btn-warning"> Deactivate </a>
                                         <?php

@@ -17,6 +17,7 @@ if (isset($_POST['button'])){
       $sql = "SELECT * FROM accounts WHERE username ='$uname'";
       $result = mysqli_query($conn, $sql);
       $resultCheck = mysqli_num_rows($result);
+
       if($resultCheck < 1){
         header("Location: ../index.php?login=error1"); // error
         exit();
@@ -24,10 +25,11 @@ if (isset($_POST['button'])){
         if($row = mysqli_fetch_assoc($result)){
           //VERIFY ACCOUNT HERE
           $hashedPwdCheck = null;
-          $hashedPwd = $row['password'];
-          if(password_verify($stripedpwd , $hashedPwd)){
+          $realPwd = $row['password'];
+          echo '$realPwd';
+          if(base64_decode($realPwd) == $stripedpwd){
             $hashedPwdCheck = true;
-            // echo "line 31";
+
             if ($hashedPwdCheck == true) {
               //LOGIN USER!!
               $_SESSION['u_name'] = $row['username'];     // SESSION VARIABLES IF U GUYS NEED JUST
@@ -51,7 +53,7 @@ if (isset($_POST['button'])){
                   header("Location: ../subadmin2/index.php");
                 }
               }elseif ($_SESSION['status'] == "Deactivated") {
-                   echo "<script type='text/javascript'>  alert('Account Deactivated /nPlease Go back to the login page.'); </script>" ;
+                  echo "<script type='text/javascript'>  alert('Account Deactivated'); </script>" ;
 
               }
            }else{

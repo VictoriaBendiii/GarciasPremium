@@ -70,7 +70,7 @@
             </ol>
         </div>
         <!--/.row-->
-
+        
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Accounts</h1>
@@ -82,7 +82,20 @@
                 <button onclick="location.href='addaccount.php'" style="width:33.3%">Add Accounts</button>
             </div>
             <br><br>
-
+        <!-- ALERT -->
+        
+        <?php require_once 'adduser.php' ?>
+                        <?php
+                                if (isset($_SESSION['message'])): ?>
+                        <div class="alert alert-<?=$_SESSION['msg_type']?>">
+                        <?php
+                            echo $_SESSION['message'];
+                            unset($_SESSION['message']); 
+                        ?>
+                        </div>
+                        <?php endif ?>
+                        <br>
+        <!-- ALERT -->
         <div class="row">
             <div class="col-lg-12">
                 <?php

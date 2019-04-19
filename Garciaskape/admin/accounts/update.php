@@ -2,9 +2,6 @@
 <?php
 
 session_start();
-$firstname='';
-$lastname='';
-$user_type='';
 
 if (isset($_GET['activate'])){
 
@@ -58,6 +55,8 @@ if(isset($_POST['edit_account'])){
           WHERE accountid='$id'";
         
         mysqli_query($conn, $sql);
+        $_SESSION['message']="Account of ".$firstname. " has been edited!";
+        $_SESSION['msg_type']="success";
         header("location: accounts.php");  
  
     

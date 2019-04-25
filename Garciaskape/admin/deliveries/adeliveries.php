@@ -8,20 +8,32 @@ if(isset($_POST['abc'])){
     $test = "0";
 
     // Data for text message. This is the text message data.
-    $sender = $_POST['sender']; // This is who the message appears to be from.
+    $sender = 'garsha'; // This is who the message appears to be from.
     $numbers = $_POST['num']; // A single number or a comma-seperated list of numbers
-    $messageArray = $_POST['beans'];
-    $message = implode(" ", $messageArray);
+    foreach(array_combine($_POST['beans'], $_POST['quan']) as $beans=>$quan) {
+        ob_start();
+        echo $beans;
+        echo $quan;
+        echo "\r";
+        $myStr = ob_get_contents();
+        ob_end_clean();
+
+        $messageArray[] = $myStr;
+    }
+    
+    $messageProds = implode(" ", $messageArray);
+    $message = "Good day! I would like to order the following\r\n" . $messageProds;
     // 612 chars or less
     // A single number or a comma-seperated list of numbers
-    $message = urlencode($message);
-    $data = "username=".$username."&hash=".$hash."&message=".$message."&sender=".$sender."&numbers=".$numbers."&test=".$test;
-    $ch = curl_init('http://api.txtlocal.com/send/?');
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $result = curl_exec($ch); // This is the result from the API
-    curl_close($ch);
+ //   $message = urlencode($message);
+ //   $data = "username=".$username."&hash=".$hash."&message=".$message."&sender=".$sender."&numbers=".$numbers."&test=".$test;
+ //   $ch = curl_init('http://api.txtlocal.com/send/?');
+ //   curl_setopt($ch, CURLOPT_POST, true);
+ //   curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+ //   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+ //   $result = curl_exec($ch); // This is the result from the API
+ //   curl_close($ch);
+    echo $message;
 }
 ?>
 
@@ -75,9 +87,11 @@ if (!$result2) {
                 var row = document.getElementById("dropdowns");
                 var table = document.getElementById("tableDrop");
                 var clone = row.cloneNode(true);
-                clone.id = "dropdowns";
+                clone.id = "dropdowns1";
                 table.appendChild(clone);
             }
+
+
 
             function RemoveOrder(){
                 var rowCount = document.getElementById('tableDrop').rows.length;
@@ -167,13 +181,13 @@ if (!$result2) {
                                 <table align="center">
                                     <tr>
                                         <td>Supplier:</td>
-                                        <th id="num">
+                                        <td id="num">
                                             <select name="num">
                                                 <?php while($row1 = mysqli_fetch_array($result2)):;?>
                                                 <option value="<?php echo $row1[3];?>"><?php echo $row1[1], " - " , $row1[3];?></option>
                                                 <?php endwhile;?>
                                             </select>
-                                        </th>  
+                                        </td>  
                                     </tr>
                                 </table>
                                 <div style="overflow-x:auto;">
@@ -191,19 +205,19 @@ if (!$result2) {
                                         </tr>
 
                                         <tr id="dropdowns">                                          
-                                            <th id="beans">
+                                            <td id="beansDropdown">
                                                 <select name="beans[]">
                                                     <?php while($row1 = mysqli_fetch_array($result1)):;?>
                                                     <option value="<?php echo $row1[1], "-";?>"><?php echo $row1[1];?></option>
                                                     <?php endwhile;?>
                                                 </select>
-                                            </th>
-                                            <th id="quantity">
-                                                <input type="text" name="beans[]" placeholder="enter quantity">
-                                            </th>
-                                            <th id="remove">
+                                            </td>
+                                            <td id="quantity">
+                                                <input type="number" name="quan[]" placeholder="enter quantity" required>
+                                            </td>
+                                            <td id="remove">
                                                 <input type="button" value="&#10006;" onclick="RemoveOrder()">
-                                            </th>
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>

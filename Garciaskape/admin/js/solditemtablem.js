@@ -9,7 +9,7 @@ app.filter('beginning_data', function() {
     }
 });
 app.controller('controller', function($scope, $http, $timeout) {
-    $http.get('solditem_report_table_m.php').success(function(orders) {
+    $http.get('solditem_report_query_m.php').success(function(orders) {
         $scope.file = orders;
         $scope.current_grid = 1;
         $scope.data_limit = 10;

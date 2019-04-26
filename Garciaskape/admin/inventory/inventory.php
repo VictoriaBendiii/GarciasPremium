@@ -2,7 +2,7 @@
 <?php 
 
 //fetch query
-$sql = "SELECT products.productname,products.productid, stock.quantity as stock, branch.branchid, products.status
+$sql = "SELECT products.productname, products.productid as pid, stock.quantity as stock, branch.branchid, products.status
 from ((stock left join products on stock.productid = products.productid) 
 left join branch on stock.branchid = branch.branchid) where (branch.branchid = 1  OR branch.branchid = 3) AND products.status = 'active'; ";
 $result = mysqli_query($conn, $sql);
@@ -10,7 +10,7 @@ $result = mysqli_query($conn, $sql);
 //update query
 if(isset($_POST['active'])){
 
-    $productid = $_POST['productid'];
+    $productid = $_POST['pid'];
     $updateproduct =("UPDATE products SET status = 'archive' WHERE products.productid='$productid'");
     mysqli_query($conn, $updateproduct);
 }
@@ -60,14 +60,14 @@ session_start();
             <div class="divider"></div>
             <ul class="nav menu">
                 <li ><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-                <li ><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
-                <li ><a href="../notification/notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-                <li ><a href="../deliveries/adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
-                <li class="active"><a href="inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-                <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
-                <li><a href="../product/product.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
-                <li><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
-                <li><a href="../supplier/supplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
+                <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
+                <li><a href="../notification/notification.php"><em class="fa fa-bell">&nbsp;</em> Notification</a></li>
+                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Delivery</a></li>
+                <li class="active"><a href="../inventory/inventory.php"><em class="fa fa-edit">&nbsp;</em> Inventory</a></li>
+                <li><a href="../branch/branch.php"><em class="fa fa-inbox">&nbsp;</em> Stock Request </a></li>
+                <li><a href="../product/product.php"><em class="fa fa-product-hunt">&nbsp;</em> Products</a></li>
+                <li><a href="../accounts/accounts.php"><em class="fa fa-user">&nbsp;</em> Accounts </a></li>
+                <li><a href="../supplier/supplier.php"><em class="fa fa-shopping-cart">&nbsp;</em> Suppliers </a></li>
                 <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
@@ -89,9 +89,9 @@ session_start();
 
             </div><!--/.row-->
             <div class="btn-group" style="width:100%">
-                <button onclick="location.href='inventory.php'"; style="width:33.3%">Market</button>
-                <button onclick="location.href='inventoryporta.php'"; style="width:33.3%">Porta</button>
-                <button onclick="location.href='inventoryarchive.php'"; style="width:33.3%">Archived</button>
+                <button onclick="location.href='inventory.php'"; style="width:33.3%; border-radius: 30px;">Market</button>
+                <button onclick="location.href='inventoryporta.php'"; style="width:33.3%; border-radius: 30px;">Porta</button>
+                <button onclick="location.href='inventoryarchive.php'"; style="width:33.3%; border-radius: 30px;">Archived</button>
             </div>
 
             <br>
@@ -111,7 +111,7 @@ session_start();
                             </div>
                             <div class="modal-footer">
                                 <form action ="" method="POST">
-                                    <input type="submit" name="active" class="btn btn-success btn-sm" >Archive</a>
+                                    <input type="submit" name="active" class="btn btn-success btn-sm" value="Archive"></a>
                                 <a href="" class="btn btn-danger btn-sm" data-dismiss="modal">Close</a>
                                 </form>
 
@@ -196,7 +196,7 @@ session_start();
     jQuery('#yesarchive').click(function(){
         jQuery.ajax({
             type:'POST',
-            url:'invetory.php',
+            url:'inventory.php',
             data:{'updated':true},
             dataType:'json'
             success:function(data){

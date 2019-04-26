@@ -1,8 +1,6 @@
 <?php include '../includes/connection.php'; ?>
 <?php
 
-session_start();
-
 if (isset($_GET['activate'])){
 
     $id = $_GET['activate'];
@@ -43,6 +41,8 @@ if(isset($_POST['edit_account'])){
     $contact_number = mysqli_real_escape_string($conn, $_POST['contact_number']);
     $usertype = mysqli_real_escape_string($conn, $_POST['usertype']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
+
+      
     if ($password != $confirm_password) {
         array_push($errors, "The two passwords do not match");
       }

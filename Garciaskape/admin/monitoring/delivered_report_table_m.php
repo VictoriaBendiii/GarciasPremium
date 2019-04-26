@@ -3,7 +3,7 @@ session_start();
 include '../includes/connection.php';
 
 
-$query = "SELECT products.productname, branch.branchid, branch.branch_name, orders.quantity, supplier.supplier_name, delivery.deliveryid, accounts.firstname, orders.time, delivery.status
+$query = "SELECT products.productname, branch.branchid, branch.branch_name, orders.quantity, supplier.supplier_name, delivery.deliveryid, accounts.firstname, DATE_FORMAT(orders.time,'%b %d, %Y %r') as time, delivery.status
 from (((((orders inner join products on orders.productid = products.productid) 
 left join branch on orders.branchid = branch.branchid) 
 left join supplier on orders.supplierid = supplier.supplierid)

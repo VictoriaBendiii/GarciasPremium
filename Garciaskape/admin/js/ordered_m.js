@@ -1,4 +1,4 @@
-var app = angular.module('orderedtablem', ['ui.bootstrap']);
+var app = angular.module('ordered_m', ['ui.bootstrap']);
 app.filter('beginning_data', function() {
     return function(input, begin) {
         if (input) {

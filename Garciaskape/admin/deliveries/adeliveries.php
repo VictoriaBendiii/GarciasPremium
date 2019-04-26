@@ -8,23 +8,10 @@ if(isset($_POST['abc'])){
     $test = "0";
 
     // Data for text message. This is the text message data.
-    $sender = 'garsha'; // This is who the message appears to be from.
+    $sender = $_POST['sender']; // This is who the message appears to be from.
     $numbers = $_POST['num']; // A single number or a comma-seperated list of numbers
-    foreach(array_combine($_POST['beans'], $_POST['quan']) as $beans=>$quan) {
-        //For storing echos in a variable
-        ob_start();
-        echo $beans;
-        echo $quan;
-        echo "\r";
-        $myStr = ob_get_contents();
-        ob_end_clean();
-
-        //Adding the contents in an array
-        $messageArray[] = $myStr;
-    }
-
-    $messageProds = implode(" ", $messageArray);
-    $message = "Good day! I would like to order the following\r\n" . $messageProds;
+    $messageArray = $_POST['beans'];
+    $message = implode(" ", $messageArray);
     // 612 chars or less
     // A single number or a comma-seperated list of numbers
     $message = urlencode($message);
@@ -41,7 +28,7 @@ if(isset($_POST['abc'])){
 <?php
 
 include '../includes/connection.php';
-session_start();
+include '../includes/header.php';
 $query = "SELECT * FROM products";
 
 $result1 = mysqli_query($conn, $query);
@@ -62,79 +49,20 @@ if (!$result2) {
 
 ?>
 
+        <script src="../js/notification.js"></script>
 
-<php>
-    <!DOCTYPE php>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Garcias Premium Coffee</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../css/datepicker3.css" rel="stylesheet">
-        <link href="../css/styles.css" rel="stylesheet">
-        <link href="../css/add.css" rel="stylesheet">
-
-        <!--Custom Font-->
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-        <!--[if lt IE 9]>
-<script src="js/html5shiv.js"></script>
-<script src="js/respond.min.js"></script>
-<![endif]-->
-
-        <script type="text/javascript">
-
-            function cloneRow(){
-                var row = document.getElementById("dropdowns");
-                var table = document.getElementById("tableDrop");
-                var clone = row.cloneNode(true);
-                clone.id = "dropdowns1";
-                table.appendChild(clone);
-            }
-
-
-
-            function RemoveOrder(){
-                var rowCount = document.getElementById('tableDrop').rows.length;
-                var td = event.target.parentNode;
-                var tr = td.parentNode;
-                if (rowCount > 2) {
-                    tr.parentNode.removeChild(tr);
-                } else {
-                    alert("Should have atleast one order!");
-                }
-            }
-        </script>
-
-    </head>
-    <body>
-        <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse"><span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span></button>
-                    <a class="navbar-brand" href="#"><span></span>Admin</a>
-                    <br>
-                    <p> <?php $f_name = $_SESSION['firstname']; $l_name = $_SESSION['lastname'];  echo "$f_name $l_name "; ?></p>
-
-
-                </div>
-            </div><!-- /.container-fluid -->
-        </nav>
-        <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+          <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
             <div class="divider"></div>
             <ul class="nav menu">
                 <li ><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-                <li ><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
-                <li ><a href="../notification/notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-                <li class="active"><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
-                <li><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-                <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
-                <li><a href="../product/product.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
-                <li><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
-                <li><a href="../supplier/supplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
+                <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
+                <li><a href="../notification/notification.php"><em class="fa fa-bell">&nbsp;</em> Notification</a></li>
+                <li class="active"><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Delivery</a></li>
+                <li><a href="../inventory/inventory.php"><em class="fa fa-edit">&nbsp;</em> Inventory</a></li>
+                <li><a href="../branch/branch.php"><em class="fa fa-inbox">&nbsp;</em> Stock Request </a></li>
+                <li><a href="../product/product.php"><em class="fa fa-product-hunt">&nbsp;</em> Products</a></li>
+                <li><a href="../accounts/accounts.php"><em class="fa fa-user">&nbsp;</em> Accounts </a></li>
+                <li><a href="../supplier/supplier.php"><em class="fa fa-shopping-cart">&nbsp;</em> Suppliers </a></li>
                 <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
@@ -145,13 +73,13 @@ if (!$result2) {
                     <li><a href="#">
                         <em class="fa fa-home"></em>
                         </a></li>
-                    <li class="active">Branch Stock Request</li>
+                    <li class="active">Delivery</li>
                 </ol>
             </div><!--/.row-->
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Branch Stock Request</h1>
+                    <h1 class="page-header">Delivery</h1>
                 </div>
             </div><!--/.row-->
 
@@ -161,7 +89,7 @@ if (!$result2) {
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
                 <!-- Button trigger modal -->
                 <button type="button" class="addbtn black circular" data-toggle="modal" data-target="#ModalCenter">
-                    ADD DELIVERY TO MARKET
+                    REQUEST A DELIVERY TO MARKET
                 </button>
                 <br> 
                 <br>
@@ -172,7 +100,7 @@ if (!$result2) {
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="ModalLongTitle">Add Deliveries</h5>
+                            <h5 class="modal-title" id="ModalLongTitle">Request a delivery to Market</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -182,13 +110,13 @@ if (!$result2) {
                                 <table align="center">
                                     <tr>
                                         <td>Supplier:</td>
-                                        <td id="num">
+                                        <th id="num">
                                             <select name="num">
                                                 <?php while($row1 = mysqli_fetch_array($result2)):;?>
                                                 <option value="<?php echo $row1[3];?>"><?php echo $row1[1], " - " , $row1[3];?></option>
                                                 <?php endwhile;?>
                                             </select>
-                                        </td>  
+                                        </th>  
                                     </tr>
                                 </table>
                                 <div style="overflow-x:auto;">
@@ -206,19 +134,19 @@ if (!$result2) {
                                         </tr>
 
                                         <tr id="dropdowns">                                          
-                                            <td id="beansDropdown">
+                                            <th id="beans">
                                                 <select name="beans[]">
                                                     <?php while($row1 = mysqli_fetch_array($result1)):;?>
                                                     <option value="<?php echo $row1[1], "-";?>"><?php echo $row1[1];?></option>
                                                     <?php endwhile;?>
                                                 </select>
-                                            </td>
-                                            <td id="quantity">
-                                                <input type="number" name="quan[]" placeholder="enter quantity" required>
-                                            </td>
-                                            <td id="remove">
+                                            </th>
+                                            <th id="quantity">
+                                                <input type="text" name="beans[]" placeholder="enter quantity">
+                                            </th>
+                                            <th id="remove">
                                                 <input type="button" value="&#10006;" onclick="RemoveOrder()">
-                                            </td>
+                                            </th>
                                         </tr>
                                     </table>
                                 </div>
@@ -239,26 +167,3 @@ if (!$result2) {
             </div>
             <br>
         </main>
-
-        <script src="../js/jquery-1.11.1.min.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/chart.min.js"></script>
-        <script src="../js/chart-data.js"></script>
-        <script src="../js/easypiechart.js"></script>
-        <script src="../js/easypiechart-data.js"></script>
-        <script src="../js/bootstrap-datepicker.js"></script>
-        <script src="../js/custom.js"></script>
-        <script>
-            window.onload = function () {
-                var chart1 = document.getElementById("line-chart").getContext("2d");
-                window.myLine = new Chart(chart1).Line(lineChartData, {
-                    responsive: true,
-                    scaleLineColor: "rgba(0,0,0,.2)",
-                    scaleGridLineColor: "rgba(0,0,0,.05)",
-                    scaleFontColor: "#c5c7cc"
-                });
-            };
-        </script>
-
-    </body>
-</php>

@@ -51,14 +51,14 @@ session_start();
             <div class="divider"></div>
             <ul class="nav menu">
                 <li ><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-                <li ><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
-                <li ><a href="../notification/notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-                <li ><a href="../deliveries/adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
-                <li class="active"><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-                <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
-                <li><a href="../product/product.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
-                <li><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
-                <li><a href="../supplier/supplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
+                <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
+                <li><a href="../notification/notification.php"><em class="fa fa-bell">&nbsp;</em> Notification</a></li>
+                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Delivery</a></li>
+                <li class="active"><a href="../inventory/inventory.php"><em class="fa fa-edit">&nbsp;</em> Inventory</a></li>
+                <li><a href="../branch/branch.php"><em class="fa fa-inbox">&nbsp;</em> Stock Request </a></li>
+                <li><a href="../product/product.php"><em class="fa fa-product-hunt">&nbsp;</em> Products</a></li>
+                <li><a href="../accounts/accounts.php"><em class="fa fa-user">&nbsp;</em> Accounts </a></li>
+                <li><a href="../supplier/supplier.php"><em class="fa fa-shopping-cart">&nbsp;</em> Suppliers </a></li>
                 <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
@@ -80,9 +80,9 @@ session_start();
 
             </div><!--/.row-->
             <div class="btn-group" style="width:100%">
-                <button  onclick="location.href='inventory.php'"; style="width:33.3%" >Market</button>
-                <button onclick="location.href='inventoryporta.php'"; style="width:33.3%">Porta</button>
-                <button onclick="location.href='inventoryarchive.php'"; style="width:33.3%">Archived</button>
+                <button  onclick="location.href='inventory.php'"; style="width:33.3%;  border-radius: 30px;" >Market</button>
+                <button onclick="location.href='inventoryporta.php'"; style="width:33.3%;  border-radius: 30px;">Porta</button>
+                <button onclick="location.href='inventoryarchive.php'"; style="width:33.3%; border-radius: 30px;">Archived</button>
             </div>
 
             <br>

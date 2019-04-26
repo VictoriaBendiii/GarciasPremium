@@ -18,6 +18,7 @@
   display: table;
 }
 
+
 .btn-group button:not(:last-child) {
   border-right: none; /* Prevent double borders */
 }
@@ -25,6 +26,7 @@
 /* Add a background color on hover */
 .btn-group button:hover {
   background-color: #7d5632;
+ 
 }
 
 /*button add delivery*/

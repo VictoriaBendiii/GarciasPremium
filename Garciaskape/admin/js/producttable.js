@@ -10,7 +10,7 @@ app.filter('beginning_data', function() {
 });
 
 app.controller('controller', function($scope, $http, $timeout) {
-    $http.get('all_report_m.php').success(function(products) {
+    $http.get('all_report_query_m.php').success(function(products) {
         $scope.file = products;
         $scope.current_grid = 1;
         $scope.data_limit = 10;
@@ -30,3 +30,4 @@ app.controller('controller', function($scope, $http, $timeout) {
         $scope.reverse = !$scope.reverse;
     };
 });
+

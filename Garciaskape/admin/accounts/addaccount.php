@@ -1,59 +1,20 @@
-<!DOCTYPE html>
 <?php include '../includes/connection.php';
-session_start();
+include '../includes/header.php';
 include 'adduser.php';
-
 ?>
-<html>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Garcias Premium Coffee</title>
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/datepicker3.css" rel="stylesheet">
-    <link href="../css/styles.css" rel="stylesheet">
-    <link href="../css/add.css" rel="stylesheet">
-
-    <!--Custom Font-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
-    <!--[if lt IE 9]>
-	<script src="js/html5shiv.js"></script>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
-</head>
-
-<body>
-    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#sidebar-collapse"><span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span></button>
-                <a class="navbar-brand" href="#"><span></span>Admin</a>
-                <br>
-                <p> <?php $f_name = $_SESSION['firstname']; $l_name = $_SESSION['lastname'];  echo "$f_name $l_name "; ?> </p>
-
-
-            </div>
-        </div><!-- /.container-fluid -->
-    </nav>
     <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
         <div class="divider"></div>
         <ul class="nav menu">
             <li><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
                 <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
-                <li><a href="../notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
-                <li><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-                <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
-                <li><a href="../product/product.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
-                <li class="active"><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
-                <li><a href="../supplier/supplier.php"><em class="fa fa-toggle-off">&nbsp;</em> Suppliers</a></li>
+                <li><a href="../notification/notification.php"><em class="fa fa-bell">&nbsp;</em> Notification</a></li>
+                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Delivery</a></li>
+                <li><a href="../inventory/inventory.php"><em class="fa fa-edit">&nbsp;</em> Inventory</a></li>
+                <li><a href="../branch/branch.php"><em class="fa fa-inbox">&nbsp;</em> Stock Request </a></li>
+                <li><a href="../product/product.php"><em class="fa fa-product-hunt">&nbsp;</em> Products</a></li>
+                <li class="active"><a href="../accounts/accounts.php"><em class="fa fa-user">&nbsp;</em> Accounts </a></li>
+                <li><a href="../supplier/supplier.php"><em class="fa fa-shopping-cart">&nbsp;</em> Suppliers </a></li>
                 <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
         </ul>
     </div>
@@ -62,11 +23,12 @@ include 'adduser.php';
     <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
         <div class="row">
             <ol class="breadcrumb">
-                <li><a href="#">
+                    <li><a href="accounts.php">
                         <em class="fa fa-home"></em>
-                    </a></li>
-                <li class="active">Add Account</li>
-            </ol>
+                        </a></li>
+                    <li><a href="accounts.php">Accounts</a></li>
+                    <li class="active">Add Accounts</li>
+                </ol>
         </div>
         <!--/.row-->
 
@@ -89,8 +51,8 @@ include 'adduser.php';
                         <?php endif ?>
         <!-- ALERT -->
         <div class="btn-group" style="width:100%">
-                <button onclick="location.href='accounts.php'" style="width:33.3%">Accounts</button>
-                <button class="btn btn-primary active" onclick="location.href='addaccount.php'" style="width:33.3%">Add Accounts</button>
+                <button onclick="location.href='accounts.php'" style="width:33.3%; border-radius: 30px;">Accounts</button>
+                <button class="btn btn-primary active" onclick="location.href='addaccount.php'" style="width:33.3%; border-radius: 30px;">Add Accounts</button>
             </div>
             <br><br>
 
@@ -116,12 +78,12 @@ include 'adduser.php';
                         <div class="form-group">
                             <label class="form-label" for="lastname">Last Name</label>
                             <input type="text" class="form-control" id="lastname" name="lastname"
-                                placeholder="Last Name" tabindex="1" required>
+                                placeholder="Last Name" tabindex="1">
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="firstname">First Name</label>
                             <input type="text" class="form-control" id="firstname" name="firstname"
-                                placeholder="First Name" tabindex="1" required>
+                                placeholder="First Name" tabindex="1">
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="middlename">Middle Name</label>
@@ -130,13 +92,13 @@ include 'adduser.php';
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="contact_number">Contact Number</label>
-                            <input type="text" class="form-control" id="contact_number" name="contact_number"
-                                placeholder="Contact Number" tabindex="1" maxlength="13" minlength="13" value="+63" required>
+                            <input type="text" maxlength="13" class="form-control" id="contact_number" name="contact_number"
+                                placeholder="Contact Number" tabindex="1" >
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Email"
-                                tabindex="1" required>
+                                tabindex="1">
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="usertype">User type</label>
@@ -230,12 +192,12 @@ include 'adduser.php';
     </script>
 
 <script>
-    var contact_number = document.getElementById("contact_number");
+    var contact_number = document.getElementById("contact_number").value;
         
 
     function checkNumber() {
-        if (contact_number.length < 13) {
-            contact_number.setCustomValidity("Please input 12 digit contact number!");
+        if (contact_number.length != 13) {
+            contact_number.setCustomValidity("Please input 13 digit contact number!");
         } else {
             contact_number.setCustomValidity('');
         }
@@ -244,6 +206,7 @@ include 'adduser.php';
     contact_number.onchange = checkNumber;
     contact_number.onkeyup = checkNumber;
     </script>
+
 </body>
 
 </html>

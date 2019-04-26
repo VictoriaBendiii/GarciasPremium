@@ -1,6 +1,6 @@
 <?php include '../includes/connection.php'; ?>
 <?php
-session_start();
+
 if (isset($_POST['add_supplier'])) {
 
     $supplier_name = mysqli_real_escape_string($conn, $_POST['supplier_name']);

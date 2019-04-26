@@ -13,6 +13,7 @@ if (isset($_POST['add_user'])) {
   $usertype = mysqli_real_escape_string($conn, $_POST['usertype']);
   $email = mysqli_real_escape_string($conn, $_POST['email']);
   $status = "Active";
+  $patternuser = '/[^a-zA-Z0-9_]/';
   $branchid;
   if ($usertype == "sub-admin1") {
     $branchid =1;
@@ -27,6 +28,9 @@ if (isset($_POST['add_user'])) {
   if (empty($username)) { 
     array_push($errors, "Username is required");
   }
+  if (preg_match($patternuser, $username)==0){
+      array_push($errors, "usernameinvalid");
+  }
   
   if (empty($password)) {
     array_push($errors, "Password is required"); 
@@ -36,6 +40,9 @@ if (isset($_POST['add_user'])) {
     array_push($errors, "The two passwords do not match");
   }
 
+   
+
+    
   // for encryption
   
   $ecnrypt_password = base64_encode($password);
@@ -46,7 +53,7 @@ if (isset($_POST['add_user'])) {
     $_SESSION['msg_type']="success";
 
     mysqli_query($conn, $sql);
-    header("location: account.php");
+    header("location: accounts.php");
 }
 
 ?>

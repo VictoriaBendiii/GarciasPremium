@@ -120,7 +120,7 @@ $output;
                         <div>
                           <div class="input-group">
                             <span class="input-group-addon">+63</span>
-                            <input type="text" class="form-control" placeholder = "9XXXXXXXXX" aria-label="Amount (rounded to the nearest dollar)">
+                            <input type="text" class="form-control" maxlength="10" placeholder = "9XXXXXXXXX" aria-label="Amount (rounded to the nearest dollar)">
                           </div>
                         <div class="form-group">
                             <label class="form-label" for="email">Email</label>

@@ -15,6 +15,7 @@ if (isset($_POST['add_user'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $status = "Active";
     $branchid;
+    $finContact_number = "+63$contact_number";
 
     // VALIDATION of USERNAME
     if (preg_match("/^[a-zA-Z][0-9]/", $username)) {
@@ -67,11 +68,11 @@ if (isset($_POST['add_user'])) {
     }
 
     //Check contact number for duplicates
-    $query_con = "SELECT * FROM accounts WHERE contact_number='$contact_number'";
+    $query_con = "SELECT * FROM accounts WHERE contact_number='$finContact_number'";
     $result = mysqli_query($conn, $query_con);
     $concount=mysqli_num_rows($result);
     if ($concount > 0) {
-        $_SESSION['message']="Contact number ".$contact_number." already exists!";
+        $_SESSION['message']="Contact number ".$finContact_number." already exists!";
         $_SESSION['msg_type']="danger";
         header("location: addaccount.php");
         die();
@@ -101,7 +102,7 @@ if (isset($_POST['add_user'])) {
     $sql = "INSERT INTO accounts (username, email, password, user_type, firstname, middlename, lastname, contact_number,
         status, branchid)
         VALUES('$username', '$email', '$ecnrypt_password', '$usertype','$firstname', '$middlename', '$lastname',
-        '$contact_number', '$status', '$branchid')";
+        '$finContact_number', '$status', '$branchid')";
     $_SESSION['message']="Account ".$username. " created";
     $_SESSION['msg_type']="success";
 

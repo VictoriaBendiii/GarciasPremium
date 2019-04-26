@@ -100,12 +100,18 @@ if (!$result2) {
 
 
             function RemoveOrder(ele) {
-                var row = ele.closest('tr');
-                var drop = row.querySelector('.beansDrop');
-                var alldrop = document.querySelectorAll('.beansDrop');
-                if (drop.selectedIndex != -1)
-                    alldrop.forEach(ele => ele.options[drop.selectedIndex].disabled = false)
-                row.remove();
+                var rownumber = document.getElementById("tableDrop").rows.length;
+                if (rownumber == 2){
+                    window.alert("You cannot remove the last order");
+                }	else {
+
+                    var row = ele.closest('tr');
+                    var drop = row.querySelector('.beansDrop');
+                    var alldrop = document.querySelectorAll('.beansDrop');
+                    if (drop.selectedIndex != -1)
+                        alldrop.forEach(ele => ele.options[drop.selectedIndex].disabled = false)
+                    row.remove();
+                }
             }
         </script>
 

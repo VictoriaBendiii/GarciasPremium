@@ -1,20 +1,15 @@
-<?php include '../includes/connection.php'; ?>
-<?php 
-
+<?php session_start();
+include '../includes/connection.php';
+include 'critical.php';  ?>
+<?php
 //fetch query
 $sql = "SELECT products.productname, products.productid as pid, stock.quantity as stock, branch.branchid, products.status
 from ((stock left join products on stock.productid = products.productid) 
-left join branch on stock.branchid = branch.branchid) where (branch.branchid = 1  OR branch.branchid = 3) AND products.status = 'active'; ";
+left join branch on stock.branchid = branch.branchid) where (branch.branchid = 1  OR branch.branchid = 3) 
+AND products.status = 'Active' ORDER BY products.productname ASC  ";
 $result = mysqli_query($conn, $sql);
 
-//update query
-if(isset($_POST['active'])){
 
-    $productid = $_POST['pid'];
-    $updateproduct =("UPDATE products SET status = 'archive' WHERE products.productid='$productid'");
-    mysqli_query($conn, $updateproduct);
-}
-session_start();
 ?>
 
 
@@ -91,8 +86,12 @@ session_start();
             <div class="btn-group" style="width:100%">
                 <button onclick="location.href='inventory.php'"; style="width:33.3%; border-radius: 30px;">Market</button>
                 <button onclick="location.href='inventoryporta.php'"; style="width:33.3%; border-radius: 30px;">Porta</button>
-                <button onclick="location.href='inventoryarchive.php'"; style="width:33.3%; border-radius: 30px;">Archived</button>
             </div>
+            <br>
+            <br>
+            <form action = "critical.php" method = "POST">
+            Critical Value: <input type="text" name="critical" autocomplete="off"> <input type="submit" name = "submitcritical" value="Submit">
+            </form>
 
             <br>
             <br> 
@@ -127,7 +126,7 @@ session_start();
                 <tr>
                     <th>Name</th>
                     <th>Total Stock (kg)</th>
-                    <th>Action</th>
+                    <th> Status </th>
                 </tr>
                 <tr>
 
@@ -138,14 +137,11 @@ session_start();
                     {
                         while($row=mysqli_fetch_array($result))
                         {  
-
                     ?>
 
-
-
                     <td><?php echo $row['productname']; ?></td> 
-                    <td <?php if($row['stock'] <= 50): ?> style="background-color:red;" <?php endif; ?>><?php echo $row['stock']; ?></td> 
-                    <td> <button type="submit" id = "archive" onclick="confirmation() " class="addbtn green " name="archive" > <?php echo $row['status']; ?></button>
+                    <td <?php if($row['stock'] <= $value): ?> style="background-color:#f9243f" <?php endif; ?>><?php echo $row['stock']; ?></td> 
+                    <td> <button type="submit"  class="addbtn green " name="archive" > <?php echo $row['status']; ?></button>
                     </td> 
                 </tr>
 

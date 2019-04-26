@@ -1,15 +1,16 @@
-<?php include '../includes/connection.php'; ?>
+<?php 
+session_start();
+include '../includes/connection.php';
+include 'critical.php'; ?>
 <?php 
 $sql = "SELECT products.productname, stock.quantity as stock, branch.branchid, products.status
 from ((stock left join products on stock.productid = products.productid) 
-left join branch on stock.branchid = branch.branchid) where branch.branchid = 2  OR branch.branchid = 3; ";
-//$sql = "SELECT status, products.productname, stock.quantity as stock, branch.branchid
-//from ((stock left join products on stock.productid = products.productid) 
-//left join branch on stock.branchid = branch.branchid) WHERE status= 'active' AND  branch.branchid ='3'"  ;
-
-
+left join branch on stock.branchid = branch.branchid) where (branch.branchid = 2  OR branch.branchid = 3) 
+AND products.status = 'Active' ORDER BY products.productname ASC  ";
 $result = mysqli_query($conn, $sql);
-session_start();
+
+
+
 ?>
 
 
@@ -86,35 +87,14 @@ session_start();
             <div class="btn-group" style="width:100%">
                 <button onclick="location.href='inventory.php'"; style="width:33.3%; border-radius: 30px;">Market</button>
                 <button onclick="location.href='inventoryporta.php'"; style="width:33.3%; border-radius: 30px;">Porta</button>
-                <button onclick="location.href='inventoryarchive.php'"; style="width:33.3%; border-radius: 30px;">Archived</button>
             </div>
-
             <br>
             <br> 
-            <div class="bs-example">
-                <!-- Button HTML (to Trigger Modal) -->   
-
-                <!-- Modal HTML -->
-                <div id="myModal" class="modal fade">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">Archive Confirmation</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>Do you want to archive this product?</p>
-                                <p class="text-warning"><small>Product will be move in archived products</small></p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Yes</button>
-                            </div>
-                        </div>s
-                    </div>
-                </div>
-            </div>
-
+            <form action = "critical.php" method = "POST">
+            Critical Value: <input type="text" name="critical" autocomplete="off"> <input type="submit" name = "submitcritical" value="Submit">
+            </form>
+            <br>
+            <br> 
 
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
@@ -138,7 +118,7 @@ session_start();
 
 
                         <td><?php echo $row['productname']; ?></td> 
-                        <td><?php echo $row['stock']; ?></td> 
+                        <td <?php if($row['stock'] <= $value): ?> style="background-color:#f9243f" <?php endif; ?>><?php echo $row['stock']; ?></td> 
                         <td> <button type="submit" id = "archive" onclick="confirmation() " class="addbtn green " name="archive" > <?php echo $row['status']; ?></button>
                         </td> 
                     </tr>

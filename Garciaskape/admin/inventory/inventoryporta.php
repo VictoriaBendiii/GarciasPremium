@@ -90,8 +90,9 @@ $result = mysqli_query($conn, $sql);
             </div>
             <br>
             <br> 
-            <form action = "critical.php" method = "POST">
-            Critical Value: <input type="text" name="critical" autocomplete="off"> <input type="submit" name = "submitcritical" value="Submit">
+            <form action = "" method = "POST">
+            Critical Value: <input type="text" name="critical" autocomplete="off"> 
+            <input type="submit" name = "submitcritical" class ="btn btn-success btn-sm acceptbtn" value="Change Value">
             </form>
             <br>
             <br> 
@@ -119,7 +120,7 @@ $result = mysqli_query($conn, $sql);
 
                         <td><?php echo $row['productname']; ?></td> 
                         <td <?php if($row['stock'] <= $value): ?> style="background-color:#f9243f" <?php endif; ?>><?php echo $row['stock']; ?></td> 
-                        <td> <button type="submit" id = "archive" onclick="confirmation() " class="addbtn green " name="archive" > <?php echo $row['status']; ?></button>
+                        <td> <button type="submit"  class="btn btn-success btn-sm acceptbtn " name="archive" > <?php echo $row['status']; ?></button>
                         </td> 
                     </tr>
 
@@ -146,13 +147,6 @@ $result = mysqli_query($conn, $sql);
 <script src="../js/bootstrap-datepicker.js"></script>
 <script src="../js/custom.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("#archive").click(function(){
-            $("#myModal").modal('show');
-        });
-    });
-</script>
 <script>
 
     window.onload = function () {

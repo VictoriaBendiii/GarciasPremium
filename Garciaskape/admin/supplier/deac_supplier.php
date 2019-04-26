@@ -37,9 +37,9 @@ include 'update.php'; ?>
         </div>
         <!--/.row-->
         <div class="btn-group" style="width:100%">
-            <button class="btn btn-primary active" onclick="location.href='supplier.php'" style="width:33.3%; border-radius: 30px;">Supplier</button>
+            <button onclick="location.href='supplier.php'" style="width:33.3%; border-radius: 30px;">Supplier</button>
             <button onclick="location.href='addsupplier.php'" style="width:33.3%; border-radius: 30px;">Add Supplier</button>
-            <button onclick="location.href='deac_supplier.php'" style="width:33.3%; border-radius: 30px;">Deactivated Supplier Accounts</button>
+            <button class="btn btn-primary active" onclick="location.href='deac_supplier.php'" style="width:33.3%; border-radius: 30px;">Deactivated Supplier Accounts</button>
         </div>
         <br><br>
         <!-- ALERT -->
@@ -58,7 +58,7 @@ include 'update.php'; ?>
         <div class="row">
             <div class="col-lg-12">
                 <?php
-                    $sql_supplier = "SELECT * from supplier WHERE status = 'Active'";
+                    $sql_supplier = "SELECT * from supplier WHERE status = 'Deactivated'";
                     $result = mysqli_query($conn, $sql_supplier);
                     ?>
 
@@ -87,69 +87,13 @@ include 'update.php'; ?>
                                     <td> <?php echo $row["contact_number"]; ?> </td>
                                     <td> <?php echo $row["address"];?> </td>
                                     <td> <?php echo $row["status"];?> </td>
-                                    <td>                                        
+                                    <td>
+                                       
+                                        <a href="update.php?activate=<?php echo $row['supplierid']; ?>"
+                                            class="btn btn-info"> Activate </a>
 
-                                        <a href="update.php?deactivate=<?php echo $row['supplierid']; ?>"
-                                            class="btn btn-warning"> Deactivate </a>    
-                                        
-                                        <a href="#edit<?php echo $row['supplierid'];?>" data-toggle="modal"
-                                            class="btn btn-success" data-toggle="modal">Edit</a>
-
-                                        <!-- Modal -->
-                                        <div id="edit<?php echo $row['supplierid']; ?>" class="modal fade"
-                                            role="dialog">
-                                            <div class="modal-dialog">
-
-                                                <!-- Modal content-->
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close"
-                                                            data-dismiss="modal">&times;</button>
-                                                        <h4 class="modal-title">Edit Supplier</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form method="POST" action="editsupplier.php">
-                                                            <div class="form-group">
-                                                                <input type="hidden" name="supplierid"
-                                                                    value="<?php echo $row['supplierid']; ?>">
-                                                                <label>Supplier Name</label>
-                                                                <input type="text" name="supplier_name"
-                                                                    class="form-control"
-                                                                    value="<?php echo $row['supplier_name']; ?>"
-                                                                    placeholder="Enter Supplier Name">
-                                                                <label>Supplier Contact Person</label>
-                                                                <input type="text" name="supplier_contact_person"
-                                                                    class="form-control"
-                                                                    value="<?php echo $row['supplier_contact_person']; ?>"
-                                                                    placeholder="Enter Contact Person Full Name">
-                                                                <label>Contact Number</label>
-                                                                <input type="text" class="form-control"
-                                                                    id="contact_number" name="contact_number"
-                                                                    placeholder="Contact Number"
-                                                                    value="<?php echo $row['contact_number']; ?>"
-                                                                    maxlength="13" minlength="13" required>
-                                                                <label>Address</label>
-                                                                <input type="text" class="form-control" id="address"
-                                                                    name="address" placeholder="Address"
-                                                                    value="<?php echo $row['address']; ?>">
-                                                            </div>
-
-                                                            <div class="modal-footer">
-                                                                <button type="submit" class="btn btn-success"
-                                                                    name="edit_supplier"
-                                                                    id="edit_supplier ">Update</button>
-
-                                                                <button type="button" class="btn btn-default"
-                                                                    data-dismiss="modal">Close</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- End of Modal -->
-
+                                        <a href="update.php?delete=<?php echo $row['supplierid']; ?>"
+                                            class="btn btn-danger"> Delete </a>
                                     </td>
                                 </form>
 

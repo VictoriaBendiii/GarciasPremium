@@ -1,21 +1,28 @@
 <?php include '../includes/connection.php'; ?>
 <?php
 
-
+session_start();
 
 if (isset($_GET['activate'])){
 
     $id = $_GET['activate'];
-    $sql_query = "UPDATE supplier SET status='active' WHERE supplierid=$id";
+    $sql_query = "UPDATE supplier SET status='Active' WHERE supplierid=$id";
     mysqli_query($conn, $sql_query);
-    header("location: supplier.php");
+    $_SESSION['message']="Supplier account activated";
+    $_SESSION['msg_type']="success";
+    header("location: deac_supplier.php");
 
-} else if (isset($_GET['deactivate'])){
+
+} 
+if (isset($_GET['deactivate'])){
 
     $id = $_GET['deactivate'];
-    $sql_query ="UPDATE supplier SET status='deactivated' WHERE supplierid=$id";
+    $sql_query ="UPDATE supplier SET status='Deactivated' WHERE supplierid=$id";
     mysqli_query($conn, $sql_query);
+    $_SESSION['message']="Supplier account deactivated";
+    $_SESSION['msg_type']="danger";
     header("location: supplier.php");
+    die();
 }
 if (isset($_GET['delete'])){
 
@@ -25,7 +32,7 @@ if (isset($_GET['delete'])){
     $_SESSION['message'] = "Supplier account has been deleted!";
     $_SESSION['msg_type'] = "danger";
 
-    header("location: supplier.php");
+    header("location: deac_supplier.php");
 }
 
 

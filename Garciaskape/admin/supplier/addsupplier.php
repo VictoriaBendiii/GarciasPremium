@@ -40,8 +40,8 @@ include '../includes/header.php';
         <!--/.row-->
         <div class="btn-group" style="width:100%">
             <button onclick="location.href='supplier.php'" style="width:33.3%; border-radius: 30px;">Supplier</button>
-            <button class="btn btn-primary active" onclick="location.href='addsupplier.php'" style="width:33.3%; border-radius: 30px;">Add
-                Supplier</button>
+            <button class="btn btn-primary active" qonclick="location.href='addsupplier.php'" style="width:33.3%; border-radius: 30px;">Add Supplier</button>
+            <button onclick="location.href='deac_supplier.php'" style="width:33.3%; border-radius: 30px;">Deactivated Supplier Accounts</button>
         </div>
         <br><br>
         <!-- ALERT -->

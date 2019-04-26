@@ -72,8 +72,7 @@ include 'addprod.php';?>
                             <input type="text" class="form-control" value="Market and Porta" tabindex="1" disabled>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-start-order" name="add_prod" id="add_prod">ADD NEW
-                                PRODUCT</button>
+                            <button type="submit" class="btn btn-start-order" name="add_prod" id="add_prod">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -85,8 +84,3 @@ include 'addprod.php';?>
     <!--/.row-->
     </div>
     <!--/.main-->
-
-
-</body>
-
-</html>

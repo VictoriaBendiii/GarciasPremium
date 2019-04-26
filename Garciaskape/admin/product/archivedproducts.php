@@ -84,6 +84,8 @@ include 'update.php'; ?>
                                     <td>
                                         <a href="update.php?activate=<?php echo $row['productid']; ?>"
                                             class="btn btn-warning"> Restore </a>
+                                        <a href="update.php?delete=<?php echo $row['productid']; ?>"
+                                            class="btn btn-danger"> Delete </a>
                                     </td>
                                 </form>
 

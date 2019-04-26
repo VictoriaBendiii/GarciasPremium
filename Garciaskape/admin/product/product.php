@@ -81,16 +81,11 @@ include 'update.php'; ?>
                             <tr>
                                 <form action="update.php" method="POST">
                                     <td> <?php echo $row["productname"]; ?> </td>
-
-
                                     <td>
-
-
                                         <a href="#edit<?php echo $row['productid'];?>" data-toggle="modal"
                                             class="btn btn-success" data-toggle="modal">Edit</a>
                                         <a href="update.php?deactivate=<?php echo $row['productid']; ?>"
                                             class="btn btn-warning"> Archive </a>
-
                                         <!-- Modal -->
                                         <div id="edit<?php echo $row['productid']; ?>" class="modal fade" role="dialog">
                                             <div class="modal-dialog">

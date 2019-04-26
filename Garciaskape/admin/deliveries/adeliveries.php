@@ -11,6 +11,7 @@ if(isset($_POST['abc'])){
     $sender = 'garsha'; // This is who the message appears to be from.
     $numbers = $_POST['num']; // A single number or a comma-seperated list of numbers
     foreach(array_combine($_POST['beans'], $_POST['quan']) as $beans=>$quan) {
+        //For storing echos in a variable
         ob_start();
         echo $beans;
         echo $quan;
@@ -18,22 +19,22 @@ if(isset($_POST['abc'])){
         $myStr = ob_get_contents();
         ob_end_clean();
 
+        //Adding the contents in an array
         $messageArray[] = $myStr;
     }
-    
+
     $messageProds = implode(" ", $messageArray);
     $message = "Good day! I would like to order the following\r\n" . $messageProds;
     // 612 chars or less
     // A single number or a comma-seperated list of numbers
- //   $message = urlencode($message);
- //   $data = "username=".$username."&hash=".$hash."&message=".$message."&sender=".$sender."&numbers=".$numbers."&test=".$test;
- //   $ch = curl_init('http://api.txtlocal.com/send/?');
- //   curl_setopt($ch, CURLOPT_POST, true);
- //   curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
- //   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
- //   $result = curl_exec($ch); // This is the result from the API
- //   curl_close($ch);
-    echo $message;
+    $message = urlencode($message);
+    $data = "username=".$username."&hash=".$hash."&message=".$message."&sender=".$sender."&numbers=".$numbers."&test=".$test;
+    $ch = curl_init('http://api.txtlocal.com/send/?');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $result = curl_exec($ch); // This is the result from the API
+    curl_close($ch);
 }
 ?>
 

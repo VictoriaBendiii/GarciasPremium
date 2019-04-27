@@ -90,8 +90,8 @@ $result = mysqli_query($conn, $sql);
             <br>
             <br>
             <form action = "" method = "POST">
-            Critical Value: <input type="text" name="critical" autocomplete="off"> 
-            <input type="submit" name = "submitcritical" class ="btn btn-success btn-sm acceptbtn" value="Change Value">
+            Critical Value: <input type="number" name="critical" autocomplete="off"> 
+            <input type="submit" name = "submitcritical" class ="btn btn-success btn-sm acceptbtn" min="0"  value="Change Value">
             </form>
 
             <br>

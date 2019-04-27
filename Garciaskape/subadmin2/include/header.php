@@ -1,3 +1,11 @@
+<?php include('connection.php') ?>
+<?php 
+session_start();
+
+$username = $_SESSION['u_name'];
+$branchid = $_SESSION['branch_id'];
+$accountid = $_SESSION['account_id'];
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +34,7 @@
 					<span class="icon-bar"></span></button>
 				<a class="navbar-brand" href="#"><span></span> Sub Admin 2 </a>
 					<br>
-					<p> Eddie Garcia </p>
+					<p> <?php echo $username; ?> </p>
 
 				
 			</div>

@@ -19,7 +19,7 @@
 
 			<?php
 				$sql = "SELECT * from ((stock left join products on stock.productid = products.productid)
-				left join branch on stock.branchid = branch.branchid) where branch.branchid = 1";
+				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid ORDER BY productname";
 				$result = mysqli_query($conn, $sql);
 			?>
 
@@ -28,7 +28,7 @@
 					<thead>
 						<tr>
 							<th>Product</th>
-							<th>Qty / Kg</th>
+							<th>Quantity (in Kg)</th>
 						</tr>
 					</thead>
 					<tbody>

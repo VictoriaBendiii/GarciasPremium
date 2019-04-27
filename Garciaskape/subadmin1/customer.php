@@ -1,24 +1,39 @@
 <?php $page = 'customer'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
-<<<<<<< HEAD
-<?php
-function customersold($conn){
-	$output = '';
-	$sql_cust = " SELECT * from ((stock left join products on stock.productid = products.productid)
-	left join branch on stock.branchid = branch.branchid) where branch.branchid = 1 ORDER BY productname ASC";
-	$result = mysqli_query($conn, $sql_cust);	
-
-foreach ($result as $row){
-	$output .= '<option value="'.$row["productname"].'">'.$row["productname"].'</option>';
+<style>
+th, td{
+	padding: 10px;
 }
-return $output;
-}
+</style>
 
-?>
-=======
->>>>>>> 0bbf79ef52e087371e54acdba2bb93a03d47eb62
-		
+        <script type="text/javascript">
+            function cloneRow(e) {
+                e.preventDefault();
+                var row = document.querySelector(".dropdowns:last-child");
+                var tableBody = document.querySelector("#tableDrop tbody");
+                var clone = row.cloneNode(true);
+                var clonedDrop = clone.querySelector('.beansDrop');
+                var lastDrop = row.querySelector('.beansDrop');
+                clonedDrop.value = '';
+                if (lastDrop.selectedIndex != -1) clonedDrop.options[lastDrop.selectedIndex].disabled = true;
+                tableBody.appendChild(clone);
+            }
+            function RemoveOrder(ele) {
+                var rownumber = document.getElementById("tableDrop").rows.length;
+                if (rownumber == 2){
+                    window.alert("You cannot remove the last order");
+                }	else {
+                    var row = ele.closest('tr');
+                    var drop = row.querySelector('.beansDrop');
+                    var alldrop = document.querySelectorAll('.beansDrop');
+                    if (drop.selectedIndex != -1)
+                        alldrop.forEach(ele => ele.options[drop.selectedIndex].disabled = false)
+                    row.remove();
+                }
+            }
+        </script>
+
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
@@ -31,26 +46,92 @@ return $output;
 		
 		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
-				<h1 class="h2">Customer</h1>
+				<h1 class="h2">Customer's Order</h1>
 			</div>
-			<button type="button" class="btn add"><em class="fa fa-plus" style="font-size: 30px"></em> </button>	
-  
-	<form method="post" id="insert_form">
-    <div class="table-repsonsive">
-     <span id="error"></span>
-     <table class="table table-bordered" id="item_table">
-      <tr>
-       <th>Enter Item Name</th>
-       <th>Enter Quantity</th>
-       <th>Select Product</th>
-       <th><button type="button" name="add" class="btn btn-success btn-sm add"><span class="glyphicon glyphicon-plus"></span></button></th>
-      </tr>
-     </table>
-     <div align="center">
-      <input type="submit" name="submit" class="btn btn-info" value="Insert" />
-     </div>
-    </div>
-   </form>
+						
+		<form action="customer.php" method="POST">
+        <?php
+				$sqlspoil = "SELECT * from ((stock left join products on stock.productid = products.productid)
+				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid";
+				$result = mysqli_query($conn, $sqlspoil);
+		?>
+
+			<div class="table-responsive">
+				<table id="tableDrop" class="table table-bordered table-striped table-sm">
+						<tr>
+							<th>Product</th>
+							<th>Quantity (in KG)</th>
+                            <th>Action</th>
+						</tr>
+						<tr class="dropdowns">
+							<td class="beansDropdown">							
+								<select name="prodname[]" id="prodname" class="beansDrop">
+									<?php
+										$row = mysqli_num_rows($result);
+										while ($row = mysqli_fetch_array($result)) {
+												echo "<option value='". $row['productid'] ."'>". $row['productname'] ."</option>";
+												}
+									?>
+								</select>				
+							</td>
+							<td id="quantity">
+								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" required>
+							</td>
+							<td id="remove">
+								<input type="button" value="&#10006;" onclick="RemoveOrder(this)">
+							</td>
+						</tr>
+				</table>
+			</div>
+
+			<div class="form-inline">
+				<input type="button" onclick="cloneRow(event)" name="add" id="add" value="Add" class="btn btn-secondary"/>
+				<button type="submit" class="btn btn-primary" name="cust" id="cust">Submit</button>
+			</div>
+	</form>
+
+	<?php
+
+		if (isset($_POST['cust'])) {
+
+				$sql2 = "SELECT solditemid from solditem order by solditemid desc limit 1";
+				$result2 = mysqli_query($conn, $sql2);
+				$row = mysqli_num_rows($result2);
+				$row = mysqli_fetch_array($result2);
+				$res1 = $row['solditemid'];
+				$res1++;
+
+				$sql3 = "SELECT orderid from solditem order by orderid desc limit 1";
+				$result3 = mysqli_query($conn, $sql3);
+				$row = mysqli_num_rows($result3);
+				$row = mysqli_fetch_array($result3);
+				$res2 = $row['orderid'];
+				$res2++;
+
+				foreach (array_combine($_POST['prodname'] , $_POST['prodquan']) as $prodname => $prodquan){
+
+					$sql1 = "SELECT quantity FROM stock WHERE productid=$prodname";
+					$result1 = mysqli_query($conn, $sql1);
+					$row = mysqli_num_rows($result1);
+					$row = mysqli_fetch_array($result1);
+					$res = $row['quantity'];
+					$fin = $res-$prodquan;
+
+
+					$status = "sold";
+
+					
+					$sql_cust = "UPDATE stock SET quantity=$fin,stockout=$prodquan,date_out=SYSDATE() WHERE productid=$prodname and branchid=$branchid";
+					$sql_update = "INSERT INTO solditem (solditemid, productid, quantity, orderid, branchid, accountid, time, status)
+									VALUES('$res1', '$prodname', '$prodquan', '$res2', '$branchid', '$accountid', SYSDATE(), '$status')";
+					
+					mysqli_query($conn, $sql_cust);
+					mysqli_query($conn, $sql_update);
+
+				}
+			}
+	?>
+		
 		</main>
 		
 		</div><!--/.row-->
@@ -58,80 +139,3 @@ return $output;
 		
 </body>
 </html>
-
-<script>
-$(document).ready(function(){
- 
- $(document).on('click', '.add', function(){
-  var html = '';
-  html += '<tr>';
-  html += '<td><input type="text" name="item_name[]" class="form-control item_name" /></td>';
-  html += '<td><input type="text" name="item_quantity[]" class="form-control item_quantity" /></td>';
-  html += '<td><select name="item_unit[]" class="form-control item_unit"><option value="">Select Unit</option><?php echo customersold($conn) ?></select></td>';
-  html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></td></tr>';
-  $('#item_table').append(html);
- });
- 
- $(document).on('click', '.remove', function(){
-  $(this).closest('tr').remove();
- });
- 
- $('#insert_form').on('submit', function(event){
-  event.preventDefault();
-  var error = '';
-  $('.item_name').each(function(){
-   var count = 1;
-   if($(this).val() == '')
-   {
-    error += "<p>Enter Item Name at "+count+" Row</p>";
-    return false;
-   }
-   count = count + 1;
-  });
-  
-  $('.item_quantity').each(function(){
-   var count = 1;
-   if($(this).val() == '')
-   {
-    error += "<p>Enter Item Quantity at "+count+" Row</p>";
-    return false;
-   }
-   count = count + 1;
-  });
-   
-  $('.item_unit').each(function(){
-   var count = 1;
-   if($(this).val() == '')
-   {
-    error += "<p>Select Unit at "+count+" Row</p>";
-    return false;
-   }
-   count = count + 1;
-  });
-
-
-  var form_data = $(this).serialize();
-  if(error == '')
-  {
-   $.ajax({
-    url:"insert.php",
-    method:"POST",
-    data:form_data,
-    success:function(data)
-    {
-     if(data == 'ok')
-     {
-      $('#item_table').find("tr:gt(0)").remove();
-      $('#error').html('<div class="alert alert-success">Item Details Saved</div>');
-     }
-    }
-   });
-  }
-  else
-  {
-   $('#error').html('<div class="alert alert-danger">'+error+'</div>');
-  }
- });
- 
-});
-</script>

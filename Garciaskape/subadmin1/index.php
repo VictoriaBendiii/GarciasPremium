@@ -18,9 +18,9 @@
 			</div>
 
 		<?php
-				$sqlrep = "SELECT orders.orderid, orders.time, products.productname, orders.quantity, orders.status
+				$sqlrep = "SELECT DATE_FORMAT(orders.time,'%b %d, %Y %r') as time, orders.orderid, products.productname, orders.quantity, orders.status
 				from ((orders left join products on orders.productid = products.productid)
-				left join branch on orders.branchid = branch.branchid) where branch.branchid = 1 order by orders.time desc limit 10";
+				left join branch on orders.branchid = branch.branchid) where branch.branchid = $branchid order by orders.time desc limit 5";
 				$result = mysqli_query($conn, $sqlrep);
 		?>
 
@@ -31,7 +31,7 @@
 					<thead>
 						<tr>
 							<th>Product</th>
-							<th>Quantity</th>
+							<th>Quantity (in Kg)</th>
 							<th>Status</th>
 							<th>Date & Time</th>
 						</tr>
@@ -47,6 +47,48 @@
 							<td> <?php echo $row["quantity"]; ?> </td>
 							<td> <?php echo $row["status"];?> </td>
 							<td> <?php echo $row["time"]; ?> </td>
+						</tr>
+					<?php
+							}
+						}
+					?>
+					</tbody>
+				</table>
+			</div>
+
+
+
+		<?php
+			$sql = "SELECT * from ((stock left join products on stock.productid = products.productid)
+					left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid ORDER BY date_in desc, date_out desc limit 5";
+				$result = mysqli_query($conn, $sqlrep);
+		?>
+
+			<h2>Stocks</h2>
+
+			<div class="table-responsive">
+				<table class="table table-bordered table-striped table-sm">
+					<thead>
+						<tr>
+							<th>Product</th>
+							<th>Quantity (in Kg)</th>
+							<th>Status</th>
+							<th>Date in</th>
+							<th>Date out</th>
+						</tr>
+					</thead>
+					<tbody>
+
+					<?php
+						if($result = mysqli_query($conn, $sql)) {
+							while($row = mysqli_fetch_assoc($result)){
+					?>
+						<tr>
+							<td> <?php echo $row["productname"]; ?> </td>
+							<td> <?php echo $row["quantity"]; ?> </td>
+							<td> <?php echo $row["status"];?> </td>
+							<td> <?php echo $row["date_in"]; ?> </td>
+							<td> <?php echo $row["date_out"]; ?> </td>
 						</tr>
 					<?php
 							}

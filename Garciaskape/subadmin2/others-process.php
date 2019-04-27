@@ -13,15 +13,14 @@
 
 			<div class="table-responsive">
 				<table id="tableDrop" class="table table-bordered table-striped table-sm">
-					<thead>
 						<tr>
 							<th>Product</th>
 							<th>Quantity (in KG)</th>
                             <th>Action</th>
 						</tr>
-						<tr id="dropdowns">
-							<td id="beans">							
-								<select name="prodname[]" id="prodname">
+						<tr class="dropdowns">
+							<td class="beansDropdown">							
+								<select name="prodname[]" id="prodname" class="beansDrop">
 									<?php
 										$row = mysqli_num_rows($result);
 										while ($row = mysqli_fetch_array($result)) {
@@ -31,22 +30,19 @@
 								</select>				
 							</td>
 							<td id="quantity">
-								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" size="20">
+								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" required>
 							</td>
-							<th id="action">
-								<input type="button" value="&#10006;" onclick="RemoveOrder()">
-                            	<input type="button" onclick="cloneRow()" name="add" id="add" value="Add" class="btn btn-secondary"/>
-							</th>
+							<td id="remove">
+								<input type="button" value="&#10006;" onclick="RemoveOrder(this)">
+							</td>
 						</tr>
-					</thead>
-					<tbody>
-					</tbody>
 				</table>
 			</div>
 
-						<div class="form-group">
-							<button type="submit" class="btn btn-primary" name="subspoil" id="subspoil">Submit</button>
-						</div>
+			<div class="form-inline">
+				<input type="button" onclick="cloneRow(event)" name="add" id="add" value="Add" class="btn btn-secondary"/>
+				<button type="submit" class="btn btn-primary" name="subspoil" id="subspoil">Submit</button>
+			</div>
 			<?php
 				}
 			?>
@@ -66,18 +62,10 @@
 					
 					$sql_spoil = "UPDATE stock SET quantity=$fin,stockout=$prodquan,date_out=SYSDATE() WHERE productid=$prodname and branchid=$branchid";
 					
-					//mysqli_query($conn, $sql_spoil);
-
-					if ($conn->query($sql_spoil) === TRUE) {
-						echo "New record created successfully";
-					} else {
-						echo "Error: " . $sql_spoil . "<br>" . $conn->error;
-					}	
+					mysqli_query($conn, $sql_spoil);
 				}
 			}
 	?>
-
-
 
 
 	<form action="others-process.php" method="POST">
@@ -89,44 +77,38 @@
 		?>
 			<h2>Product Loss</h2>		
 
-			<div class="table-responsive">
+		<div class="table-responsive">
 				<table id="tableDrop" class="table table-bordered table-striped table-sm">
-					<thead>
 						<tr>
 							<th>Product</th>
 							<th>Quantity (in KG)</th>
                             <th>Action</th>
 						</tr>
-
-						<tr id="dropdowns">
-							<td id="beans">							
-								<select name="prodname[]" id="prodname">
-								<?php
-								$row = mysqli_num_rows($result);
-								while ($row = mysqli_fetch_array($result)) {
-
-										echo "<option value='". $row['productid'] ."'>". $row['productname'] ."</option>";
-										}
+						<tr class="dropdowns">
+							<td class="beansDropdown">							
+								<select name="prodname[]" id="prodname" class="beansDrop">
+									<?php
+										$row = mysqli_num_rows($result);
+										while ($row = mysqli_fetch_array($result)) {
+												echo "<option value='". $row['productid'] ."'>". $row['productname'] ."</option>";
+												}
 									?>
 								</select>				
 							</td>
 							<td id="quantity">
-								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" size="20">
+								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" required>
 							</td>
-							<th id="action">
-								<input type="button" value="&#10006;" onclick="RemoveOrder()">
-                            	<input type="button" onclick="cloneRow()" name="add" id="add" value="Add" class="btn btn-secondary"/>
-							</th>
+							<td id="remove">
+								<input type="button" value="&#10006;" onclick="RemoveOrder(this)">
+							</td>
 						</tr>
-					</thead>
-					<tbody>
-					</tbody>
 				</table>
 			</div>
 
-						<div class="form-group">
-							<button type="submit" class="btn btn-primary" name="subloss" id="subloss">Submit</button>
-						</div>
+			<div class="form-inline">
+				<input type="button" onclick="cloneRow(event)" name="add" id="add" value="Add" class="btn btn-secondary"/>
+				<button type="submit" class="btn btn-primary" name="subloss" id="subloss">Submit</button>
+			</div>
 			<?php
 				}
 			?>

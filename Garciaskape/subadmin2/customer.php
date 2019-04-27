@@ -84,10 +84,10 @@ th, td{
 				</table>
 			</div>
 
-						<div class="form-inline">
-							<input type="button" onclick="cloneRow(event)" name="add" id="add" value="Add" class="btn btn-secondary"/>
-							<button type="submit" class="btn btn-primary" name="cust" id="cust">Submit</button>
-						</div>
+			<div class="form-inline">
+				<input type="button" onclick="cloneRow(event)" name="add" id="add" value="Add" class="btn btn-secondary"/>
+				<button type="submit" class="btn btn-primary" name="cust" id="cust">Submit</button>
+			</div>
 	</form>
 
 	<?php

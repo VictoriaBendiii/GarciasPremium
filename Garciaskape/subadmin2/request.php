@@ -7,25 +7,32 @@ th, td{
 }
 </style>
 
-<script type="text/javascript">
-		function cloneRow(){
-				var row = document.getElementById("dropdowns");
-				var table = document.getElementById("tableDrop");
-				var clone = row.cloneNode(true);
-				clone.id = "dropdownsclone";
-				table.appendChild(clone);
-		}
-		function RemoveOrder(){
-			var rownumber = document.getElementById("tableDrop").rows.length;
-			if (rownumber == 2){
-				window.alert("You cannot remove the last order");
-			}	else {
-				var td = event.target.parentNode;
-				var tr = td.parentNode;
-				tr.parentNode.removeChild(tr);
-			}
-		}
-</script>
+        <script type="text/javascript">
+            function cloneRow(e) {
+                e.preventDefault();
+                var row = document.querySelector(".dropdowns:last-child");
+                var tableBody = document.querySelector("#tableDrop tbody");
+                var clone = row.cloneNode(true);
+                var clonedDrop = clone.querySelector('.beansDrop');
+                var lastDrop = row.querySelector('.beansDrop');
+                clonedDrop.value = '';
+                if (lastDrop.selectedIndex != -1) clonedDrop.options[lastDrop.selectedIndex].disabled = true;
+                tableBody.appendChild(clone);
+            }
+            function RemoveOrder(ele) {
+                var rownumber = document.getElementById("tableDrop").rows.length;
+                if (rownumber == 2){
+                    window.alert("You cannot remove the last order");
+                }	else {
+                    var row = ele.closest('tr');
+                    var drop = row.querySelector('.beansDrop');
+                    var alldrop = document.querySelectorAll('.beansDrop');
+                    if (drop.selectedIndex != -1)
+                        alldrop.forEach(ele => ele.options[drop.selectedIndex].disabled = false)
+                    row.remove();
+                }
+            }
+        </script>
 
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
@@ -58,7 +65,7 @@ th, td{
 			<!-- Modal -->
 
 			<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLongTitle">Request Stock</h5>
@@ -66,18 +73,18 @@ th, td{
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
+						<div class="modal-body">
 						<form action="request.php" method="POST" class="form">
-						<div class="table-responsive">
-							<table id="tableDrop" class="table table-bordered table-striped table-sm">
-								<thead>
+							<div class="table-responsive">
+								<table id="tableDrop" class="table table-bordered table-striped">
 									<tr>
 										<th>Product</th>
 										<th>Quantity (in KG)</th>
 										<th>Action</th>
 									</tr>
-									<tr id="dropdowns">
-										<td id="beans">							
-											<select name="prodname[]" id="prodname">
+									<tr class="dropdowns">
+										<td class="beansDropdown">								
+											<select name="prodname[]" id="prodname" class="beansDrop">
 												<?php
 													$sql = "SELECT * FROM products";
 													$result = mysqli_query($conn, $sql);
@@ -89,23 +96,26 @@ th, td{
 											</select>				
 										</td>
 										<td id="quantity">
-											<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" size="20">
+											<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="50" max="1000" size="20">
 										</td>
-										<th id="action">
-											<input type="button" value="&#10006;" onclick="RemoveOrder()">
-											<input type="button" onclick="cloneRow()" name="add" id="add" value="Add" class="btn btn-secondary"/>
-										</th>
+										<td id="remove">
+											<input type="button" value="&#10006;" onclick="RemoveOrder(this)">
+										</td>
 									</tr>
-								</thead>
-								<tbody>
-								</tbody>
+								</table>
+							</div>
+							<table>
+								<br>
+								<tr>
+									<td> <input type="button" onclick="cloneRow(event)" name="add" id="add" value="Add" class="btn btn-secondary"/> </td>
+									<td> <button type="submit" class="btn btn-primary" name="sub" id="sub">Submit</button> </td>
+								</tr>
 							</table>
+						</form>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-primary" name="sub" id="sub">Submit</button>
 						</div>
-						</form>
 					</div>
 				</div>
 			</div>

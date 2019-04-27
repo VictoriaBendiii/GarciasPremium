@@ -40,53 +40,7 @@ if (isset($_POST['edit_account'])) {
     $contact_number = mysqli_real_escape_string($conn, $_POST['contact_number']);
     $usertype = mysqli_real_escape_string($conn, $_POST['usertype']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
-    // VALIDATION of USERNAME
-    if (preg_match("/^[a-zA-Z][0-9]/", $username)) {
-        $_SESSION['message']="username must be alphabhets only!";
-        $_SESSION['msg_type']="danger";
-        header("location: addaccount.php");
-        die();
-    }
 
-    //Check username for duplicates
-    $query_username = "SELECT * FROM accounts WHERE username='$username'";
-    $result = mysqli_query($conn, $query_username);
-    $usercount=mysqli_num_rows($result);
-    if ($usercount > 0) {
-        $_SESSION['message']="Username ".$username." already exists!";
-        $_SESSION['msg_type']="danger";
-        header("location: addaccount.php");
-        die();
-    }
-    //Check email for duplicates
-    $query_email = "SELECT * FROM accounts WHERE email='$email'";
-    $result = mysqli_query($conn, $query_email);
-    $emailcount=mysqli_num_rows($result);
-    if ($emailcount > 0) {
-        $_SESSION['message']="Email ".$email." already exists!";
-        $_SESSION['msg_type']="danger";
-        header("location: addaccount.php");
-        die();
-    }
-
-    //Check contact number for duplicates
-    $query_con = "SELECT * FROM accounts WHERE contact_number='$contact_number'";
-    $result = mysqli_query($conn, $query_con);
-    $concount=mysqli_num_rows($result);
-    if ($concount > 0) {
-        $_SESSION['message']="Contact number ".$contact_number." already exists!";
-        $_SESSION['msg_type']="danger";
-        header("location: addaccount.php");
-        die();
-    }
-    //Check password length
-    if (strlen($confirm_password) < 10 && strlen($confirm_password) > 8) {
-        $_SESSION['message']="Contact number ".$contact_number." already exists!";
-        $_SESSION['msg_type']="danger";
-        header("location: accounts.php");
-        die();
-    }
-    
     $ecnrypt_password = base64_encode($password);
     
     $sql = "UPDATE accounts SET username='$username', 
@@ -97,13 +51,17 @@ if (isset($_POST['edit_account'])) {
           contact_number='$contact_number',
           email='$email' 
           WHERE accountid='$id'";
-        
-    mysqli_query($conn, $sql);
-    $_SESSION['message']="Account of ".$firstname. " has been edited!";
-    $_SESSION['msg_type']="success";
-    header("location: accounts.php");
- 
     
+ 
+        if ($conn->query($sql) === TRUE) {
+        $_SESSION['message']="Account of ".$firstname. " has been edited!";
+        $_SESSION['msg_type']="success";
+        header("location: accounts.php");
+    } else {
+        $_SESSION['message']="Unsuccesful update for ".$firstname."'s account";
+        $_SESSION['msg_type']="danger";
+        header("location: accounts.php");
+    }
     
     $conn->close();
 }

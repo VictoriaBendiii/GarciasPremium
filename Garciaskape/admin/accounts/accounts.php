@@ -131,7 +131,8 @@ include 'update.php';
                                                                                 <div class="form-group">
                                                                                     <input type="hidden" name="edit_item_id" value="<?php echo $row['accountid']; ?>">
                                                                                     <label>Username</label>
-                                                                                    <input type="text" name="username" class="form-control" value="<?php echo $row['username']; ?>" placeholder="Enter Username">
+                                                                                    <span id="popover-username" class="hide pull-right block-help"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Username must not contain any special characters</span>
+                                                                                    <input type="text" id="username" name="username" class="form-control" value="<?php echo $row['username']; ?>" placeholder="Enter Username">
                                                                                     <label>First Name</label>
                                                                                     <input type="hidden" name="accountid" id="accountid" class="form-control" value="<?php echo $row['accountid']; ?>">
                                                                                     <input type="text" name="firstname" id="firstname" class="form-control" value="<?php echo $row['firstname']; ?>" placeholder="Enter First Name">
@@ -154,13 +155,16 @@ include 'update.php';
                                                                     <option value="subadmin2">Sub-admin Porta</option>
                                                                 </select>
                                                                                     <label>Contact Number</label>
-                                                                                    <input type="text" maxlength="11" class="form-control" id="contact_number" name="contact_number" placeholder="Contact Number" value="<?php echo $row['contact_number']; ?>" maxlength="13" minlength="13">
+                                                                                    <span id="popover-cnumber" class="hide pull-right block-help"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Enter 13 digit phone number with format</span>
+
+                                                                                    <input type="text" class="form-control" id="contact_number" name="contact_number" minlength="13" maxlength="13" placeholder="9XXXXXXXXX" value="<?php echo $row['contact_number']; ?>" required>
+
                                                                                     <label>Email</label>
                                                                                     <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo $row['email']; ?>">
                                                                                 </div>
 
                                                                                 <div class="modal-footer">
-                                                                                    <button type="submit" class="btn btn-success" name="edit_account" id="edit_account ">Update</button>
+                                                                                    <button type="submit" class="btn btn-success" id="submit" name="edit_account" id="edit_account ">Update</button>
 
                                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                                                 </div>
@@ -190,6 +194,61 @@ include 'update.php';
             </div>
             <!--/.main-->
 
-        </body>
+            <script>
+                $(document).ready(function() {
 
-        </html>
+                    $('#password').keyup(function() {
+                        var password = $('#password').val();
+                        if (checkStrength(password) == false) {
+                            $('#sign-up').attr('disabled', true);
+                        }
+                    });
+
+                    $('#confirm_password').blur(function() {
+                        if ($('#password').val() !== $('#confirm_password').val()) {
+                            $('#popover-cpassword').removeClass('hide');
+                            $('#sign-up').attr('disabled', true);
+                        } else {
+                            $('#popover-cpassword').addClass('hide');
+                        }
+                    });
+
+                    $('#username').blur(function() {
+                        var regex = /\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\'|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s/;
+                        if ($('#username').val().match(regex)) {
+                            $('#popover-username').removeClass('hide');
+                            $("#submit").attr('disabled', 'disabled');
+                        } else {
+                            $('#popover-username').addClass('hide');
+                            $("#submit").removeAttr('disabled');
+                        }
+                    })
+
+                    $('#contact_number').blur(function() {
+                        var regex = /^[+](6)(3)(9)([\d]+){9}$/;
+                        if ($('#contact_number').val().match(regex)) {
+                            $('#popover-cnumber').addClass('hide');
+                            $('#sign-up').attr('disabled', false);
+
+                            $("#submit").removeAttr('disabled');
+                        } else {
+                            $('#popover-cnumber').removeClass('hide');
+
+                            $("#submit").attr('disabled', 'disabled');
+                        }
+                    });
+
+
+
+                    $('#password').keyup(function() {
+                        var password = $('#password').val();
+                        if (checkStrength(password) == false) {
+                            $('#sign-up').attr('disabled', true);
+                        }
+                    });
+                });
+
+            </script>
+            </body>
+
+            </html>

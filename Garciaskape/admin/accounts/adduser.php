@@ -1,6 +1,9 @@
 <?php include '../includes/connection.php'; ?>
 <?php
-session_start();
+
+if(!isset($_SESSION)){ // Starts a session IF and ONLY IF Session is not started
+      session_start();
+}
 if (isset($_POST['add_user'])) {
 
     //GET DATA FROM FORM
@@ -15,7 +18,7 @@ if (isset($_POST['add_user'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $status = "Active";
     $branchid;
-    $finContact_number = "+63$contact_number";
+
 
     // VALIDATION of USERNAME
     if (preg_match("/^[a-zA-Z][0-9]/", $username)) {
@@ -24,7 +27,7 @@ if (isset($_POST['add_user'])) {
         header("location: addaccount.php");
         die();
     }
-    
+
     //VALIDATION of FIRST, MIDDLE, AND LAST NAME
     if (preg_match("/^[a-zA-Z][0-9]/", $firstname)) {
         $_SESSION['message']="First name must be alphabhets only!";
@@ -68,16 +71,16 @@ if (isset($_POST['add_user'])) {
     }
 
     //Check contact number for duplicates
-    $query_con = "SELECT * FROM accounts WHERE contact_number='$finContact_number'";
+    $query_con = "SELECT * FROM accounts WHERE contact_number='$contact_number'";
     $result = mysqli_query($conn, $query_con);
     $concount=mysqli_num_rows($result);
     if ($concount > 0) {
-        $_SESSION['message']="Contact number ".$finContact_number." already exists!";
+        $_SESSION['message']="Contact number ".$contact_number." already exists!";
         $_SESSION['msg_type']="danger";
         header("location: addaccount.php");
         die();
     }
-    
+
     //Check password length
     if (strlen($confirm_password) < 10 && strlen($confirm_password) > 8) {
         $_SESSION['message']="Contact number ".$contact_number." already exists!";
@@ -93,22 +96,26 @@ if (isset($_POST['add_user'])) {
     } else {
         $branchid =3;
     }
-        
+
 
     // PASSWORD ENCRYPTION
     $ecnrypt_password = base64_encode($password);
+
+    // Contact number concatenation
+    $cpCode = "+63";
+    $finContact = $cpCode . $contact_number;
 
     //Start of insertion to database
     $sql = "INSERT INTO accounts (username, email, password, user_type, firstname, middlename, lastname, contact_number,
         status, branchid)
         VALUES('$username', '$email', '$ecnrypt_password', '$usertype','$firstname', '$middlename', '$lastname',
-        '$finContact_number', '$status', '$branchid')";
+        '$finContact', '$status', '$branchid')";
     $_SESSION['message']="Account ".$username. " created";
     $_SESSION['msg_type']="success";
 
     mysqli_query($conn, $sql);
     header("location: addaccount.php");
 }
-  
+
 
   ?>

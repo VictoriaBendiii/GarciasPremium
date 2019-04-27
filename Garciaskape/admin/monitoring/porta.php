@@ -173,7 +173,6 @@ include '../includes/sidebar.php';
                             <th>Branch&nbsp; &nbsp;<a ng-click="sort_with('branch_name');"></a></th> 
                             <th>Account Name&nbsp; &nbsp;<a ng-click="sort_with('firstname');"><i class="glyphicon fa fa-sort"></i></a></th>
                             <th>Product Name&nbsp; &nbsp;<a ng-click="sort_with('productname');"><i class="glyphicon fa fa-sort"></i></a></th>
-                            <th>Supplier&nbsp; &nbsp;<a ng-click="sort_with('supplier_name');"><i class="glyphicon fa fa-sort"></i></a></th>
                             <th>Quantity (in kg)&nbsp; &nbsp;<a ng-click="sort_with('quantity');"><i class="glyphicon fa fa-sort"></i></a></th>
                             <th>Time Ordered&nbsp; &nbsp;<a ng-click="sort_with('time');"><i class="glyphicon fa fa-sort"></i></a></th>
                         </thead>
@@ -183,7 +182,6 @@ include '../includes/sidebar.php';
                                 <td>{{data.branch_name}}</td>
                                 <td>{{data.firstname}}</td>
                                 <td>{{data.productname}}</td>
-                                <td>{{data.supplier_name}}</td>  
                                 <td>{{data.quantity}}</td>
                                 <td>{{data.time}}</td>
                             </tr>

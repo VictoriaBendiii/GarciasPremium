@@ -1,3 +1,4 @@
+<?php $page = 'dashboard'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 
@@ -10,77 +11,97 @@
 				<li class="active">Dashboard</li>
 			</ol>
 		</div><!--/.row-->
-		
+
 		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
 				<h1 class="h2">Hi Sub Admin!</h1>
 			</div>
 
-			<h2>Physical Count</h2>
+		<?php
+				$sqlrep = "SELECT DATE_FORMAT(orders.time,'%b %d, %Y %r') as time, orders.orderid, products.productname, orders.quantity, orders.status
+				from ((orders left join products on orders.productid = products.productid)
+				left join branch on orders.branchid = branch.branchid) where branch.branchid = $branchid order by orders.time desc limit 5";
+				$result = mysqli_query($conn, $sqlrep);
+		?>
+
+			<h2>Reports</h2>
+
 			<div class="table-responsive">
 				<table class="table table-bordered table-striped table-sm">
 					<thead>
 						<tr>
 							<th>Product</th>
-							<th>Quantity</th>
+							<th>Quantity (in Kg)</th>
+							<th>Status</th>
 							<th>Date & Time</th>
 						</tr>
 					</thead>
 					<tbody>
+
+					<?php
+						if($result = mysqli_query($conn, $sqlrep)) {
+							while($row = mysqli_fetch_assoc($result)){
+					?>
 						<tr>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
+							<td> <?php echo $row["productname"]; ?> </td>
+							<td> <?php echo $row["quantity"]; ?> </td>
+							<td> <?php echo $row["status"];?> </td>
+							<td> <?php echo $row["time"]; ?> </td>
 						</tr>
-						<tr>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-						</tr>
+					<?php
+							}
+						}
+					?>
 					</tbody>
 				</table>
+			</div>
 
-				<h2>Reports</h2>
+
+
+		<?php
+			$sql = "SELECT * from ((stock left join products on stock.productid = products.productid)
+					left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid ORDER BY date_in desc, date_out desc limit 5";
+				$result = mysqli_query($conn, $sqlrep);
+		?>
+
+			<h2>Stocks</h2>
+
 			<div class="table-responsive">
 				<table class="table table-bordered table-striped table-sm">
 					<thead>
 						<tr>
-							<th>ID</th>
-							<th>Date & Time</th>
-							<th>From</th>
-							<th>To</th>
 							<th>Product</th>
-							<th>Quantity</th>
+							<th>Quantity (in Kg)</th>
 							<th>Status</th>
+							<th>Date in</th>
+							<th>Date out</th>
 						</tr>
 					</thead>
 					<tbody>
+
+					<?php
+						if($result = mysqli_query($conn, $sql)) {
+							while($row = mysqli_fetch_assoc($result)){
+					?>
 						<tr>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
+							<td> <?php echo $row["productname"]; ?> </td>
+							<td> <?php echo $row["quantity"]; ?> </td>
+							<td> <?php echo $row["status"];?> </td>
+							<td> <?php echo $row["date_in"]; ?> </td>
+							<td> <?php echo $row["date_out"]; ?> </td>
 						</tr>
-						<tr>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-						</tr>
+					<?php
+							}
+						}
+					?>
 					</tbody>
 				</table>
 			</div>
 
 		</main>
-		
+
 		</div><!--/.row-->
 	</div>	<!--/.main-->
-		
+
 </body>
 </html>

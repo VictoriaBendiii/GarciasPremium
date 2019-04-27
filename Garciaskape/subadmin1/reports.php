@@ -18,27 +18,27 @@
 			<form action="reports.php" method="POST">
 				<div class="btn-group btn-group-justified" role="group" aria-label="...">
 					<div class="btn-group" role="group">
-					  <button type="submit" class="btn btn-default" name="all_rep" id="all_rep">All Reports</button>
+					  <button type="submit" class="btn btn-primary" name="all_rep" id="all_rep"> ALL </button>
 					</div>
 					<div class="btn-group" role="group">
-					  <button type="submit" class="btn btn-default" name="ord_rep" id="ord_rep">Order Reports</button>
+					  <button type="submit" class="btn btn-primary" name="ord_rep" id="ord_rep"> ORDER </button>
 					</div>
 					<div class="btn-group" role="group">
-					  <button type="submit" class="btn btn-default" name="del_rep" id="del_rep">Delivery Reports</button>
+					  <button type="submit" class="btn btn-primary" name="del_rep" id="del_rep"> DELIVERY </button>
 					</div>
 					<div class="btn-group" role="group">
-					  <button type="submit" class="btn btn-default" name="sold_rep" id="sold_rep">Sold Reports</button>
+					  <button type="submit" class="btn btn-primary" name="sold_rep" id="sold_rep"> SOLD </button>
 					</div>
 				  </div>
 				</form>
 			</div>
 
-		</br>
+		<br>
 		<?php
 			if (isset($_POST['all_rep'])) {
-				$sqlsold = "SELECT orders.orderid, orders.time, products.productname, orders.quantity, orders.status
+				$sqlsold = "SELECT DATE_FORMAT(orders.time,'%b %d, %Y %r') as time, orders.orderid, products.productname, orders.quantity, orders.status
 				from ((orders left join products on orders.productid = products.productid)
-				left join branch on orders.branchid = branch.branchid) where branch.branchid = 1";
+				left join branch on orders.branchid = branch.branchid) where branch.branchid = $branchid";
 				$result = mysqli_query($conn, $sqlsold);
 		?>
 
@@ -49,7 +49,7 @@
 					<thead>
 						<tr>
 							<th>Product</th>
-							<th>Quantity</th>
+							<th>Quantity (in Kg)</th>
 							<th>Status</th>
 							<th>Date & Time</th>
 						</tr>
@@ -77,23 +77,26 @@
 			}
 		?>
 
-
 		<?php
-			if (isset($_POST['sold_rep'])) {
-				$sqlsold = "SELECT solditem.solditemid, products.productname, solditem.quantity, solditem.time, solditem.status
-				from ((solditem left join products on solditem.productid = products.productid)
-				left join branch on solditem.branchid = branch.branchid) where branch.branchid = 1";
-				$result = mysqli_query($conn, $sqlsold);
+			if (isset($_POST['ord_rep'])) {
+				$sqlord = "SELECT products.productname, orders.quantity, orders.status, orders.time FROM orders 
+				inner join products on orders.productid = products.productid
+				where orders.branchid = $branchid and (orders.status = 'accepted' or orders.status = 'pending' )
+				UNION
+				SELECT products.productname, delivery.quantity, delivery.status, delivery.time FROM delivery
+				inner join products on delivery.productid = products.productid
+				where delivery.branchid = $branchid and delivery.status = 'delivered'";
+				$result = mysqli_query($conn, $sqlord);
 		?>
 
-			<h2>Sold Reports</h2>
+			<h2>Order Reports</h2>
 
 			<div class="table-responsive">
 				<table class="table table-bordered table-striped table-sm">
 					<thead>
 						<tr>
 							<th>Product</th>
-							<th>Quantity</th>
+							<th>Quantity (in Kg)</th>
 							<th>Status</th>
 							<th>Date & Time</th>
 						</tr>
@@ -101,7 +104,7 @@
 					<tbody>
 
 					<?php
-						if($result = mysqli_query($conn, $sqlsold)) {
+						if($result = mysqli_query($conn, $sqlord)) {
 							while($row = mysqli_fetch_assoc($result)){
 					?>
 						<tr>
@@ -120,24 +123,27 @@
 		<?php
 			}
 		?>
+
 
 
 		<?php
 			if (isset($_POST['del_rep'])) {
-				$sqldel = "SELECT products.productname, delivery.quantity, delivery.status, delivery.time 
-				FROM delivery inner join products on delivery.productid = products.productid
-				where delivery.branchid = '1'";
+				$sqldel = "SELECT DATE_FORMAT(delivery.time,'%b %d, %Y %r') as time, products.productname, supplier.supplier_name, delivery.quantity, delivery.status
+				from ((delivery left join products on delivery.productid = products.productid)
+				left join supplier on delivery.supplierid = supplier.supplierid) where delivery.branchid = $branchid	o";
+
 				$result = mysqli_query($conn, $sqldel);
 		?>
 
-			<h2>Delivered Reports</h2>
+			<h2>Delivery Reports</h2>
 
 			<div class="table-responsive">
 				<table class="table table-bordered table-striped table-sm">
 					<thead>
 						<tr>
 							<th>Product</th>
-							<th>Quantity</th>
+							<th>Quantity (in Kg)</th>
+							<th>From</th>
 							<th>Status</th>
 							<th>Date & Time</th>
 						</tr>
@@ -151,6 +157,7 @@
 						<tr>
 							<td> <?php echo $row["productname"]; ?> </td>
 							<td> <?php echo $row["quantity"]; ?> </td>
+							<td> <?php echo $row["supplier_name"];?> </td>
 							<td> <?php echo $row["status"];?> </td>
 							<td> <?php echo $row["time"]; ?> </td>
 						</tr>
@@ -165,27 +172,22 @@
 			}
 		?>
 
-
 		<?php
-			if (isset($_POST['ord_rep'])) {
-				$sqlord = "SELECT products.productname, orders.quantity, orders.status, orders.time FROM orders 
-				inner join products on orders.productid = products.productid
-				where orders.branchid = '1' and (orders.status = 'accepted' or orders.status = 'pending' )
-				UNION
-				SELECT products.productname, delivery.quantity, delivery.status, delivery.time FROM delivery
-				inner join products on delivery.productid = products.productid
-				where delivery.branchid = '1' and delivery.status = 'delivered'";
-				$result = mysqli_query($conn, $sqlord);
+			if (isset($_POST['sold_rep'])) {
+				$sqlsold = "SELECT solditem.solditemid, products.productname, solditem.quantity, solditem.time, solditem.status
+				from ((solditem left join products on solditem.productid = products.productid)
+				left join branch on solditem.branchid = branch.branchid) where branch.branchid = $branchid";
+				$result = mysqli_query($conn, $sqlsold);
 		?>
 
-			<h2>Ordered Reports</h2>
+			<h2>Sold Reports</h2>
 
 			<div class="table-responsive">
 				<table class="table table-bordered table-striped table-sm">
 					<thead>
 						<tr>
 							<th>Product</th>
-							<th>Quantity</th>
+							<th>Quantity (in Kg)</th>
 							<th>Status</th>
 							<th>Date & Time</th>
 						</tr>
@@ -193,7 +195,7 @@
 					<tbody>
 
 					<?php
-						if($result = mysqli_query($conn, $sqlord)) {
+						if($result = mysqli_query($conn, $sqlsold)) {
 							while($row = mysqli_fetch_assoc($result)){
 					?>
 						<tr>

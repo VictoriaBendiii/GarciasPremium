@@ -3,11 +3,9 @@ session_start();
 include '../includes/connection.php';
 
 
-$query = "SELECT products.productname, branch.branchid, branch.branch_name, orders.quantity, supplier.supplier_name, delivery.deliveryid, accounts.firstname, DATE_FORMAT(orders.time,'%b %d, %Y %r') as time
-from (((((orders inner join products on orders.productid = products.productid) 
+$query = "SELECT products.productname, branch.branchid, branch.branch_name, orders.quantity, accounts.firstname, DATE_FORMAT(orders.time,'%b %d, %Y %r') as time
+from (((orders inner join products on orders.productid = products.productid) 
 left join branch on orders.branchid = branch.branchid) 
-left join supplier on orders.supplierid = supplier.supplierid)
-left join delivery on orders.deliveryid = delivery.deliveryid)
 left join accounts on orders.accountid = accounts.accountid) 
 where branch.branchid = 1";
 
@@ -23,4 +21,5 @@ $jResponse = json_encode($fetch_data);
 echo $jResponse;
 
 ?>
+
 

@@ -7,45 +7,33 @@ th, td{
 }
 </style>
 
-<script type="text/javascript">
-		function cloneRow(){
-				var row = document.getElementById("dropdowns");
-				var table = document.getElementById("tableDrop");
-				var clone = row.cloneNode(true);
-				clone.id = "dropdownsclone";
-				table.appendChild(clone);
-		}
-		function RemoveOrder(){
-			var rownumber = document.getElementById("tableDrop").rows.length;
-			if (rownumber == 2){
-				window.alert("You cannot remove the last order");
-			}	else {
-				var td = event.target.parentNode;
-				var tr = td.parentNode;
-				tr.parentNode.removeChild(tr);
-			}
-		}
-</script>
-
-<script type="text/javascript">
-		function cloneRow(){
-				var row = document.getElementById("dropdowns");
-				var table = document.getElementById("tableDrop");
-				var clone = row.cloneNode(true);
-				clone.id = "dropdownsclone";
-				table.appendChild(clone);
-		}
-		function RemoveOrder(){
-			var rownumber = document.getElementById("tableDrop").rows.length;
-			if (rownumber == 2){
-				window.alert("You cannot remove the last order");
-			}	else {
-				var td = event.target.parentNode;
-				var tr = td.parentNode;
-				tr.parentNode.removeChild(tr);
-			}
-		}
-</script>
+        <script type="text/javascript">
+            function cloneRow(e) {
+                e.preventDefault();
+                var row = document.querySelector(".dropdowns:last-child");
+                var tableBody = document.querySelector("#tableDrop tbody");
+                var clone = row.cloneNode(true);
+                var clonedDrop = clone.querySelector('.beansDrop');
+                var lastDrop = row.querySelector('.beansDrop');
+                clonedDrop.value = '';
+                if (lastDrop.selectedIndex != -1) clonedDrop.options[lastDrop.selectedIndex].disabled = true;
+                tableBody.appendChild(clone);
+            }
+            function RemoveOrder(ele) {
+                var rownumber = document.getElementById("tableDrop").rows.length;
+                if (rownumber == 2){
+                    window.alert("You cannot remove the last order");
+                }	else {
+                    var row = ele.closest('tr');
+                    var drop = row.querySelector('.beansDrop');
+                    var alldrop = document.querySelectorAll('.beansDrop');
+                    if (drop.selectedIndex != -1)
+                        alldrop.forEach(ele => ele.options[drop.selectedIndex].disabled = false)
+                    row.remove();
+                }
+            }
+        </script>
+		
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
@@ -61,7 +49,7 @@ th, td{
 				<h1 class="h2">Customer's Order</h1>
 			</div>
 						
-		<form action="customer.php" method="POST">
+			<form action="customer.php" method="POST">
         <?php
 				$sqlspoil = "SELECT * from ((stock left join products on stock.productid = products.productid)
 				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid";
@@ -70,15 +58,14 @@ th, td{
 
 			<div class="table-responsive">
 				<table id="tableDrop" class="table table-bordered table-striped table-sm">
-					<thead>
 						<tr>
 							<th>Product</th>
 							<th>Quantity (in KG)</th>
                             <th>Action</th>
 						</tr>
-						<tr id="dropdowns">
-							<td id="beans">							
-								<select name="prodname[]" id="prodname">
+						<tr class="dropdowns">
+							<td class="beansDropdown">							
+								<select name="prodname[]" id="prodname" class="beansDrop">
 									<?php
 										$row = mysqli_num_rows($result);
 										while ($row = mysqli_fetch_array($result)) {
@@ -88,20 +75,17 @@ th, td{
 								</select>				
 							</td>
 							<td id="quantity">
-								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" size="20">
+								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" required>
 							</td>
-							<th id="action">
-								<input type="button" value="&#10006;" onclick="RemoveOrder()">
-                            	<input type="button" onclick="cloneRow()" name="add" id="add" value="Add" class="btn btn-secondary"/>
-							</th>
+							<td id="remove">
+								<input type="button" value="&#10006;" onclick="RemoveOrder(this)">
+							</td>
 						</tr>
-					</thead>
-					<tbody>
-					</tbody>
 				</table>
 			</div>
 
-						<div class="form-group">
+						<div class="form-inline">
+							<input type="button" onclick="cloneRow(event)" name="add" id="add" value="Add" class="btn btn-secondary"/>
 							<button type="submit" class="btn btn-primary" name="cust" id="cust">Submit</button>
 						</div>
 	</form>

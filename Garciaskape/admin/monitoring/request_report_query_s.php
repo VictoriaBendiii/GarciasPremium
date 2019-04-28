@@ -9,7 +9,7 @@ inner join products on order_request.productid = products.productid)
 left join branch on order_request.branchid = branch.branchid) 
 left join supplier on order_request.supplierid = supplier.supplierid)
 left join accounts on order_request.accountid = accounts.accountid) 
-where order_request.branchid = 1";
+where order_request.branchid = 2";
 
 
 $result = $conn->query($query) or die($conn->error . __LINE__);

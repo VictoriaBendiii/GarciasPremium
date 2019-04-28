@@ -2,6 +2,7 @@
 <?php
 session_start();
 include '../includes/connection.php';
+include '../inventory/query.php';
 
 $query = "SELECT products.productname, branch.branchid, stock.quantity, stock.stockin, stock.stockout
 from ((stock inner join products on stock.productid = products.productid) inner join branch on stock.branchid = branch.branchid) where branch.branchid=2";
@@ -27,6 +28,13 @@ $res = $conn->query($query);
 <script src="js/html5shiv.js"></script>
 <script src="js/respond.min.js"></script>
 <![endif]-->
+<style type="text/css">
+   #chart-container {
+        margin-left: 250px;
+        position: relative;
+        width: 80vw;
+        height: 10vh;
+</style>
     </head>
     <body>
         <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
@@ -50,7 +58,7 @@ $res = $conn->query($query);
                 <li class="active"><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
                 <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
                 <li><a href="../notification/notification.php"><em class="fa fa-bell">&nbsp;</em> Notification</a></li>
-                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Delivery</a></li>
+                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Order Request</a></li>
                 <li><a href="../inventory/inventory.php"><em class="fa fa-edit">&nbsp;</em> Inventory</a></li>
                 <li><a href="../branch/branch.php"><em class="fa fa-inbox">&nbsp;</em> Stock Request </a></li>
                 <li><a href="../product/product.php"><em class="fa fa-product-hunt">&nbsp;</em> Products</a></li>
@@ -72,68 +80,32 @@ $res = $conn->query($query);
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Total Stocks Remaining</h1>
+                    <h1 class="page-header">Total Stocks Remaining <?php echo $row1['branch_name']; ?> </h1>
                 </div>
             </div><!--/.row-->
             <div class="btn-group" style="width:100%">
-                <button onclick="location.href='../index.php'"; style="width:33.3%">Market</button>
-                <button class="btn btn-primary active" onclick="location.href='subchart.php'"; style="width:33.3%">Porta</button>
-            </div>
-        </div><!--/.row-->
+                <button onclick="location.href='../index.php'"; style="width:33.3%; border-radius: 30px;">Market</button>
+                <button class="btn btn-primary active" onclick="location.href='subchart.php'"; style="width:33.3%; border-radius: 30px;">Porta</button>
+            </div><!--/.row-->
 
         </div>	<!--/.main-->
-    <div style="padding-left: 300px; padding-top: 200px">
-        <script type="text/javascript" src="../js/loader.js"></script>
-        <script type="text/javascript">
-            google.charts.load('current', {'packages':['corechart']});
-            google.charts.setOnLoadCallback(drawChart);
 
-            function drawChart() {
-
-                var data = google.visualization.arrayToDataTable([
-                    ['productname', 'quantity'],
-
-                    <?php
-                    while($row = $res -> fetch_assoc())
-                    {
-                        echo "['".$row['productname']."',".$row['quantity']."],";
-                    }
-                    ?>
-                ]);
-
-                var options = {
-                    title: 'Product'
-                };
-
-                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-                chart.draw(data, options);
-            }
-        </script>
-        <div id="piechart" style=" width:100%; height: 400px;"></div>
+    
+<div id="chart-container">
+      <canvas id="mycanvas"></canvas>
     </div>
 
 
-
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/Chart.min.js"></script>
+    <script type="text/javascript" src="../js/app1.js"></script>
     <script src="../js/jquery-1.11.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/chart.min.js"></script>
-    <script src="../js/chart-data.js"></script>
     <script src="../js/easypiechart.js"></script>
     <script src="../js/easypiechart-data.js"></script>
     <script src="../js/bootstrap-datepicker.js"></script>
     <script src="../js/custom.js"></script>
-    <script>
-        window.onload = function () {
-            var chart1 = document.getElementById("line-chart").getContext("2d");
-            window.myLine = new Chart(chart1).Line(lineChartData, {
-                responsive: true,
-                scaleLineColor: "rgba(0,0,0,.2)",
-                scaleGridLineColor: "rgba(0,0,0,.05)",
-                scaleFontColor: "#c5c7cc"
-            });
-        };
-    </script>
+   
 
     </body>
 </php>

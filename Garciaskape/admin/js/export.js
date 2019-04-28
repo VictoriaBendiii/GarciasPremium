@@ -97,3 +97,27 @@ function exportToExcelSoldItem(tableID, filename = ''){
                             downloadurl.click();
                         }
                     }
+function exportToExcelRequest(tableID, filename = ''){
+                        var downloadurl;
+                        var dataFileType = 'application/vnd.ms-excel';
+                        var tableSelect = document.getElementById(tableID);
+                        var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
+
+                        filename = filename?filename+'.xls':'MarketOrderRequestReport.xls';
+
+                        downloadurl = document.createElement("a");
+
+                        document.body.appendChild(downloadurl);
+
+                        if(navigator.msSaveOrOpenBlob){
+                            var blob = new Blob(['\ufeff', tableHTMLData], {
+                                type: dataFileType
+                            });
+                            navigator.msSaveOrOpenBlob(blob, filename);
+                        }else{
+
+                            downloadurl.href = 'data:' + dataFileType + ', ' + tableHTMLData;
+                            downloadurl.download = filename;
+                            downloadurl.click();
+                        }
+                    }

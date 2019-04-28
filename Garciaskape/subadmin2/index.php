@@ -26,7 +26,7 @@
 
 			<h2>Reports</h2>
 
-			<div class="table-responsive">
+			<div class="table-responsive" style="overflow-x:auto;">
 				<table class="table table-bordered table-striped table-sm">
 					<thead>
 						<tr>
@@ -60,13 +60,13 @@
 
 		<?php
 			$sql = "SELECT * from ((stock left join products on stock.productid = products.productid)
-					left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid ORDER BY date_in desc, date_out desc limit 5";
+					left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid ORDER BY date_in desc limit 5";
 				$result = mysqli_query($conn, $sqlrep);
 		?>
 
 			<h2>Stocks</h2>
 
-			<div class="table-responsive">
+			<div class="table-responsive" style="overflow-x:auto;">
 				<table class="table table-bordered table-striped table-sm">
 					<thead>
 						<tr>

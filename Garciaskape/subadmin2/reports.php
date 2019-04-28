@@ -44,7 +44,7 @@
 
 			<h2>All Reports</h2>
 
-			<div class="table-responsive">
+			<div class="table-responsive" style="overflow-x:auto;">
 				<table class="table table-bordered table-striped table-sm">
 					<thead>
 						<tr>
@@ -91,7 +91,7 @@
 
 			<h2>Order Reports</h2>
 
-			<div class="table-responsive">
+			<div class="table-responsive" style="overflow-x:auto;">
 				<table class="table table-bordered table-striped table-sm">
 					<thead>
 						<tr>
@@ -137,7 +137,7 @@
 
 			<h2>Delivery Reports</h2>
 
-			<div class="table-responsive">
+			<div class="table-responsive" style="overflow-x:auto;">
 				<table class="table table-bordered table-striped table-sm">
 					<thead>
 						<tr>
@@ -174,15 +174,15 @@
 
 		<?php
 			if (isset($_POST['sold_rep'])) {
-				$sqlsold = "SELECT solditem.solditemid, products.productname, solditem.quantity, solditem.time, solditem.status
+				$sqlsold = "SELECT DATE_FORMAT(solditem.time,'%b %d, %Y %r') as time, solditem.solditemid, products.productname, solditem.quantity, solditem.status
 				from ((solditem left join products on solditem.productid = products.productid)
-				left join branch on solditem.branchid = branch.branchid) where branch.branchid = $branchid";
+				left join branch on solditem.branchid = branch.branchid) where branch.branchid = $branchid ORDER BY solditem.time desc";
 				$result = mysqli_query($conn, $sqlsold);
 		?>
 
 			<h2>Sold Reports</h2>
 
-			<div class="table-responsive">
+			<div class="table-responsive" style="overflow-x:auto;">
 				<table class="table table-bordered table-striped table-sm">
 					<thead>
 						<tr>

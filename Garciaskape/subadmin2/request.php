@@ -75,7 +75,7 @@ th, td{
 						</div>
 						<div class="modal-body">
 						<form action="request.php" method="POST" class="form">
-							<div class="table-responsive">
+							<div class="table-responsive" style="overflow-x:auto;">
 								<table id="tableDrop" class="table table-bordered table-striped">
 									<tr>
 										<th>Product</th>
@@ -151,9 +151,9 @@ th, td{
 
 		<?php
 			if (isset($_POST['pending'])) {
-				$sql_pending = "SELECT products.productname, orders.orderid, orders.quantity, orders.status, orders.time FROM orders 
-				inner join products on orders.productid = products.productid
-				where orders.branchid = '1' and orders.status = 'pending'";
+				$sql_pending = "SELECT order_request.idnumber, products.productname, order_request.order_requestid, order_request.quantity, order_request.status, order_request.time 
+				FROM order_request inner join products on delivery.productid = products.productid 
+				WHERE order_request.branchid = '2' AND delivery.status = 'pending'";
 				$result = mysqli_query($conn, $sql_pending);
 		?>
 
@@ -161,23 +161,18 @@ th, td{
 
 			<div class="table-responsive">
 				<table class="table table-bordered table-striped table-sm">
-					<thead>
 						<tr>
-							<th>ID</th>
 							<th>Date & Time</th>
 							<th>Product</th>
 							<th>Quantity (in Kg)</th>
 							<th>Status</th>
 						</tr>
-					</thead>
-					<tbody>
 
 					<?php
 						if($result = mysqli_query($conn, $sql_pending)) {
 							while($row = mysqli_fetch_assoc($result)){
 					?>
 						<tr>
-							<td> <?php echo $row["orderid"]; ?> </td>
 							<td> <?php echo $row["time"]; ?> </td>
 							<td> <?php echo $row["productname"]; ?> </td>
 							<td> <?php echo $row["quantity"]; ?> </td>
@@ -187,7 +182,6 @@ th, td{
 							}
 						}
 					?>
-					</tbody>
 				</table>
 			</div>
 			<?php
@@ -196,51 +190,44 @@ th, td{
 
 		<?php
 			if (isset($_POST['accepted'])) {
-				$sql_pending = "SELECT products.productname, orders.stockid, orders.idnumber, orders.orderid, orders.quantity, orders.status, orders.time FROM orders 
-				inner join products on orders.productid = products.productid
-				where orders.branchid = '1' and orders.status = 'accepted'";
-				$result = mysqli_query($conn, $sql_pending);
+				$sql_accepted = "SELECT delivery.idnumber, products.productname, delivery.order_requestid, delivery.quantity, delivery.status, delivery.time 
+				FROM delivery inner join products on delivery.productid = products.productid 
+				WHERE delivery.branchid='2' AND delivery.status='pending'";
+				$result = mysqli_query($conn, $sql_accepted);
 		?>
 
 			<h2>Accepted/Rejected Orders</h2>
 
-			<div class="table-responsive">
+			<div class="table-responsive" style="overflow-x:auto;">
 				<table class="table table-bordered table-striped table-sm">
-					<thead>
 						<tr>
-							<th>ID</th>
 							<th>Date & Time</th>
 							<th>Product</th>
 							<th>Quantity (in Kg)</th>
 							<th>Status</th>
 							<th>Action</th>
 						</tr>
-					</thead>
-					<tbody>
-					
 
 					<?php
-						if($result = mysqli_query($conn, $sql_pending)) {
-							while($row = mysqli_fetch_array($result)){
+						if($result = mysqli_query($conn, $sql_accepted)) {
+							while($row = mysqli_fetch_assoc($result)){
 					?>
 						<tr>
 						<form action="request.php" method="POST">
-							<td> <?php echo $row["orderid"]; ?> </td>
 							<td> <?php echo $row["time"]; ?> </td>
 							<td> <?php echo $row["productname"]; ?> </td>
 							<td> <?php echo $row["quantity"]; ?> </td>
-							<td> <?php echo $row["status"];?> </td>
+							<td> <?php echo $row["status"]; ?> </td>
 							<td>
 								<a href="request.php?accept=<?php echo $row['idnumber']; ?>"
                                 	class="btn btn-success"> Accept </a>
 							</td>
-							</form>
+						</form>
 						</tr>
 					<?php
 							}
 						}
 					?>
-					</tbody>
 				</table>
 			</div>
 			<?php
@@ -253,16 +240,16 @@ th, td{
 
 				$id = $_GET['accept'];
 
-				$sql_get1 = "SELECT * FROM orders WHERE idnumber=$id";
+				$sql_get1 = "SELECT * FROM delivery WHERE idnumber=$id";
 				$result1 = mysqli_query($conn, $sql_get1);
 				$row = mysqli_num_rows($result1);
 				$row = mysqli_fetch_array($result1);
 				$orderquan = $row['quantity'];
 
 				
-				$sql_get2 = "SELECT orders.idnumber, stock.stockid, stock.productid, stock.quantity FROM stock 
-				inner join orders on stock.productid = orders.productid
-				where stock.branchid = '1' AND orders.idnumber=$id";
+				$sql_get2 = "SELECT order_request.idnumber, stock.stockid, stock.productid, stock.quantity FROM stock 
+				inner join orders on stock.productid = order_request.productid
+				where stock.branchid = '2' AND order_request.idnumber=$id";
 				$result2 = mysqli_query($conn, $sql_get2);
 				$row = mysqli_num_rows($result2);
 				$row = mysqli_fetch_array($result2);
@@ -273,10 +260,10 @@ th, td{
 				$fin = $orderquan+$stockquan;
 
 				
-				$sql_update = "UPDATE orders SET status='delivered',time=SYSDATE() WHERE idnumber=$id";
+				$sql_update = "UPDATE delivery SET status='delivered',time=SYSDATE() WHERE idnumber=$id";
 				mysqli_query($conn, $sql_update);
 
-				$sql_insert = "UPDATE stock SET quantity=$fin,date_in=SYSDATE(),stockin=$orderquan WHERE productid=$prodid AND branchid=$branchid";
+				$sql_insert = "UPDATE stock SET quantity=$fin,date_in=SYSDATE(),stockin=$orderquan WHERE productid=$prodid AND branchid='2'";
 				mysqli_query($conn, $sql_insert);
 				
 

@@ -13,9 +13,17 @@
 		</div><!--/.row-->
 
 		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+		<form action="stocks.php" method="POST">
 			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
 				<h1 class="h2">Stocks</h1>
+				<h1 class="h4">Remarks: The color "RED" symobolized that the product is in critical level</h1>
+				<label> Critical Value: <input type="number" name="crit" id="crit" min="0" max="1000" ></label>
+				<button type="submit" class="btn btn-primary btn-sm" name="sub" id="sub">SUBMIT</button>
+				<button type="submit" class="btn btn-danger btn-sm" name="res" id="res">RESET</button>
+				<br>
+				<br>
 			</div>
+		</form>
 
 			<?php
 				$sql = "SELECT * from ((stock left join products on stock.productid = products.productid)
@@ -23,15 +31,12 @@
 				$result = mysqli_query($conn, $sql);
 			?>
 
-			<div class="table-responsive">
+			<div class="table-responsive" style="overflow-x:auto;">
 				<table class="table table-bordered table-striped table-sm">
-					<thead>
 						<tr>
 							<th>Product</th>
 							<th>Quantity (in Kg)</th>
 						</tr>
-					</thead>
-					<tbody>
 
 					<?php
 						if($result = mysqli_query($conn, $sql)) {
@@ -39,24 +44,28 @@
 					?>
 						<tr>
 							<td> <?php echo $row["productname"]; ?> </td>
-							<td> <?php echo $row["quantity"]; ?> </td>
+							<?php
+									$value = '50';
+								if(isset($_POST["sub"])){
+									$value = $_POST['crit'] ;
+								}
+								if(isset($_POST["res"])){
+									$value = '50';
+								}
+								if ($value >= $row['quantity']) {
+									echo "<td style='background-color:#f9243f;'>". $row['quantity'] ."</td>";
+								} else {
+									echo "<td>". $row['quantity'] ."</td>";
+								}									
+							?> 
 						</tr>
-
 					<?php
 							}
 						}
 					?>
-
-					</tbody>
 				</table>
 			</div>
-
-			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
-				<h1 class="h4">Remarks: <em class="fa fa-warning"></em>  This symbolized that the product is in critical level</h1>
-			</div>
-
 		</main>
-
 		</div><!--/.row-->
 	</div>	<!--/.main-->
 

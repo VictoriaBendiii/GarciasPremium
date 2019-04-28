@@ -56,7 +56,7 @@ th, td{
 				$result = mysqli_query($conn, $sqlspoil);
 		?>
 
-			<div class="table-responsive">
+			<div class="table-responsive" style="overflow-x:auto;">
 				<table id="tableDrop" class="table table-bordered table-striped table-sm">
 						<tr>
 							<th>Product</th>
@@ -117,10 +117,8 @@ th, td{
 					$res = $row['quantity'];
 					$fin = $res-$prodquan;
 
-
 					$status = "sold";
 
-					
 					$sql_cust = "UPDATE stock SET quantity=$fin,stockout=$prodquan,date_out=SYSDATE() WHERE productid=$prodname and branchid=$branchid";
 					$sql_update = "INSERT INTO solditem (solditemid, productid, quantity, orderid, branchid, accountid, time, status)
 									VALUES('$res1', '$prodname', '$prodquan', '$res2', '$branchid', '$accountid', SYSDATE(), '$status')";
@@ -133,7 +131,7 @@ th, td{
 	?>
 		
 		</main>
-		
+
 		</div><!--/.row-->
 	</div>	<!--/.main-->
 		

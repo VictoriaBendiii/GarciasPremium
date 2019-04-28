@@ -56,7 +56,7 @@ th, td{
 			<br>
 			<form action="request.php" method="POST">
 				<div class="btn-group" role="group" aria-label="...">
-					<button type="submit" class="btn btn-default">Request from Porta</button>
+					<button type="submit" class="btn btn-default" name="req" id="req">Request from Porta</button>
 					<button type="submit" class="btn btn-default" name="pending" id="pending">Order items</button>
 					<button type="submit" class="btn btn-default" name="accepted" id="accepted">Delivery items</button>
 				</div>
@@ -76,7 +76,7 @@ th, td{
 						</div>
 						<div class="modal-body">
 						<form action="request.php" method="POST" class="form">
-							<div class="table-responsive">
+							<div class="table-responsive" style="overflow-x:auto;">
 								<table id="tableDrop" class="table table-bordered table-striped">
 									<tr>
 										<th>Product</th>
@@ -127,26 +127,133 @@ th, td{
 
 				$status = "pending";
 
-				$sql_req = "SELECT orderid from orders order by orderid desc limit 1";
+				$sql_req = "SELECT order_requestid from order_request order by order_requestid desc limit 1";
 				$result = mysqli_query($conn, $sql_req);
 				$row = mysqli_num_rows($result);
 				$row = mysqli_fetch_array($result);
-				$res = $row['orderid'];
+				$res = $row['order_requestid'];
 				$res++;
 
 
 				foreach (array_combine($_POST['prodname'], $_POST['prodquan']) as $prodname => $prodquan){
 					
-					$sql_sub = "INSERT INTO orders (orderid, stockid, productid, quantity, solditemid, deliveryid, supplierid, branchid, accountid, time, status)
+					$sql_sub = "INSERT INTO order_requestid (order_requestid, productid, quantity, suplierid, branchid, accountid, time, status, deliveryid)
 							VALUES ('$res', NULL, '$prodname', '$prodquan', NULL, NULL, NULL, '$branchid', '$accountid', SYSDATE(), '$status')";
 					
 					mysqli_query($conn, $sql_sub);
 					
 				}
 			}
-
-
 		?>
+
+
+		<?php
+			if (isset($_POST['req'])) {
+				$sql_req = "SELECT products.productname, order_request.idnumber, order_request.quantity, order_request.time, order_request.status, branch.branch_name
+				from ((order_request left join products on order_request.productid = products.productid)
+				left join branch on order_request.branchid = branch.branchid)
+				where order_request.branchid='2' and order_request.status='pending'";
+				$result = mysqli_query($conn, $sql_req);
+		?>
+
+			<h2>Order Request of Porta</h2>
+
+			<div class="table-responsive" style="overflow-x:auto;">
+				<table class="table table-bordered table-striped table-sm">
+						<tr>
+							<th>Date & Time</th>
+							<th>Product</th>
+							<th>From</th>
+							<th>Quantity (in Kg)</th>
+							<th>Status</th>
+							<th>Action</th>
+						</tr>
+
+					<?php
+						if($result = mysqli_query($conn, $sql_req)) {
+							while($row = mysqli_fetch_assoc($result)){
+					?>
+						<tr>
+						<form action="request.php" method="POST">
+							<td> <?php echo $row["time"]; ?> </td>
+							<td> <?php echo $row["productname"]; ?> </td>
+							<td> <?php echo $row["branch_name"]; ?> </td>
+							<td> <?php echo $row["quantity"]; ?> </td>
+							<td> <?php echo $row["status"];?> </td>
+							<td>
+								<a href="request.php?order=<?php echo $row['idnumber']; ?>"
+                                	class="btn btn-success"> Accept </a>
+							</td>
+						</form>
+						</tr>
+					<?php
+							}
+						}
+					?>
+				</table>
+			</div>
+			<?php
+				}
+			?>
+
+			<?php
+
+			if (isset($_GET['order'])) {
+
+				$id = $_GET['order'];
+
+				$sql_get1 = "SELECT * FROM order_request WHERE idnumber=$id";
+				$result1 = mysqli_query($conn, $sql_get1);
+				$row = mysqli_num_rows($result1);
+				$row = mysqli_fetch_array($result1);
+				$orderquan = $row['quantity'];
+
+				
+				$sql_get2 = "SELECT order_request.idnumber, stock.stockid, stock.productid, stock.quantity FROM stock 
+				inner join order_request on stock.productid = order_request.productid
+				where stock.branchid = $branchid AND order_request.idnumber=$id";
+				$result2 = mysqli_query($conn, $sql_get2);
+				$row = mysqli_num_rows($result2);
+				$row = mysqli_fetch_array($result2);
+				$stockquan = $row['quantity'];
+				$prodid = $row['productid'];
+
+
+				$fin = $orderquan-$stockquan;
+
+				
+				$sql_update1 = "UPDATE order_request SET status='accepted',time=SYSDATE() WHERE idnumber=$id";
+				mysqli_query($conn, $sql_update1);
+
+				$sql_update2 = "UPDATE stock SET quantity=$fin,date_in=SYSDATE(),stockout=$orderquan WHERE productid=$prodid AND branchid=1";
+				mysqli_query($conn, $sql_update2);
+
+
+				$sql_req = "SELECT deliveryid from delivery order by deliveryid desc limit 1";
+				$result3 = mysqli_query($conn, $sql_req);
+				$row = mysqli_num_rows($result3);
+				$row = mysqli_fetch_array($result3);
+				$res = $row['deliveryid'];
+				$res++;
+
+				$sql = "SELECT * FROM (order_request left join delivery on order_request.deliveryid = delivery.deliveryid) where order_request.idnumber=$id";
+				$result4 = mysqli_query($conn, $sql);
+				$row = mysqli_num_rows($result4);
+				$row = mysqli_fetch_array($result4);
+				$supplier = $row['supplierid'];
+				$branch = $row['branchid'];
+				$order_req = $row['order_requestid'];
+				$status = 'pending';
+				$acctid = $row['accountid'];
+
+				$sql_insert = "INSERT INTO delivery (deliveryid, productid, quantity, supplierid, branchid, order_requestid, time, status, accountid)
+							   VALUES ('$res', '$prodid', '$orderquan', '$supplier', '$branch', '$order_req', SYSDATE(), '$status', '$acctid')";
+				mysqli_query($conn, $sql_insert);		
+
+		}
+		?>
+
+
 
 		
 

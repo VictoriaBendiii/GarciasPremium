@@ -1,52 +1,4 @@
 <?php include('others.php'); ?>
-<?php include('include/sidebar.php'); ?>
-
-	
-	<form action="others-process.php" method="POST">
-        <?php
-			if (isset($_POST['spoil'])) {
-				$sqlspoil = "SELECT * from ((stock left join products on stock.productid = products.productid)
-				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid";
-				$result = mysqli_query($conn, $sqlspoil);
-		?>
-			<h2>Product Spoilage</h2>
-
-			<div class="table-responsive">
-				<table id="tableDrop" class="table table-bordered table-striped table-sm">
-						<tr>
-							<th>Product</th>
-							<th>Quantity (in KG)</th>
-                            <th>Action</th>
-						</tr>
-						<tr class="dropdowns">
-							<td class="beansDropdown">							
-								<select name="prodname[]" id="prodname" class="beansDrop">
-									<?php
-										$row = mysqli_num_rows($result);
-										while ($row = mysqli_fetch_array($result)) {
-												echo "<option value='". $row['productid'] ."'>". $row['productname'] ."</option>";
-												}
-									?>
-								</select>				
-							</td>
-							<td id="quantity">
-								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" required>
-							</td>
-							<td id="remove">
-								<input type="button" value="&#10006;" onclick="RemoveOrder(this)">
-							</td>
-						</tr>
-				</table>
-			</div>
-
-			<div class="form-inline">
-				<input type="button" onclick="cloneRow(event)" name="add" id="add" value="Add" class="btn btn-secondary"/>
-				<button type="submit" class="btn btn-primary" name="subspoil" id="subspoil">Submit</button>
-			</div>
-			<?php
-				}
-			?>
-	</form>
 
 	<?php
 
@@ -66,53 +18,6 @@
 				}
 			}
 	?>
-
-
-	<form action="others-process.php" method="POST">
-        <?php
-			if (isset($_POST['loss'])) {
-				$sqlloss = "SELECT * from ((stock left join products on stock.productid = products.productid)
-				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid";
-				$result = mysqli_query($conn, $sqlloss);
-		?>
-			<h2>Product Loss</h2>		
-
-		<div class="table-responsive">
-				<table id="tableDrop" class="table table-bordered table-striped table-sm">
-						<tr>
-							<th>Product</th>
-							<th>Quantity (in KG)</th>
-                            <th>Action</th>
-						</tr>
-						<tr class="dropdowns">
-							<td class="beansDropdown">							
-								<select name="prodname[]" id="prodname" class="beansDrop">
-									<?php
-										$row = mysqli_num_rows($result);
-										while ($row = mysqli_fetch_array($result)) {
-												echo "<option value='". $row['productid'] ."'>". $row['productname'] ."</option>";
-												}
-									?>
-								</select>				
-							</td>
-							<td id="quantity">
-								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" required>
-							</td>
-							<td id="remove">
-								<input type="button" value="&#10006;" onclick="RemoveOrder(this)">
-							</td>
-						</tr>
-				</table>
-			</div>
-
-			<div class="form-inline">
-				<input type="button" onclick="cloneRow(event)" name="add" id="add" value="Add" class="btn btn-secondary"/>
-				<button type="submit" class="btn btn-primary" name="subloss" id="subloss">Submit</button>
-			</div>
-			<?php
-				}
-			?>
-	</form>
 
 	
 	<?php
@@ -135,106 +40,6 @@
 			}
 	?>
 
-
-	<form action="others-process.php" method="POST">
-        <?php
-			if (isset($_POST['return'])) {
-				$sqlreturn = "SELECT products.productname, solditem.solditemid, solditem.productid, solditem.quantity, solditem.branchid FROM 
-				(solditem left join products on solditem.productid = products.productid) where solditem.branchid=$branchid and solditem.time > DATE_SUB(NOW(), INTERVAL 24 HOUR)";
-				$result1 = mysqli_query($conn, $sqlreturn);
-
-				$sqlexchange = "SELECT * from ((stock left join products on stock.productid = products.productid)
-				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid";
-				$result2 = mysqli_query($conn, $sqlexchange);
-		?>
-
-			<h2>Customer's Item</h2>		
-
-			<div class="table-responsive">
-				<table id="tableDrop" class="table table-bordered table-striped table-sm">
-					<thead>
-						<tr>
-							<th>Product</th>
-							<th>Quantity (in KG)</th>
-                            <th>Action</th>
-						</tr>
-						<tr id="dropdowns">
-							<td id="beans">							
-								<select name="returnname[]" id="returnname">
-								<?php
-								$row = mysqli_num_rows($result1);
-								while ($row = mysqli_fetch_array($result1)) {
-						?>
-									<?php 
-										echo "<option value='". $row['productid'] ."'> ".$row['productname'] ."</option>";				
-										}
-									?>
-								</select>				
-							</td>
-							<td id="quantity">
-
-								<input type="number" name="returnquan[]" id="returnquan" placeholder="Enter Quantity" min="1" max="1000" size="20" >
-											
-
-							</td>
-							<th id="action">
-								<input type="button" value="&#10006;" onclick="RemoveOrder()">
-                            	<input type="button" onclick="cloneRow()" name="add" id="add" value="Add" class="btn btn-secondary"/>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
-
-			<h2>Exchange to</h2>				
-
-			<div class="table-responsive">
-				<table id="tableDrop" class="table table-bordered table-striped table-sm">
-					<thead>
-						<tr>
-							<th>Product</th>
-							<th>Quantity (in KG)</th>
-                            <th>Action</th>
-						</tr>
-						<tr id="dropdowns">
-							<td id="beans">							
-								<select name="exchangename[]" id="returnname">
-								<?php
-								$row = mysqli_num_rows($result2);
-								while ($row = mysqli_fetch_array($result2)) {
-						?>
-									<?php 
-										echo "<option value='". $row['productid'] ."'> ".$row['productname'] ."</option>";				
-										}
-									?>
-								</select>				
-							</td>
-							<td id="quantity">
-
-								<input type="number" name="exchangequan[]" id="returnquan" placeholder="Enter Quantity" min="1" max="1000" size="20" >
-											
-
-							</td>
-							<th id="action">
-								<input type="button" value="&#10006;" onclick="RemoveOrder()">
-                            	<input type="button" onclick="cloneRow()" name="add" id="add" value="Add" class="btn btn-secondary"/>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
-
-						<div class="form-group">
-							<button type="submit" class="btn btn-primary" name="subreturn" id="subreturn">Submit</button>
-						</div>
-			<?php	
-				}
-			?>
-	</form>
 
 	<?php
 
@@ -281,6 +86,8 @@
 			
 			}
 	?>
+
+
 		</main>
 
 </div><!--/.row-->

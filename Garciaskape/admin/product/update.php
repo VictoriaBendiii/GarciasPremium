@@ -2,7 +2,10 @@
 
 <?php
 
-session_start();
+if(!isset($_SESSION))
+    {
+        session_start();
+    } 
 
 if(isset($_POST['edit_product'])){
     $id = mysqli_real_escape_string($conn, $_POST['productid']);
@@ -14,7 +17,7 @@ if(isset($_POST['edit_product'])){
     $_SESSION['message']="".$productname." has been edited!";
     $_SESSION['msg_type']="success";
 
-    header('location: product.php'); 
+    header('location: product.php');
 }
 
 if (isset($_GET['activate'])){
@@ -45,7 +48,7 @@ if (isset($_GET['delete'])){
     $_SESSION['message'] = "Product permanently deleted!";
     $_SESSION['msg_type'] = "danger";
     header("location: archivedproducts.php");
-} 
+}
 
 
 ?>

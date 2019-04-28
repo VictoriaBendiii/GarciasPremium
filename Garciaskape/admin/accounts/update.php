@@ -1,7 +1,10 @@
 <?php include '../includes/connection.php'; ?>
 <?php
 
-session_start();
+if(!isset($_SESSION))
+    {
+        session_start();
+    } 
 
 if (isset($_GET['activate'])) {
     $id = $_GET['activate'];
@@ -42,17 +45,17 @@ if (isset($_POST['edit_account'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
 
     $ecnrypt_password = base64_encode($password);
-    
-    $sql = "UPDATE accounts SET username='$username', 
-          password='$ecnrypt_password', 
+
+    $sql = "UPDATE accounts SET username='$username',
+          password='$ecnrypt_password',
           firstname='$firstname',
-          lastname='$lastname', 
+          lastname='$lastname',
           user_type='$usertype',
           contact_number='$contact_number',
-          email='$email' 
+          email='$email'
           WHERE accountid='$id'";
-    
- 
+
+
         if ($conn->query($sql) === TRUE) {
         $_SESSION['message']="Account of ".$firstname. " has been edited!";
         $_SESSION['msg_type']="success";
@@ -62,7 +65,7 @@ if (isset($_POST['edit_account'])) {
         $_SESSION['msg_type']="danger";
         header("location: accounts.php");
     }
-    
+
     $conn->close();
 }
 

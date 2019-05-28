@@ -126,18 +126,27 @@ th, td{
 
 				$status = "pending";
 
-				$sql_req = "SELECT orderid from orders order by orderid desc limit 1";
+				$sql_req = "SELECT order_requestid from order_request order by order_requestid desc limit 1";
 				$result = mysqli_query($conn, $sql_req);
 				$row = mysqli_num_rows($result);
 				$row = mysqli_fetch_array($result);
-				$res = $row['orderid'];
-				$res++;
+				$res1 = $row['order_requestid'];
+				$res1++;
+
+				$sql1 = "SELECT deliveryid from order_request order by deliveryid desc limit 1";
+				$result1 = mysqli_query($conn, $sql1);
+				$row = mysqli_num_rows($result1);
+				$row = mysqli_fetch_array($result1);
+				$res2 = $row['deliveryid'];
+				$res2++;
 
 
 				foreach (array_combine($_POST['prodname'], $_POST['prodquan']) as $prodname => $prodquan){
+
+					$supplier = 2;
 					
-					$sql_sub = "INSERT INTO orders (orderid, stockid, productid, quantity, solditemid, deliveryid, supplierid, branchid, accountid, time, status)
-							VALUES ('$res', NULL, '$prodname', '$prodquan', NULL, NULL, NULL, '$branchid', '$accountid', SYSDATE(), '$status')";
+					$sql_sub = "INSERT INTO order_request(order_requestid, quantity, time, status, accountid, branchid, deliveryid, productid, supplierid)
+							VALUES ('$res1', '$prodquan', SYSDATE(), '$status', '$accountid', '$branchid', '$res2', '$prodname', '$supplier')";
 					
 					mysqli_query($conn, $sql_sub);
 					
@@ -152,8 +161,8 @@ th, td{
 		<?php
 			if (isset($_POST['pending'])) {
 				$sql_pending = "SELECT order_request.idnumber, products.productname, order_request.order_requestid, order_request.quantity, order_request.status, order_request.time 
-				FROM order_request inner join products on delivery.productid = products.productid 
-				WHERE order_request.branchid = '2' AND delivery.status = 'pending'";
+				FROM order_request inner join products on order_request.productid = products.productid 
+				WHERE order_request.branchid = $branchid AND order_request.status='pending' OR order_request.status='rejected'";
 				$result = mysqli_query($conn, $sql_pending);
 		?>
 
@@ -189,10 +198,10 @@ th, td{
 			?>
 
 		<?php
-			if (isset($_POST['accepted'])) {
+			if (isset($_POST['accepted'])) { 
 				$sql_accepted = "SELECT delivery.idnumber, products.productname, delivery.order_requestid, delivery.quantity, delivery.status, delivery.time 
 				FROM delivery inner join products on delivery.productid = products.productid 
-				WHERE delivery.branchid='2' AND delivery.status='pending'";
+				WHERE delivery.branchid=$branchid AND delivery.status='pending'";
 				$result = mysqli_query($conn, $sql_accepted);
 		?>
 
@@ -248,8 +257,8 @@ th, td{
 
 				
 				$sql_get2 = "SELECT order_request.idnumber, stock.stockid, stock.productid, stock.quantity FROM stock 
-				inner join orders on stock.productid = order_request.productid
-				where stock.branchid = '2' AND order_request.idnumber=$id";
+				inner join order_request on stock.productid = order_request.productid
+				WHERE stock.branchid = $branchid AND order_request.idnumber=$id";
 				$result2 = mysqli_query($conn, $sql_get2);
 				$row = mysqli_num_rows($result2);
 				$row = mysqli_fetch_array($result2);
@@ -257,15 +266,14 @@ th, td{
 				$prodid = $row['productid'];
 
 
-				$fin = $orderquan+$stockquan;
+				$final = $orderquan+$stockquan;
 
 				
-				$sql_update = "UPDATE delivery SET status='delivered',time=SYSDATE() WHERE idnumber=$id";
-				mysqli_query($conn, $sql_update);
+				$sql_update1 = "UPDATE delivery SET status='delivered',time=SYSDATE() WHERE idnumber=$id";
+				mysqli_query($conn, $sql_update1);
 
-				$sql_insert = "UPDATE stock SET quantity=$fin,date_in=SYSDATE(),stockin=$orderquan WHERE productid=$prodid AND branchid='2'";
-				mysqli_query($conn, $sql_insert);
-				
+				$sql_update2 = "UPDATE stock SET quantity=$final,stockin=$orderquan,date_in=SYSDATE() WHERE productid=$prodid AND branchid=$branchid";
+				mysqli_query($conn, $sql_update2);
 
 		}
 		?>

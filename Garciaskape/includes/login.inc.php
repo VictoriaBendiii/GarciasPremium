@@ -7,11 +7,11 @@ if (isset($_POST['button'])){
 
     $uname = mysqli_real_escape_string($conn, $_POST['uname']);
     $pword = mysqli_real_escape_string($conn, $_POST['pword']);
-
     $stripedpwd = strip_tags(mysqli_real_escape_string($conn, trim($pword)));
 
     if (empty($uname) || empty($pword)) { //
       header("Location: ../index.php?login=empty"); // error
+      $_SESSION['errMsg'] = 'Empty Credentials.';
       exit();
     }else {
       $sql = "SELECT * FROM accounts WHERE username ='$uname'";
@@ -20,6 +20,7 @@ if (isset($_POST['button'])){
 
       if($resultCheck < 1){
         header("Location: ../index.php?login=error1"); // error
+        $_SESSION['errMsg'] = 'User does not exist.';
         exit();
       } else {
         if($row = mysqli_fetch_assoc($result)){
@@ -31,17 +32,21 @@ if (isset($_POST['button'])){
             $hashedPwdCheck = true;
 
             if ($hashedPwdCheck == true) {
-              //LOGIN USER!!
-              $_SESSION['u_name'] = $row['username'];     // SESSION VARIABLES IF U GUYS NEED JUST
-              $_SESSION['u_type'] = $row['user_type'];    // SESSION VARIABLES IF U GUYS NEED JUST
-              $_SESSION['status'] = $row['status'];       // SESSION VARIABLES IF U GUYS NEED JUST
-              $_SESSION['account_id'] = $row['accountid'];       // SESSION VARIABLES IF U GUYS NEED JUST
+              //LOGIN USER
+              // Session Variables, If needed, try this statement
+              // <p><?php echo("{$_SESSION['test']}"."<br />"); *questionMark* *greaterThan*
+
+              $_SESSION['u_name'] = $row['username'];
+              $_SESSION['u_type'] = $row['user_type'];
+              $_SESSION['status'] = $row['status'];
+              $_SESSION['account_id'] = $row['accountid'];
               $_SESSION['branch_id'] = $row['branchid'];
               $_SESSION['firstname'] = $row['firstname'];
               $_SESSION['lastname'] = $row['lastname'];
+              $_SESSION['login_user'] = $uname;
               /*
               This part:
-              1. checks if the user loggin  in has an inactive or active account.
+              1. checks if the user logging in has an inactive or active account.
               2. checks if the user logging in is an admin or a subadmin.
               */
               if ($_SESSION['status'] == "Active" ){
@@ -62,6 +67,7 @@ if (isset($_POST['button'])){
           }
           if ($hashedPwdCheck == false){
             header("Location: ../index.php?login=error2"); // error
+            $_SESSION['errMsg'] = 'Wrong username or password';
             exit();
           }
 
@@ -72,7 +78,8 @@ if (isset($_POST['button'])){
 
 
 }else {
-  header("Location: ../index.php?login=error3");
+  header("Location: index.php?login=error3");
+  $_SESSION['errMsg'] = '';
   exit();
 }
 

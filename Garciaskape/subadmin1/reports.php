@@ -82,7 +82,7 @@
 
 		<?php
 			if (isset($_POST['ord_rep'])) {
-				$sqlord = "SELECT products.productname, solditem.quantity, solditem.time
+				$sqlord = "SELECT DATE_FORMAT(solditem.time,'%b %d, %Y %r') as time, products.productname, solditem.quantity
 				from ((solditem 
 				left join products on solditem.productid = products.productid)
 				left join branch on solditem.branchid = branch.branchid)
@@ -127,7 +127,7 @@
 
 		<?php
 			if (isset($_POST['del_rep'])) {
-				$sqldel = "SELECT products.productname, delivery.quantity, delivery.time, delivery.status, supplier.supplier_name
+				$sqldel = "SELECT DATE_FORMAT(delivery.time,'%b %d, %Y %r') as time, products.productname, delivery.quantity, delivery.status, supplier.supplier_name
 				from (((delivery
 				left join products on delivery.productid = products.productid)
 				left join supplier on delivery.supplierid = supplier.supplierid)
@@ -176,7 +176,7 @@
 
 		<?php
 			if (isset($_POST['sold_rep'])) {
-				$sqlsold = "SELECT products.productname, solditem.quantity, solditem.time, solditem.status
+				$sqlsold = "SELECT DATE_FORMAT(solditem.time,'%b %d, %Y %r') as time, products.productname, solditem.quantity, solditem.status
 				from ((solditem 
 				left join products on solditem.productid = products.productid)
 				left join branch on solditem.branchid = branch.branchid)
@@ -223,7 +223,7 @@
 
 		<?php
 			if (isset($_POST['order_req'])) {
-				$sqlreq = "SELECT products.productname, order_request.quantity, order_request.time, order_request.status, supplier.supplier_name
+				$sqlreq = "SELECT DATE_FORMAT(order_request.time,'%b %d, %Y %r') as time, products.productname, order_request.quantity, order_request.status, supplier.supplier_name
 				from ((order_request left join products on order_request.productid = products.productid)
 				left join supplier on order_request.supplierid = supplier.supplierid)
 				where order_request.branchid = $branchid";

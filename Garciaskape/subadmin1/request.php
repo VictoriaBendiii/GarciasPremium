@@ -181,8 +181,11 @@ th, td{
 							<td> <?php echo $row["quantity"]; ?> </td>
 							<td> <?php echo $row["status"];?> </td>
 							<td>
-								<a href="request.php?order=<?php echo $row['idnumber']; ?>"
+								<a href="request.php?orderA=<?php echo $row['idnumber']; ?>"
                                 	class="btn btn-success"> Accept </a>
+
+									<a href="request.php?orderR=<?php echo $row['idnumber']; ?>"
+                                	class="btn btn-danger"> Reject </a>
 							</td>
 						</form>
 						</tr>
@@ -198,9 +201,9 @@ th, td{
 
 			<?php
 
-			if (isset($_GET['order'])) {
+			if (isset($_GET['orderA'])) {
 
-				$id = $_GET['order'];
+				$id = $_GET['orderA'];
 
 				$sql_get1 = "SELECT * FROM order_request WHERE idnumber=$id";
 				$result1 = mysqli_query($conn, $sql_get1);
@@ -211,33 +214,24 @@ th, td{
 				
 				$sql_get2 = "SELECT order_request.idnumber, stock.stockid, stock.productid, stock.quantity FROM stock 
 				inner join order_request on stock.productid = order_request.productid
-				where stock.branchid = $branchid AND order_request.idnumber=$id";
+				WHERE stock.branchid = $branchid AND order_request.idnumber=$id";
 				$result2 = mysqli_query($conn, $sql_get2);
 				$row = mysqli_num_rows($result2);
 				$row = mysqli_fetch_array($result2);
 				$stockquan = $row['quantity'];
 				$prodid = $row['productid'];
 
-
-				$fin = $orderquan-$stockquan;
+				$fin = $stockquan-$orderquan;
 
 				
 				$sql_update1 = "UPDATE order_request SET status='accepted',time=SYSDATE() WHERE idnumber=$id";
 				mysqli_query($conn, $sql_update1);
 
-				$sql_update2 = "UPDATE stock SET quantity=$fin,date_in=SYSDATE(),stockout=$orderquan WHERE productid=$prodid AND branchid=1";
+				$sql_update2 = "UPDATE stock SET quantity=$fin,date_out=SYSDATE(),stockout=$orderquan WHERE productid=$prodid AND branchid=$branchid";
 				mysqli_query($conn, $sql_update2);
 
-
-				$sql_req = "SELECT deliveryid from delivery order by deliveryid desc limit 1";
-				$result3 = mysqli_query($conn, $sql_req);
-				$row = mysqli_num_rows($result3);
-				$row = mysqli_fetch_array($result3);
-				$res = $row['deliveryid'];
-				$res++;
-
-				$sql = "SELECT * FROM (order_request left join delivery on order_request.deliveryid = delivery.deliveryid) where order_request.idnumber=$id";
-				$result4 = mysqli_query($conn, $sql);
+				$sql2 = "SELECT * FROM order_request WHERE idnumber=$id";
+				$result4 = mysqli_query($conn, $sql2);
 				$row = mysqli_num_rows($result4);
 				$row = mysqli_fetch_array($result4);
 				$supplier = $row['supplierid'];
@@ -245,12 +239,33 @@ th, td{
 				$order_req = $row['order_requestid'];
 				$status = 'pending';
 				$acctid = $row['accountid'];
+				$delivery = $row['deliveryid'];
 
-				$sql_insert = "INSERT INTO delivery (deliveryid, productid, quantity, supplierid, branchid, order_requestid, time, status, accountid)
-							   VALUES ('$res', '$prodid', '$orderquan', '$supplier', '$branch', '$order_req', SYSDATE(), '$status', '$acctid')";
+				$sql_insert = "INSERT INTO delivery (order_requestid, quantity, time, status, accountid, branchid, deliveryid, productid, supplierid)
+								   	VALUES ('$order_req', '$orderquan', SYSDATE(), '$status', '$acctid', '$branch', '$delivery', '$prodid', '$supplier')";
 				mysqli_query($conn, $sql_insert);		
 
-		}
+			}
+
+			if (isset($_GET['orderR'])) {
+
+				$id = $_GET['orderR'];
+
+				$sql_get2 = "SELECT order_request.idnumber, stock.stockid, stock.productid, stock.quantity FROM stock 
+				inner join order_request on stock.productid = order_request.productid
+				WHERE stock.branchid = $branchid AND order_request.idnumber=$id";
+				$result2 = mysqli_query($conn, $sql_get2);
+				$row = mysqli_num_rows($result2);
+				$row = mysqli_fetch_array($result2);
+				$stockquan = $row['quantity'];
+				$prodid = $row['productid'];
+				
+				$sql_update1 = "UPDATE order_request SET status='rejected',time=SYSDATE() WHERE idnumber=$id";
+				mysqli_query($conn, $sql_update1);
+
+			}
+
+
 		?>
 
 

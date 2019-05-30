@@ -1,0 +1,5 @@
+ErrorDocument 400 /LATEST/Garciaskape/errors/error.php
+ErrorDocument 401 /LATEST/Garciaskape/errors/error.php
+ErrorDocument 403 /LATEST/Garciaskape/errors/error.php
+ErrorDocument 404 /LATEST/Garciaskape/errors/error.php
+ErrorDocument 500 /LATEST/Garciaskape/errors/error.php

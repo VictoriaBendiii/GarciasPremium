@@ -1,8 +1,8 @@
 <?php
+session_start();
+?>
+<?php
 $status = $_SERVER['REDIRECT_STATUS'];
-
-
-
 $codes = array(
        403 => array('403 Forbidden', 'The server has refused to fulfill your request. '),
        404 => array('404 Not Found', 'The document/file requested was not found on this server.'),
@@ -20,9 +20,7 @@ if ($title == false || strlen($status) != 3) {
 }
 
 ?>
-<?php
-session_start();
-?>
+
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -58,11 +56,5 @@ session_start();
         </div>
     </div>
 
-<script>
-    history.pushState(null, null, null);
-    window.addEventListener('popstate', function () {
-        history.pushState(null, null, null);
-    });
-</script>
 </body>
 </html>

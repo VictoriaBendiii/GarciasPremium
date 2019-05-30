@@ -1,6 +1,5 @@
 <?php include('connection.php') ?>
-<?php 
-session_start();
+<?php
 
 $username = $_SESSION['u_name'];
 $branchid = $_SESSION['branch_id'];
@@ -16,7 +15,7 @@ $accountid = $_SESSION['account_id'];
 	<link href="css/font-awesome.min.css" rel="stylesheet">
 	<link href="css/datepicker3.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">
-	
+
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 	<!--[if lt IE 9]>
@@ -32,16 +31,16 @@ $accountid = $_SESSION['account_id'];
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
-				<a class="navbar-brand" href="#"><span></span> Sub Admin 2 </a>
+				<a class="navbar-brand" href="#"><span></span> Sub Admin 1 </a>
 					<br>
-					<p> <?php echo $username; ?> </p>
+					<p> Eddie Garcia </p>
 
-				
+
 			</div>
 		</div><!-- /.container-fluid -->
     </nav>
-    
-	<script src="js/jquery-1.11.1.min.js"></script>
+
+    <script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/chart.min.js"></script>
 	<script src="js/chart-data.js"></script>

@@ -33,9 +33,7 @@ $accountid = $_SESSION['account_id'];
 					<span class="icon-bar"></span></button>
 				<a class="navbar-brand" href="#"><span></span> Sub Admin 1 </a>
 					<br>
-					<p> Eddie Garcia </p>
-
-
+					<p> <?php $f_name = $_SESSION['firstname']; $l_name = $_SESSION['lastname'];  echo "$f_name $l_name"; ?></p>
 			</div>
 		</div><!-- /.container-fluid -->
     </nav>

@@ -93,7 +93,7 @@ include 'addprod.php';?>
 <script>
     $(document).ready(function() {
     $('#productname').blur(function() {
-        var regex = /[&\/\\#,+=()@^$~%.'":*?<>{}]/;
+        var regex = /[&\/\\#,+=()@^$~%.'":*!?<>{}]/;
         if ($('#productname').val().match(regex)) {
             $('#popover-product').removeClass('hide');
             $("#add_prod").attr('disabled', 'disabled');

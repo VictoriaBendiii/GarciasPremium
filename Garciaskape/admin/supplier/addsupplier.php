@@ -117,7 +117,7 @@ $(document).ready(function() {
 
     $('#suppname').blur(function() {
         var regex =
-            /\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\'|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s/;
+            /[&\/\\#,+=()@^$~%.'":*!?<>{}]/;
         if ($('#suppname').val().match(regex)) {
             $('#popover-suppname').removeClass('hide');
             $("#add_supplier").attr('disabled', 'disabled');
@@ -129,7 +129,7 @@ $(document).ready(function() {
 
     $('#contact_person').blur(function() {
         var regex =
-            /\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\'|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s/;
+            /[&\/\\#,+=()@^$~%.'":*!?<>{}]/;
         if ($('#contact_person').val().match(regex)) {
             $('#popover-conname').removeClass('hide');
             $("#add_supplier").attr('disabled', 'disabled');
@@ -141,7 +141,7 @@ $(document).ready(function() {
     });
     $('#firstname').blur(function() {
         var regex =
-            /\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\'|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s/;
+            /[&\/\\#,+=()@^$~%.'":*!?<>{}]/;
         if ($('#firstname').val().match(regex)) {
             $('#popover-firstname').removeClass('hide');
             $("#add_user").attr('disabled', 'disabled');
@@ -152,7 +152,7 @@ $(document).ready(function() {
     });
     $('#middlename').blur(function() {
         var regex =
-            /\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\'|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s/;
+            /[&\/\\#,+=()@^$~%.'":*!?<>{}]/;
         if ($('#middlename').val().match(regex)) {
             $('#popover-middlename').removeClass('hide');
             $("#add_user").attr('disabled', 'disabled');

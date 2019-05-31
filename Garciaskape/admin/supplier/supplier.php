@@ -198,7 +198,7 @@ include 'update.php'; ?>
             });
 
             $('.con_num').blur(function() {
-                var regex = /(09|\+639)\d{9}/;
+                var regex = /(\+639)\d{9}/;
                 var isNumberCorrect = $(this).val().match(regex);
                 $('.modal:visible').find('.popnum').toggleClass('hide', isNumberCorrect);
                 $('.sub').prop('disabled', !isNumberCorrect);

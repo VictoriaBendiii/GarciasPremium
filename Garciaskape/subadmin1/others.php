@@ -109,7 +109,7 @@ th, td{
         <?php
 			if (isset($_POST['spoil'])) {
 				$sqlspoil = "SELECT * from ((stock left join products on stock.productid = products.productid)
-				left join branch on stock.branchid = branch.branchid) where branch.branchid = 1";
+				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid AND products.status='Active'";
 				$result = mysqli_query($conn, $sqlspoil);
 		?>
 			<h2>Product Spoilage</h2>
@@ -155,7 +155,7 @@ th, td{
         <?php
 			if (isset($_POST['loss'])) {
 				$sqlloss = "SELECT * from ((stock left join products on stock.productid = products.productid)
-				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid";
+				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid AND products.status='Active'";
 				$result = mysqli_query($conn, $sqlloss);
 		?>
 			<h2>Product Loss</h2>		

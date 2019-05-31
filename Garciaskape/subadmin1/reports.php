@@ -18,9 +18,6 @@
 			<form action="reports.php" method="POST">
 				<div class="btn-group btn-group-justified" role="group" aria-label="...">
 					<div class="btn-group" role="group">
-					  <button type="submit" class="btn btn-primary" name="all_rep" id="all_rep"> ALL </button>
-					</div>
-					<div class="btn-group" role="group">
 					  <button type="submit" class="btn btn-primary" name="ord_rep" id="ord_rep"> ORDER </button>
 					</div>
 					<div class="btn-group" role="group">
@@ -37,48 +34,6 @@
 			</div>
 
 		<br>
-		<?php
-			if (isset($_POST['all_rep'])) {
-				$sqlall = "SELECT DATE_FORMAT(orders.time,'%b %d, %Y %r') as time, orders.orderid, products.productname, orders.quantity, orders.status
-				from ((orders left join products on orders.productid = products.productid)
-				left join branch on orders.branchid = branch.branchid) where branch.branchid = $branchid";
-				$result = mysqli_query($conn, $sqlall);
-		?>
-
-			<h2>All Reports</h2>
-
-			<div class="table-responsive" style="overflow-x:auto;">
-				<table class="table table-bordered table-striped table-sm">
-					<thead>
-						<tr>
-							<th>Product</th>
-							<th>Quantity (in Kg)</th>
-							<th>Status</th>
-							<th>Date & Time</th>
-						</tr>
-					</thead>
-					<tbody>
-
-					<?php
-						if($result = mysqli_query($conn, $sqlall)) {
-							while($row = mysqli_fetch_assoc($result)){
-					?>
-						<tr>
-							<td> <?php echo $row["productname"]; ?> </td>
-							<td> <?php echo $row["quantity"]; ?> </td>
-							<td> <?php echo $row["status"];?> </td>
-							<td> <?php echo $row["time"]; ?> </td>
-						</tr>
-					<?php
-							}
-						}
-					?>
-					</tbody>
-				</table>
-			</div>
-		<?php
-			}
-		?>
 
 		<?php
 			if (isset($_POST['ord_rep'])) {

@@ -52,7 +52,7 @@ th, td{
 		<form action="customer.php" method="POST">
         <?php
 				$sqlspoil = "SELECT * from ((stock left join products on stock.productid = products.productid)
-				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid";
+				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid AND products.status='Active'";
 				$result = mysqli_query($conn, $sqlspoil);
 		?>
 

@@ -26,8 +26,8 @@
 		</form>
 
 			<?php
-				$sql = "SELECT * from ((stock left join products on stock.productid = products.productid)
-				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid ORDER BY productname";
+				$sql = "SELECT * FROM ((stock left join products on stock.productid = products.productid)
+				left join branch on stock.branchid = branch.branchid) WHERE branch.branchid = $branchid ORDER BY productname";
 				$result = mysqli_query($conn, $sql);
 			?>
 
@@ -36,6 +36,7 @@
 						<tr>
 							<th>Product</th>
 							<th>Quantity (in Kg)</th>
+							<th>Status</th>
 						</tr>
 
 					<?php
@@ -45,19 +46,25 @@
 						<tr>
 							<td> <?php echo $row["productname"]; ?> </td>
 							<?php
-									$value = '50';
+									$value1 = '50';
+									$value2 = '80';
 								if(isset($_POST["sub"])){
-									$value = $_POST['crit'] ;
+									$value1 = $_POST['crit'] ;
 								}
 								if(isset($_POST["res"])){
-									$value = '50';
+									$value1 = '50';
 								}
-								if ($value >= $row['quantity']) {
+								if ($value1 >= $row['quantity']) {
 									echo "<td style='background-color:#f9243f;'>". $row['quantity'] ."</td>";
-								} else {
+								}
+								 elseif ($value2 >= $row['quantity'] && $row['quantity'] >= $value1) {
+									echo "<td style='background-color:#ff6600;'>". $row['quantity'] ."</td>";
+								}
+								else {
 									echo "<td>". $row['quantity'] ."</td>";
 								}									
 							?> 
+							<td> <?php echo $row["status"]; ?> </td>
 						</tr>
 					<?php
 							}

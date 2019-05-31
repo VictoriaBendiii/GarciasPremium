@@ -9,22 +9,7 @@ if (isset($_POST['add_supplier'])) {
     $contact_number = mysqli_real_escape_string($conn, $_POST['contact_number']);
     $address = mysqli_real_escape_string($conn, $_POST['address']);
     $status = 'active';
-    
-    //VALIDATION of SUPPLIER NAME AND CONTACT PERSON
-    if (preg_match("/^[a-zA-Z][0-9]/", $supplier_name)) {
-        $_SESSION['message']="Supplier name must contain alphabhets only!";
-        $_SESSION['msg_type']="danger";
-        header("location: addsupplier.php");
-        die();
-    }
-    
-    
-    if (preg_match("/^[a-zA-Z][0-9]/", $contact_person)) {
-        $_SESSION['message']="Contact person must contain alphabhets only!";
-        $_SESSION['msg_type']="danger";
-        header("location: addsupplier.php");
-        die();
-    }
+
     
     //Check for duplicates
     $query_supplier = "SELECT * FROM supplier WHERE supplier_name='$supplier_name'";

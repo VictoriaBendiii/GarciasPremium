@@ -18,9 +18,6 @@
 			<form action="reports.php" method="POST">
 				<div class="btn-group btn-group-justified" role="group" aria-label="...">
 					<div class="btn-group" role="group">
-					  <button type="submit" class="btn btn-primary" name="all_rep" id="all_rep"> ALL </button>
-					</div>
-					<div class="btn-group" role="group">
 					  <button type="submit" class="btn btn-primary" name="ord_rep" id="ord_rep"> ORDER </button>
 					</div>
 					<div class="btn-group" role="group">
@@ -37,58 +34,12 @@
 			</div>
 
 		<br>
-		<?php
-			if (isset($_POST['all_rep'])) {
-				$sqlsold = "SELECT DATE_FORMAT(orders.time,'%b %d, %Y %r') as time, orders.orderid, products.productname, orders.quantity, orders.status
-				from ((orders left join products on orders.productid = products.productid)
-				left join branch on orders.branchid = branch.branchid) where branch.branchid = $branchid";
-				$result = mysqli_query($conn, $sqlsold);
-		?>
-
-			<h2>All Reports</h2>
-
-			<div class="table-responsive" style="overflow-x:auto;">
-				<table class="table table-bordered table-striped table-sm">
-					<thead>
-						<tr>
-							<th>Product</th>
-							<th>Quantity (in Kg)</th>
-							<th>Status</th>
-							<th>Date & Time</th>
-						</tr>
-					</thead>
-					<tbody>
-
-					<?php
-						if($result = mysqli_query($conn, $sqlsold)) {
-							while($row = mysqli_fetch_assoc($result)){
-					?>
-						<tr>
-							<td> <?php echo $row["productname"]; ?> </td>
-							<td> <?php echo $row["quantity"]; ?> </td>
-							<td> <?php echo $row["status"];?> </td>
-							<td> <?php echo $row["time"]; ?> </td>
-						</tr>
-					<?php
-							}
-						}
-					?>
-					</tbody>
-				</table>
-			</div>
-		<?php
-			}
-		?>
 
 		<?php
 			if (isset($_POST['ord_rep'])) {
-				$sqlord = "SELECT DATE_FORMAT(orders.time,'%b %d, %Y %r') as time, products.productname, orders.quantity, orders.status, FROM orders 
-				inner join products on orders.productid = products.productid
-				where orders.branchid = $branchid and (orders.status = 'accepted' or orders.status = 'pending' )
-				UNION
-				SELECT products.productname, delivery.quantity, delivery.status, delivery.time FROM delivery
-				inner join products on delivery.productid = products.productid
-				where delivery.branchid = $branchid and delivery.status = 'delivered'";
+				$sqlord = "SELECT DATE_FORMAT(solditem.time,'%b %d, %Y %r') as time, solditem.solditemid, products.productname, solditem.quantity
+				from ((solditem left join products on solditem.productid = products.productid)
+				left join branch on solditem.branchid = branch.branchid) where branch.branchid = $branchid ORDER BY solditem.time desc";
 				$result = mysqli_query($conn, $sqlord);
 		?>
 
@@ -100,7 +51,6 @@
 						<tr>
 							<th>Product</th>
 							<th>Quantity (in Kg)</th>
-							<th>Status</th>
 							<th>Date & Time</th>
 						</tr>
 					</thead>
@@ -113,7 +63,6 @@
 						<tr>
 							<td> <?php echo $row["productname"]; ?> </td>
 							<td> <?php echo $row["quantity"]; ?> </td>
-							<td> <?php echo $row["status"];?> </td>
 							<td> <?php echo $row["time"]; ?> </td>
 						</tr>
 					<?php

@@ -17,14 +17,15 @@
 				<h1 class="h2">Hi Sub Admin!</h1>
 			</div>
 
+
 		<?php
-				$sqlrep = "SELECT DATE_FORMAT(orders.time,'%b %d, %Y %r') as time, orders.orderid, products.productname, orders.quantity, orders.status
-				from ((orders left join products on orders.productid = products.productid)
-				left join branch on orders.branchid = branch.branchid) where branch.branchid = $branchid order by orders.time desc limit 5";
-				$result = mysqli_query($conn, $sqlrep);
+			$sql = "SELECT DATE_FORMAT(stock.date_in,'%b %d, %Y %r') as time, stock.quantity, products.status, products.productname
+					from ((stock left join products on stock.productid = products.productid)
+					left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid ORDER BY date_in desc limit 5";
+				$result = mysqli_query($conn, $sql);
 		?>
 
-			<h2>Reports</h2>
+			<h2>Stocks In</h2>
 
 			<div class="table-responsive" style="overflow-x:auto;">
 				<table class="table table-bordered table-striped table-sm">
@@ -33,13 +34,13 @@
 							<th>Product</th>
 							<th>Quantity (in Kg)</th>
 							<th>Status</th>
-							<th>Date & Time</th>
+							<th>Date in</th>
 						</tr>
 					</thead>
 					<tbody>
 
 					<?php
-						if($result = mysqli_query($conn, $sqlrep)) {
+						if($result = mysqli_query($conn, $sql)) {
 							while($row = mysqli_fetch_assoc($result)){
 					?>
 						<tr>
@@ -56,15 +57,14 @@
 				</table>
 			</div>
 
-
-
-		<?php
-			$sql = "SELECT * from ((stock left join products on stock.productid = products.productid)
-					left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid ORDER BY date_in desc limit 5";
-				$result = mysqli_query($conn, $sqlrep);
+			<?php
+			$sql = "SELECT DATE_FORMAT(stock.date_out,'%b %d, %Y %r') as time, stock.quantity, products.status, products.productname
+					from ((stock left join products on stock.productid = products.productid)
+					left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid ORDER BY date_out desc limit 5";
+				$result = mysqli_query($conn, $sql);
 		?>
 
-			<h2>Stocks</h2>
+			<h2>Stocks Out</h2>
 
 			<div class="table-responsive" style="overflow-x:auto;">
 				<table class="table table-bordered table-striped table-sm">
@@ -73,7 +73,6 @@
 							<th>Product</th>
 							<th>Quantity (in Kg)</th>
 							<th>Status</th>
-							<th>Date in</th>
 							<th>Date out</th>
 						</tr>
 					</thead>
@@ -87,8 +86,7 @@
 							<td> <?php echo $row["productname"]; ?> </td>
 							<td> <?php echo $row["quantity"]; ?> </td>
 							<td> <?php echo $row["status"];?> </td>
-							<td> <?php echo $row["date_in"]; ?> </td>
-							<td> <?php echo $row["date_out"]; ?> </td>
+							<td> <?php echo $row["time"]; ?> </td>
 						</tr>
 					<?php
 							}

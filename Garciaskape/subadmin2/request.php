@@ -86,7 +86,7 @@ th, td{
 										<td class="beansDropdown">								
 											<select name="prodname[]" id="prodname" class="beansDrop">
 												<?php
-													$sql = "SELECT * FROM products";
+													$sql = "SELECT * FROM products WHERE status='Active'";
 													$result = mysqli_query($conn, $sql);
 													$row = mysqli_num_rows($result);
 													while ($row = mysqli_fetch_array($result)) {
@@ -162,7 +162,7 @@ th, td{
 			if (isset($_POST['pending'])) {
 				$sql_pending = "SELECT order_request.idnumber, products.productname, order_request.order_requestid, order_request.quantity, order_request.status, order_request.time 
 				FROM order_request inner join products on order_request.productid = products.productid 
-				WHERE order_request.branchid = $branchid AND order_request.status='pending' OR order_request.status='rejected'";
+				WHERE order_request.branchid = $branchid AND order_request.status='pending' OR order_request.status='rejected' ORDER BY order_request.time desc";
 				$result = mysqli_query($conn, $sql_pending);
 		?>
 

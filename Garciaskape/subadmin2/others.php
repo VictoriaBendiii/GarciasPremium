@@ -60,12 +60,13 @@ th, td{
 
 									
 					$(document).ready(function() {
-					var button = $('#crit');
-					$(button).prop('disabled', true);
+					var buttons = $('.crit');
+					$(buttons).prop('disabled', true);
 
-					$('#edit').click(function() {
-						if ($(button).prop('disabled')) $(button).prop('disabled', false);
-						else $(button).prop('disabled', true);
+					$('.edit').click(function() {
+						var button = $(this).closest("tr").find(".crit");  // closest element with the crit-class
+						var status = button.prop("disabled");   // current status
+						button.prop("disabled", !status);       // toggle disabled 
 					});
 
 				});
@@ -111,6 +112,7 @@ th, td{
 				$sqlspoil = "SELECT * from ((stock left join products on stock.productid = products.productid)
 				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid AND products.status='Active'";
 				$result = mysqli_query($conn, $sqlspoil);
+				$status = 'Spoilage';
 		?>
 			<h2>Product Spoilage</h2>
 
@@ -119,6 +121,7 @@ th, td{
 						<tr>
 							<th>Product</th>
 							<th>Quantity (in KG)</th>
+							<th>Status</th>
                             <th>Action</th>
 						</tr>
 						<tr class="dropdowns">
@@ -134,6 +137,9 @@ th, td{
 							</td>
 							<td id="quantity">
 								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" required>
+							</td>
+							<td id="status">
+								<?php echo $status; ?>
 							</td>
 							<td id="remove">
 								<input type="button" value="&#10006;" onclick="RemoveOrder(this)">
@@ -157,6 +163,7 @@ th, td{
 				$sqlloss = "SELECT * from ((stock left join products on stock.productid = products.productid)
 				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid AND products.status='Active'";
 				$result = mysqli_query($conn, $sqlloss);
+				$status = 'Loss';
 		?>
 			<h2>Product Loss</h2>		
 
@@ -165,6 +172,7 @@ th, td{
 						<tr>
 							<th>Product</th>
 							<th>Quantity (in KG)</th>
+							<th>Status</th>
                             <th>Action</th>
 						</tr>
 						<tr class="dropdowns">
@@ -180,6 +188,9 @@ th, td{
 							</td>
 							<td id="quantity">
 								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" required>
+							</td>
+							<td id="status">
+								<?php echo $status; ?>
 							</td>
 							<td id="remove">
 								<input type="button" value="&#10006;" onclick="RemoveOrder(this)">
@@ -323,7 +334,6 @@ th, td{
 							<th>Quantity (in Kg)</th>
 							<th>Action</th>
 						</tr>
-					<tbody>
 
 					<?php
 						if($result = mysqli_query($conn, $sql)) {
@@ -331,8 +341,8 @@ th, td{
 					?>
 						<tr>
 							<td> <?php echo $row["productname"]; ?> </td>
-							<td><input type="number" name="crit" id="crit" value="<?php echo $row["quantity"]; ?>" disabled></td>
-							<td><button type="button" name="edit" id="edit"><i class="fa fa-edit"></i></button></td>
+							<td><input type="number" name="crit" class="crit" value="<?php echo $row["quantity"]; ?>" disabled></td>
+							<td><button type="button" name="edit" class="edit"><i class="fa fa-edit"></i></button></td>
 						</tr>
 
 					<?php

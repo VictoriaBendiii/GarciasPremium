@@ -51,9 +51,11 @@ th, td{
 						
 			<form action="customer.php" method="POST">
         <?php
-				$sqlspoil = "SELECT * from ((stock left join products on stock.productid = products.productid)
+				$sqlsold = "SELECT * from ((stock left join products on stock.productid = products.productid)
 				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid AND products.status='Active'";
-				$result = mysqli_query($conn, $sqlspoil);
+				$result = mysqli_query($conn, $sqlsold);
+				$status = 'Loss';
+				
 		?>
 
 			<div class="table-responsive">
@@ -61,6 +63,7 @@ th, td{
 						<tr>
 							<th>Product</th>
 							<th>Quantity (in KG)</th>
+							<th>Status</th>
                             <th>Action</th>
 						</tr>
 						<tr class="dropdowns">
@@ -76,6 +79,9 @@ th, td{
 							</td>
 							<td id="quantity">
 								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" required>
+							</td>
+							<td id="status">
+								<?php echo $status; ?>
 							</td>
 							<td id="remove">
 								<input type="button" value="&#10006;" onclick="RemoveOrder(this)">

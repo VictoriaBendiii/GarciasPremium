@@ -183,7 +183,7 @@ include 'update.php'; ?>
 
             $('.supname').blur(function() {
                 var regex =
-                    /\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\'|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s/;
+                    /[&\/\\#,+=()@^$~%.'":*?<>{}]/;
                 var isSupplierNameCorrect = $(this).val().match(regex);
                 $('.modal:visible').find('.popsuppname').toggleClass('hide', !isSupplierNameCorrect);
                 $('.sub').prop('disabled', isSupplierNameCorrect);
@@ -191,7 +191,7 @@ include 'update.php'; ?>
 
             $('.conper').blur(function() {
                 var regex =
-                    /\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\'|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s/;
+                    /[&\/\\#,+=()@^$~%.'":*?<>{}]/;
                 var isContactPersonCorrect = $(this).val().match(regex);
                 $('.modal:visible').find('.popconname').toggleClass('hide', !isContactPersonCorrect);
                 $('.sub').prop('disabled', isContactPersonCorrect);

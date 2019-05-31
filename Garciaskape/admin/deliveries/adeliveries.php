@@ -3,7 +3,7 @@ session_start();
 include '../includes/connection.php';
 $accountid = $_SESSION['account_id'];
 $branchid = $_SESSION['branch_id'];
-if(isset($_POST['abc'])){
+if(isset($_POST['submitproduct'])){
     //Add Request to the order_request table
     //separate post num for suppliers
     $resultsupplier = $_POST['num'];
@@ -15,20 +15,36 @@ if(isset($_POST['abc'])){
     
 
     //separate post beans for products
-    $resultproduct = $_POST['beans'];
-    $resultproduct_explode = explode('/',implode($resultproduct));
-    $resultproduct_explode[0];
-    $productid = $resultproduct_explode[1];
+    // $resultproduct = $_POST['beans'];
+    // $resultproduct_explode = explode('/',implode($resultproduct));
+    // $productname = $resultproduct_explode[0];
+    // $productid = $resultproduct_explode[1];
+
     //get the inputted quantity
-    $arrayquantity = $_POST['quan'];
-    $quantity = $arrayquantity[0];
+    // $arrayquantity = $_POST['quan'];
+  
+    // $quantity = $arrayquantity[0];
+    // echo $quantity;
+
+    $sql_req = "SELECT order_requestid from order_request order by order_requestid desc limit 1";
+				$result = mysqli_query($conn, $sql_req);
+				$row = mysqli_num_rows($result);
+				$row = mysqli_fetch_array($result);
+				$res = $row['order_requestid'];
+				$res++;
+
+    foreach(array_combine($_POST['beans'], $_POST['quan']) as $prodname => $prodquan){
+        $resultproduct_explode = explode('/',$prodname);
+        $productname = $resultproduct_explode[0];
+        $productid = $resultproduct_explode[1];
+        // $quantity=$prodquan[0];
+         echo $prodquan;
    
-
-
     $requestsql = "INSERT INTO order_request (order_requestid, productid, quantity, supplierid, branchid, accountid, time)
-    values ('6', '$productid', '$quantity', '$supplierid','$branchid', '$accountid', now())";
+    values ('$res', '$productid', '$prodquan', '$supplierid','$branchid', '$accountid', now())";
 
 mysqli_query($conn, $requestsql);
+    }
  
 
     // Authorisation details.
@@ -276,7 +292,7 @@ if (!$result2) {
                                     <br>
                                     <tr>
                                         <td><button onClick="cloneRow(event)" class="btn btn-secondary" type="button">Add Order</button></td>
-                                        <td><input type="submit" name="abc" value="Send" class="btn btn-primary"/></td>
+                                        <td><input type="submit" name="submitproduct" value="Send" class="btn btn-primary"/></td>
                                     </tr>
                                 </table>
                             </form>

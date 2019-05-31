@@ -2,6 +2,19 @@
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 
+<script type="text/javascript">
+
+		$(document).ready(function(){
+		$("#input").on("keyup", function() {
+			var value = $(this).val().toLowerCase();
+			$("#table tr").filter(function() {
+			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			});
+		});
+		});
+
+</script>
+
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
@@ -24,6 +37,9 @@
 				<br>
 			</div>
 		</form>
+		
+		<label> Search for Product: <input type="text" id="input" onkeyup="myFunction()" placeholder="Product name"></label>
+		<br>
 
 			<?php
 				$sql = "SELECT * FROM ((stock left join products on stock.productid = products.productid)
@@ -43,6 +59,7 @@
 						if($result = mysqli_query($conn, $sql)) {
 							while($row = mysqli_fetch_assoc($result)){
 					?>
+					<tbody id="table">
 						<tr>
 							<td> <?php echo $row["productname"]; ?> </td>
 							<?php
@@ -66,6 +83,7 @@
 							?> 
 							<td> <?php echo $row["status"]; ?> </td>
 						</tr>
+					</tbody>
 					<?php
 							}
 						}

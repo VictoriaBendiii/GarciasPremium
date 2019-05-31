@@ -63,18 +63,32 @@ include '../includes/header.php';
                     <form id="contact-form" class="form" action="process.php" method="POST" role="form">
                         <div class="form-group">
                             <label class="form-label" for="name">Supplier Name</label>
-                            <input type="text" class="form-control" id="name" name="supplier_name"
+                            <span id="popover-suppname" class="hide pull-right block-help"><i
+                                class="fa fa-info-circle text-danger" aria-hidden="true"></i> Supplier name must not contain
+                            any special characters</span>
+                            <input type="text" class="form-control" id="suppname" name="supplier_name"
                                 placeholder="Supplier Name" tabindex="1" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="contact_person">Contact Person</label>
+                            <span id="popover-conname" class="hide pull-right block-help"><i
+                                class="fa fa-info-circle text-danger" aria-hidden="true"></i> Contact person name must not contain
+                            any special characters</span>
                             <input type="text" class="form-control" id="contact_person" name="contact_person"
                                 placeholder="Supplier Contact Person" tabindex="1" required>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="contact_number">Contact Number</label>
-                            <input type="text" class="form-control" id="contact_number"
-                                name="contact_number" placeholder="Contact Number" tabindex="1" maxlength="13" minlength="13" value="+63" required>
+                        <label for="contact_number">Contact Number</label>
+                        <span id="popover-cnumber" class="hide pull-right block-help"><i
+                                class="fa fa-info-circle text-danger" aria-hidden="true"></i> Enter 11 digit phone
+                            number with proper format </span>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-secondary" disabled>+63</button>
+                            </span>
+                            <input type="text" class="form-control" id="contact_number" name="contact_number"
+                                minlength="10" maxlength="10" placeholder="9XXXXXXXXX" required>
+                        </div>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="address">Address</label>
@@ -98,89 +112,70 @@ include '../includes/header.php';
     <!--/.row-->
     </div>
     <!--/.main-->
-
-    <script src="../js/jquery-1.11.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/chart.min.js"></script>
-    <script src="../js/chart-data.js"></script>
-    <script src="../js/easypiechart.js"></script>
-    <script src="../js/easypiechart-data.js"></script>
-    <script src="../js/bootstrap-datepicker.js"></script>
-    <script src="../js/custom.js"></script>
     <script>
-    window.onload = function() {
-        var chart1 = document.getElementById("line-chart").getContext("2d");
-        window.myLine = new Chart(chart1).Line(lineChartData, {
-            responsive: true,
-            scaleLineColor: "rgba(0,0,0,.2)",
-            scaleGridLineColor: "rgba(0,0,0,.05)",
-            scaleFontColor: "#c5c7cc"
-        });
-    };
-    </script>
+$(document).ready(function() {
 
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script>
-    (function($, window, document, undefined) {
-
-        'use strict';
-
-        var $html = $('html');
-
-        $html.on('click.ui.dropdown', '.js-dropdown', function(e) {
-            e.preventDefault();
-            $(this).toggleClass('is-open');
-        });
-
-        $html.on('click.ui.dropdown', '.js-dropdown [data-dropdown-value]', function(e) {
-            e.preventDefault();
-            var $item = $(this);
-            var $dropdown = $item.parents('.js-dropdown');
-            $dropdown.find('.js-dropdown__input').val($item.data('dropdown-value'));
-            $dropdown.find('.js-dropdown__current').text($item.text());
-        });
-
-        $html.on('click.ui.dropdown', function(e) {
-            var $target = $(e.target);
-            if (!$target.parents().hasClass('js-dropdown')) {
-                $('.js-dropdown').removeClass('is-open');
-            }
-        });
-
-    })(jQuery, window, document);
-    </script>
-    <script>
-    var password = document.getElementById("password"),
-        confirm_password = document.getElementById("confirm_password");
-
-    function validatePassword() {
-        if (password.value != confirm_password.value) {
-            confirm_password.setCustomValidity("Passwords Don't Match");
+    $('#suppname').blur(function() {
+        var regex =
+            /\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\'|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s/;
+        if ($('#suppname').val().match(regex)) {
+            $('#popover-suppname').removeClass('hide');
+            $("#add_supplier").attr('disabled', 'disabled');
         } else {
-            confirm_password.setCustomValidity('');
+            $('#popover-username').addClass('hide');
+            $("#add_supplier").removeAttr('disabled');
         }
-    }
+    });
 
-    password.onchange = validatePassword;
-    confirm_password.onkeyup = validatePassword;
-    </script>
-
-    <script>
-    var contact_number = document.getElementById("contact_number").value;
-
-
-    function checkNumber() {
-        if (contact_number.length != 11) {
-            contact_number.setCustomValidity("Please input 11 digit contact number!");
+    $('#contact_person').blur(function() {
+        var regex =
+            /\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\'|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s/;
+        if ($('#contact_person').val().match(regex)) {
+            $('#popover-conname').removeClass('hide');
+            $("#add_supplier").attr('disabled', 'disabled');
         } else {
-            contact_number.setCustomValidity('');
+            $('#popover-conname').addClass('hide');
+            $('#sign-up').attr('disabled', false);
+            $("#add_supplier").removeAttr('disabled');
         }
-    }
+    });
+    $('#firstname').blur(function() {
+        var regex =
+            /\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\'|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s/;
+        if ($('#firstname').val().match(regex)) {
+            $('#popover-firstname').removeClass('hide');
+            $("#add_user").attr('disabled', 'disabled');
+        } else {
+            $('#popover-firstname').addClass('hide');
+            $("#add_user").removeAttr('disabled');
+        }
+    });
+    $('#middlename').blur(function() {
+        var regex =
+            /\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\'|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s/;
+        if ($('#middlename').val().match(regex)) {
+            $('#popover-middlename').removeClass('hide');
+            $("#add_user").attr('disabled', 'disabled');
+        } else {
+            $('#popover-middlename').addClass('hide');
+            $("#add_user").removeAttr('disabled');
+        }
+    })
 
-    contact_number.onchange = checkNumber;
-    contact_number.onkeyup = checkNumber;
-    </script>
+    $('#contact_number').blur(function() {
+        var regex = /^[(9)][(\d+)]{9}$/;
+        if ($('#contact_number').val().match(regex)) {
+            $('#popover-cnumber').addClass('hide');
+            $("#add_supplier").removeAttr('disabled');
+        } else {
+            $('#popover-cnumber').removeClass('hide');
+            $("#add_supplier").attr('disabled', 'disabled');
+        }
+    });
 
+
+});
+</script>
 
 </body>
 

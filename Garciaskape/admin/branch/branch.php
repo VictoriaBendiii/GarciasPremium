@@ -1,6 +1,11 @@
 <?php
     include '../includes/connection.php';
     include '../includes/header.php';
+    
+    $updatestat = '';
+
+    include 'updatestatus.php';
+
 ?>
 
         <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
@@ -52,6 +57,19 @@
     </div>
 </div>
 <!-- Modal -->
+        
+<!-- update status -->
+<?php
+        if($updatestat === 1){
+?>
+        <div class="alert alert-success" role="alert">
+          Status has been updated!
+        </div>   
+<?php
+        }
+?>
+<!-- update status -->
+        
 <div id="request_table">
         <table class="table table-dark table-striped">
             <thead class="thead-dark">
@@ -72,23 +90,30 @@
           
                     // get requests
                 
-                    $get_branch_request = "SELECT orders.orderid, products.productname, supplier.supplier_name, branch.branchid, orders.quantity, DATE_FORMAT(orders.time,'%b %d, %Y %r') as time, orders.status from (((orders inner join products on orders.productid = products.productid) inner join supplier on orders.supplierid = supplier.supplierid) inner join branch on orders.branchid = branch.branchid) where orders.status = 'rejected' or orders.status = 'pending' or orders.status = 'accepted';";
+                    $get_branch_request = "SELECT products.productname, supplier.supplier_name, order_request.quantity, order_request.time, order_request.status, order_request.order_requestid from ((order_request inner join products on order_request.productid = products.productid) inner join supplier on order_request.supplierid = supplier.supplierid) WHERE order_request.status = 'accepted' OR order_request.status = 'rejected' OR order_request.status = 'pending'";
                 
                     $result = mysqli_query($conn, $get_branch_request);
                 
                     while($rows = mysqli_fetch_array($result)){
                 ?>
                 <tr>
-                        
+                         
                         <td><?php echo $rows['productname']; ?></td>
                         <td><?php echo $rows['supplier_name']; ?></td>
                         
                         <td><?php echo $rows['quantity']; ?></td>
                         <td><?php echo $rows['time']; ?></td>
-                        <td><span id="status-<?php echo $rows['orderid']; ?>"><?php echo $rows['status']; ?></span></td>
+                        <td><span id="status-<?php echo $rows['order_requestid']; ?>"><?php echo $rows['status']; ?></span></td>
                         <td>
-                        <button data-id="<?php echo $rows['orderid']; ?>" class="btn btn-success btn-sm acceptbtn">Accept</button>
-                        <button data-id="<?php echo $rows['orderid']; ?>" class="btn btn-danger btn-sm rejectbtn">Reject</button>
+                    
+                                        
+                        <a href="branch.php?accept=<?php echo $rows['order_requestid']; ?>" class="btn btn-success"> Accept </a>
+                                                    
+                        <a href="branch.php?reject=<?php echo $rows['order_requestid']; ?>" class="btn btn-danger"> Reject </a>
+                                                       
+                                        
+
+                        
                         </td>
                 </tr>
                 <?php

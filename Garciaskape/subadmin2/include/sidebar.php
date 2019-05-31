@@ -43,6 +43,6 @@
 				<li><a href="others.php"><em class="fa fa-clone">&nbsp;</em> Others </a></li>
 		<?php } ?>
 
-			<li><a href="login.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+			<li><a href="../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
 	</div><!--/.sidebar-->

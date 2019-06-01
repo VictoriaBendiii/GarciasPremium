@@ -129,9 +129,16 @@ include '../inventory/query.php';
 
         <script src="../js/requesttable.js"></script>
         <script src="../js/export.js""></script>
-            
+        <script>
+          function check(data){
+            if(confirm("Are you sure? ")){
+                exportToExcelRequest(data);
+    
+            }
+          }
+        </script>
 
-        <button onclick="exportToExcelRequest('tableExport')" class="btn btn-primary">Export Data To Excel File</button>
+        <button onclick="check('tableExport')" class="btn btn-primary">Export Data To Excel File</button>
         <br><br>
 
 
@@ -234,9 +241,16 @@ include '../inventory/query.php';
 
         <script src="../js/ordered_m.js"></script>
         <script src="../js/export.js""></script>
-            
+         <script>
+          function check(data){
+            if(confirm("Are you sure? ")){
+                exportToExcelOrder(data);
+    
+            }
+          }
+        </script>
 
-        <button onclick="exportToExcelOrder('tableExport')" class="btn btn-primary">Export Data To Excel File</button>
+        <button onclick="check('tableExport')" class="btn btn-primary">Export Data To Excel File</button>   
         <br><br>
 
 
@@ -331,9 +345,18 @@ if (isset($_POST['del_rep'])) {
 
 <script src="../js/deliveredtablem.js"></script>
 <script src="../js/export.js""></script>
-   
+<script>
+          function check(data){
+            if(confirm("Are you sure? ")){
+                exportToExcelDelivery(data);
+    
+            }
+          }
+        </script>
 
-<button onclick="exportToExcelDelivery('tableExport')" class="btn btn-primary">Export Data To Excel File</button>
+        <button onclick="check('tableExport')" class="btn btn-primary">Export Data To Excel File</button> 
+
+
 <br><br>
 
 
@@ -422,8 +445,17 @@ if (isset($_POST['sold_rep'])) {
 
 <script src="../js/solditemtablem.js"></script>
 <script src="../js/export.js""></script>
+<script>
+          function check(data){
+            if(confirm("Are you sure? ")){
+                exportToExcelSoldItem(data);
     
-<button onclick="exportToExcelSoldItem('tableExport')" class="btn btn-primary">Export Data To Excel File</button>
+            }
+          }
+        </script>
+
+        <button onclick="check('tableExport')" class="btn btn-primary">Export Data To Excel File</button>   
+
 <br><br>
 
 

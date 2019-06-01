@@ -15,17 +15,13 @@ if (isset($_POST['add_prod'])) {
         header("location: addproduct.php");
         die();
     }
-
     // adding of product to database
     $sql = "INSERT INTO products (productname, branchid,status) 
           VALUES('$prodname','$branchid' ,'$status' )";
     mysqli_query($conn, $sql);
     $_SESSION['message']="New product has been added to Market and Porta Vaga!";
     $_SESSION['msg_type']="success";
-
     header('location: addproduct.php'); 
-
     $conn->close();
 }
-
 ?>

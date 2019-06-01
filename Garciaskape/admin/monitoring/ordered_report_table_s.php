@@ -2,11 +2,12 @@
 session_start();
 include '../includes/connection.php';
 
-$query = "SELECT products.productname, branch.branchid, branch.branch_name, orders.quantity, accounts.firstname, DATE_FORMAT(orders.time,'%b %d, %Y %r') as time
-from (((orders inner join products on orders.productid = products.productid) 
-left join branch on orders.branchid = branch.branchid) 
-left join accounts on orders.accountid = accounts.accountid) 
-where branch.branchid = 1";
+$query ="SELECT products.productname, quantity, time, accounts.firstname, branch.branch_name
+from(((orders
+left join products on orders.productid = products.productid)
+left join accounts on orders.accountid = accounts.accountid)
+left join branch on orders.branchid = branch.branchid)
+where branch.branchid = '2'";
 
 
 $result = $conn->query($query) or die($conn->error . __LINE__);

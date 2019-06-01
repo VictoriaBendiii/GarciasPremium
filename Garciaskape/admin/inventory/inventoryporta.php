@@ -1,7 +1,9 @@
 <?php 
 session_start();
 include '../includes/connection.php';
-include 'critical.php'; ?>
+include 'critical.php'; 
+include 'query.php';
+?>
 <?php 
 $sql = "SELECT products.productname, stock.quantity as stock, branch.branchid, products.status
 from ((stock left join products on stock.productid = products.productid) 
@@ -58,7 +60,7 @@ $result = mysqli_query($conn, $sql);
                <li><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
                 <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
                 <li><a href="../notification/notification.php"><em class="fa fa-bell">&nbsp;</em> Notification</a></li>
-                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Delivery</a></li>
+                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Order Request</a></li>
                 <li class="active"><a href="../inventory/inventory.php"><em class="fa fa-edit">&nbsp;</em> Inventory</a></li>
                 <li><a href="../branch/branch.php"><em class="fa fa-inbox">&nbsp;</em> Stock Request </a></li>
                 <li><a href="../product/product.php"><em class="fa fa-product-hunt">&nbsp;</em> Products</a></li>
@@ -80,7 +82,7 @@ $result = mysqli_query($conn, $sql);
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Inventory</h1>
+                    <h1 class="page-header">Inventory <?php echo $row1['branch_name']; ?> </h1>
                 </div>
 
             </div><!--/.row-->

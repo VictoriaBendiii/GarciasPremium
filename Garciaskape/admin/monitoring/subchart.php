@@ -30,7 +30,7 @@ $res = $conn->query($query);
 <![endif]-->
 <style type="text/css">
    #chart-container {
-        margin-left: 250px;
+        float: right;
         position: relative;
         width: 80vw;
         height: 10vh;

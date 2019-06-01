@@ -1,10 +1,6 @@
 <?php
 header('Content-Type: application/json');
-$conn = mysqli_connect("localhost","root","","garciaspremiumcoffee");
-
-if(!$conn){
-  die("Connection failed: " . $conn->error);
-}
+include '../includes/connection.php';
 //query to get data from the table
 $query = sprintf("SELECT products.productname, stock.quantity from 
 ((stock inner join products on stock.productid = products.productid) 

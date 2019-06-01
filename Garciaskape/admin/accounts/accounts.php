@@ -2,6 +2,7 @@
 
 include 'update.php';
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -47,7 +48,7 @@ include 'update.php';
         <li><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
         <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
         <li><a href="../notification/notification.php"><em class="fa fa-bell">&nbsp;</em> Notification</a></li>
-        <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Delivery</a></li>
+        <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Order Request</a></li>
         <li><a href="../inventory/inventory.php"><em class="fa fa-edit">&nbsp;</em> Inventory</a></li>
         <li><a href="../branch/branch.php"><em class="fa fa-inbox">&nbsp;</em> Stock Request </a></li>
         <li><a href="../product/product.php"><em class="fa fa-product-hunt">&nbsp;</em> Products</a></li>
@@ -275,7 +276,6 @@ include 'update.php';
 
         <script>
         $(document).ready(function() {
-
             $('.username').blur(function() {
                 var regex =
                     /\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\'|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s/;
@@ -291,7 +291,6 @@ include 'update.php';
                 $('.modal:visible').find('.popfirst').toggleClass('hide', !isFirstnameCorrect);
                 $('.sub').prop('disabled', isFirstnameCorrect);
             });
-
             $('.lastname').blur(function() {
                 var regex =
                     /[&\/\\#,+=()@^$~%.'":*?<>{}]/;
@@ -299,7 +298,6 @@ include 'update.php';
                 $('.modal:visible').find('.poplast').toggleClass('hide', !isLastnameCorrect);
                 $('.sub').prop('disabled', isLastnameCorrect);
             });
-
             $('.email').blur(function() {
                 var regex =
                     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -307,7 +305,6 @@ include 'update.php';
                 $('.modal:visible').find('.popemail').toggleClass('hide', isEmailCorrect);
                 $('.sub').prop('disabled', !isEmailCorrect);
             });
-
             $('.con_num').blur(function() {
                 var regex = /((\+63)|0)[.\- ]?9[0-9]{2}[.\- ]?[0-9]{3}[.\- ]?[0-9]{4}/;
                 var isNumberCorrect = $(this).val().match(regex);

@@ -39,14 +39,13 @@ include 'adduser.php';
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
-
 <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
     <div class="divider"></div>
     <ul class="nav menu">
         <li><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
         <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
         <li><a href="../notification/notification.php"><em class="fa fa-bell">&nbsp;</em> Notification</a></li>
-        <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Delivery</a></li>
+        <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Order Request</a></li>
         <li><a href="../inventory/inventory.php"><em class="fa fa-edit">&nbsp;</em> Inventory</a></li>
         <li><a href="../branch/branch.php"><em class="fa fa-inbox">&nbsp;</em> Stock Request </a></li>
         <li><a href="../product/product.php"><em class="fa fa-product-hunt">&nbsp;</em> Products</a></li>
@@ -215,14 +214,12 @@ include 'adduser.php';
 
 <script>
 $(document).ready(function() {
-
     $('#password').keyup(function() {
         var password = $('#password').val();
         if (checkStrength(password) == false) {
             $("#submit").attr('disabled', 'disabled');
         }
     });
-
     $('#confirm_password').blur(function() {
         if ($('#password').val() !== $('#confirm_password').val()) {
             $('#popover-cpassword').removeClass('hide');
@@ -232,7 +229,6 @@ $(document).ready(function() {
             $("#submit").removeAttr('disabled');
         }
     });
-
     $('#username').blur(function() {
         var regex =
             /\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\'|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s/;
@@ -245,7 +241,6 @@ $(document).ready(function() {
             $("#submit").removeAttr('disabled');
         }
     });
-
     $('#lastname').blur(function() {
         var regex =
             /[&\/\\#,+=()@^$~%.'":*?<>{}]/;
@@ -280,7 +275,6 @@ $(document).ready(function() {
             $("#submit").removeAttr('disabled');
         }
     })
-
     $('#contact_number').blur(function() {
         var regex = /(\+639)\d{9}/;
         if ($('#contact_number').val().match(regex)) {
@@ -291,14 +285,12 @@ $(document).ready(function() {
             $("#submit").attr('disabled', 'disabled');
         }
     });
-
     $('#password').keyup(function() {
         var password = $('#password').val();
         if (checkStrength(password) == false) {
             $("#submit").attr('disabled', 'disabled');
         }
     });
-
     $('#email').blur(function() {
         var regex =
             /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -310,7 +302,6 @@ $(document).ready(function() {
             $("#submit").attr('disabled', 'disabled');
         }
     });
-
     function checkStrength(password) {
         var strength = 0;
         if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
@@ -318,41 +309,34 @@ $(document).ready(function() {
             $('.low-upper-case').addClass('text-success');
             $('.low-upper-case i').removeClass('fa fa-thumbs-down').addClass('fa fa-thumbs-up');
             $('#popover-password-top').addClass('hide');
-
         } else {
             $('.low-upper-case').removeClass('text-success');
             $('.low-upper-case i').addClass('fa fa-thumbs-down').removeClass('fa fa-thumbs-up');
             $('#popover-password-top').removeClass('hide');
         }
-
         if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) {
             strength += 1;
             $('.one-number').addClass('text-success');
             $('.one-number i').removeClass('fa fa-thumbs-down').addClass('fa fa-thumbs-up');
             $('#popover-password-top').addClass('hide');
-
         } else {
             $('.one-number').removeClass('text-success');
             $('.one-number i').addClass('fa fa-thumbs-down').removeClass('fa fa-thumbs-up');
             $('#popover-password-top').removeClass('hide');
         }
-
         if (password.length > 7) {
             strength += 1;
             $('.eight-character').addClass('text-success');
             $('.eight-character i').removeClass('fa fa-thumbs-down').addClass('fa fa-thumbs-up');
             $('#popover-password-top').addClass('hide');
-
         } else {
             $('.eight-character').removeClass('text-success');
             $('.eight-character i').addClass('fa fa-thumbs-down').removeClass('fa fa-thumbs-up');
             $('#popover-password-top').removeClass('hide');
         }
-
         if (strength < 2) {
             $('#result').removeClass()
             $('#password-strength').addClass('progress-bar-danger');
-
             $('#result').addClass('text-danger').text('Very Weak');
             $('#password-strength').css('width', '10%');
         } else if (strength == 2) {
@@ -369,11 +353,8 @@ $(document).ready(function() {
             $('#password-strength').addClass('progress-bar-success');
             $('#result').addClass('text-success').text('Strength');
             $('#password-strength').css('width', '100%');
-
             return 'Strong'
         }
-
     }
-
 });
 </script>

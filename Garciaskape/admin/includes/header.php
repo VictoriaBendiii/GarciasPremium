@@ -1,9 +1,7 @@
 <?php include('connection.php') ?>
 <?php 
- if(!isset($_SESSION)) 
-    { 
-        session_start(); 
-    } 
+
+
 ?>
 <!DOCTYPE html>
 <html>

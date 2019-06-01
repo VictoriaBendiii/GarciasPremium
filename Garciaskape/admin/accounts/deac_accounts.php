@@ -1,8 +1,6 @@
-<?php 
+<?php include '../includes/connection.php';
 
-include '../includes/connection.php'; 
-
-include 'update.php';
+include 'adduser.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,7 +39,6 @@ include 'update.php';
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
-    
 
     <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
         <div class="divider"></div>

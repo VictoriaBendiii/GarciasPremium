@@ -1,6 +1,9 @@
-
 <?php
 session_start();
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
 include '../includes/connection.php';
 include '../inventory/query.php';
 
@@ -30,7 +33,7 @@ $res = $conn->query($query);
 <![endif]-->
 <style type="text/css">
    #chart-container {
-        margin-left: 250px;
+        float: right;
         position: relative;
         width: 80vw;
         height: 10vh;
@@ -90,7 +93,7 @@ $res = $conn->query($query);
 
         </div>	<!--/.main-->
 
-    
+
 <div id="chart-container">
       <canvas id="mycanvas"></canvas>
     </div>
@@ -105,7 +108,7 @@ $res = $conn->query($query);
     <script src="../js/easypiechart-data.js"></script>
     <script src="../js/bootstrap-datepicker.js"></script>
     <script src="../js/custom.js"></script>
-   
+
 
     </body>
 </php>

@@ -1,6 +1,12 @@
 <?php
-    include '../includes/connection.php';
-    include '../includes/header.php';
+session_start();
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
+
+include '../includes/connection.php';
+include '../includes/header.php';
 ?>
         <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
             <div class="divider"></div>
@@ -8,7 +14,7 @@
                 <li ><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
                 <li ><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
                 <li ><a href="../notification/notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-                <li class="active"><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
+                <li class="active"><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Order Request</a></li>
                 <li><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
                 <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
                 <li><a href="../product/product.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>

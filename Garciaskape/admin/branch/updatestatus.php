@@ -1,8 +1,6 @@
 <?php
-
-
+    session_start();
     // accept or reject
-
     if(isset($_REQUEST['accept'])){
         
         $accept_id = $_REQUEST['accept'];
@@ -22,8 +20,6 @@
             $updatestat = '';
         }
     }
-
-
     if(isset($_REQUEST['reject'])){
         
         $accept_id = $_REQUEST['reject'];
@@ -42,5 +38,4 @@
             $updatestat = '';
         }
     }
-
 ?>

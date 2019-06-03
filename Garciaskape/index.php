@@ -1,11 +1,6 @@
 <?php
-
 session_start();
-if(session_status() !== PHP_SESSION_ACTIVE && session_status() === PHP_SESSION_NONE){
-  //do nothing
-}
 ?>
-
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -43,12 +38,11 @@ if(session_status() !== PHP_SESSION_ACTIVE && session_status() === PHP_SESSION_N
                     </div>
                     <div class="d-flex justify-content-center form_container">
 
-                      <!-- LOGIN FORM -->
                         <form action="includes/login.inc.php" method="POST">
-                          <h4 style="color:white; text-align: center;"> LOGIN </h4>
+
+
                             <div class="input-group mb-3">
                                 <div class="input-group-append">
-
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
                                 <input type="text" name="uname" class="form-control input_user" value="" placeholder="username"> <!-- name: uname -->
@@ -60,17 +54,10 @@ if(session_status() !== PHP_SESSION_ACTIVE && session_status() === PHP_SESSION_N
                                 <input type="password" name="pword" class="form-control input_pass" value="" placeholder="password">
                             </div>
                             <div class="form-group">
-                              <div id="errMsg">
-                                <?php
-                                  if (!empty($_SESSION['errMsg'])) {
-                                    echo '<center><div class="alert alert-danger" role="alert">';
-                                    echo ("{$_SESSION['errMsg']}"."");
-                                    echo '</div></center>';
-                                } ?>
-                              </div>
-                              <?php
-                              unset($_SESSION['errMsg']);
-                               ?>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customControlInline">
+                                    <label class="custom-control-label" for="customControlInline" id="remember">Remember me</label>
+                                </div>
                             </div>
                             </div>
                         <div class="d-flex justify-content-center mt-3 login_container">

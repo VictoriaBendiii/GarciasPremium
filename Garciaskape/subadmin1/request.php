@@ -1,4 +1,10 @@
-<?php $page = 'request'; ?>
+<?php
+session_start();
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
+$page = 'request'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 <style>
@@ -84,7 +90,7 @@
                                         <th>Action</th>
                                     </tr>
                                     <tr class="dropdowns">
-                                        <td class="beansDropdown">							
+                                        <td class="beansDropdown">
                                             <select name="prodname[]" id="prodname" class="beansDrop">
                                                 <?php
                                                 $sql = "SELECT * FROM products WHERE status='Active'";
@@ -94,7 +100,7 @@
                                                     echo "<option value='". $row['productid'] ."'>". $row['productname'] ."</option>";
                                                 }
                                                 ?>
-                                            </select>				
+                                            </select>
                                         </td>
                                         <td id="quantity">
                                             <input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="50" max="1000" required>
@@ -218,7 +224,7 @@
             $orderquan = $row['quantity'];
 
 
-            $sql_get2 = "SELECT order_request.idnumber, stock.stockid, stock.productid, stock.quantity FROM stock 
+            $sql_get2 = "SELECT order_request.idnumber, stock.stockid, stock.productid, stock.quantity FROM stock
 				inner join order_request on stock.productid = order_request.productid
 				WHERE stock.branchid = $branchid AND order_request.idnumber=$id";
             $result2 = mysqli_query($conn, $sql_get2);
@@ -249,7 +255,7 @@
 
             $sql_insert = "INSERT INTO delivery (order_requestid, quantity, time, status, accountid, branchid, deliveryid, productid, supplierid)
 								   	VALUES ('$order_req', '$orderquan', SYSDATE(), '$status', '$acctid', '$branch', '$delivery', '$prodid', '$supplier')";
-            mysqli_query($conn, $sql_insert);		
+            mysqli_query($conn, $sql_insert);
 
         }
 
@@ -257,7 +263,7 @@
 
             $id = $_GET['orderR'];
 
-            $sql_get2 = "SELECT order_request.idnumber, stock.stockid, stock.productid, stock.quantity FROM stock 
+            $sql_get2 = "SELECT order_request.idnumber, stock.stockid, stock.productid, stock.quantity FROM stock
 				inner join order_request on stock.productid = order_request.productid
 				WHERE stock.branchid = $branchid AND order_request.idnumber=$id";
             $result2 = mysqli_query($conn, $sql_get2);
@@ -280,8 +286,8 @@
 
         <?php
 			if (isset($_POST['pending'])) {
-				$sql_pending = "SELECT order_request.idnumber, products.productname, order_request.order_requestid, order_request.quantity, order_request.status, order_request.time 
-				FROM order_request inner join products on order_request.productid = products.productid 
+				$sql_pending = "SELECT order_request.idnumber, products.productname, order_request.order_requestid, order_request.quantity, order_request.status, order_request.time
+				FROM order_request inner join products on order_request.productid = products.productid
 				WHERE order_request.branchid = $branchid AND order_request.status='pending' OR order_request.status='rejected' ORDER BY order_request.time desc";
 				$result = mysqli_query($conn, $sql_pending);
 		?>
@@ -319,7 +325,7 @@
 
         <?php
         if (isset($_POST['accepted'])) {
-            $sql_pending = "SELECT products.productname, orders.stockid, orders.idnumber, orders.orderid, orders.quantity, orders.status, orders.time FROM orders 
+            $sql_pending = "SELECT products.productname, orders.stockid, orders.idnumber, orders.orderid, orders.quantity, orders.status, orders.time FROM orders
 				inner join products on orders.productid = products.productid
 				where orders.branchid = '1' and orders.status = 'accepted'";
             $result = mysqli_query($conn, $sql_pending);
@@ -383,7 +389,7 @@
             $orderquan = $row['quantity'];
 
 
-            $sql_get2 = "SELECT orders.idnumber, stock.stockid, stock.productid, stock.quantity FROM stock 
+            $sql_get2 = "SELECT orders.idnumber, stock.stockid, stock.productid, stock.quantity FROM stock
 				inner join orders on stock.productid = orders.productid
 				where stock.branchid = '1' AND orders.idnumber=$id";
             $result2 = mysqli_query($conn, $sql_get2);

@@ -1,4 +1,12 @@
-<?php $page = 'others'; ?>
+<?php
+session_start();
+// Check if there is a user logged in
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
+
+$page = 'others'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 <style>
@@ -58,19 +66,20 @@ th, td{
                 }
             }
 
-									
-					$(document).ready(function() {
-					var button = $('#crit');
-					$(button).prop('disabled', true);
 
-					$('#edit').click(function() {
-						if ($(button).prop('disabled')) $(button).prop('disabled', false);
-						else $(button).prop('disabled', true);
+					$(document).ready(function() {
+					var buttons = $('.crit');
+					$(buttons).prop('disabled', true);
+
+					$('.edit').click(function() {
+						var button = $(this).closest("tr").find(".crit");  // closest element with the crit-class
+						var status = button.prop("disabled");   // current status
+						button.prop("disabled", !status);       // toggle disabled
 					});
 
 				});
-				
-			
+
+
         </script>
 
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
@@ -111,6 +120,7 @@ th, td{
 				$sqlspoil = "SELECT * from ((stock left join products on stock.productid = products.productid)
 				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid AND products.status='Active'";
 				$result = mysqli_query($conn, $sqlspoil);
+				$status = 'Spoilage';
 		?>
 			<h2>Product Spoilage</h2>
 
@@ -119,10 +129,11 @@ th, td{
 						<tr>
 							<th>Product</th>
 							<th>Quantity (in KG)</th>
+							<th>Status</th>
                             <th>Action</th>
 						</tr>
 						<tr class="dropdowns">
-							<td class="beansDropdown">							
+							<td class="beansDropdown">
 								<select name="prodname[]" id="prodname" class="beansDrop">
 									<?php
 										$row = mysqli_num_rows($result);
@@ -130,10 +141,13 @@ th, td{
 												echo "<option value='". $row['productid'] ."'>". $row['productname'] ."</option>";
 												}
 									?>
-								</select>				
+								</select>
 							</td>
 							<td id="quantity">
 								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" required>
+							</td>
+							<td id="status">
+								<?php echo $status; ?>
 							</td>
 							<td id="remove">
 								<input type="button" value="&#10006;" onclick="RemoveOrder(this)">
@@ -157,18 +171,20 @@ th, td{
 				$sqlloss = "SELECT * from ((stock left join products on stock.productid = products.productid)
 				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid AND products.status='Active'";
 				$result = mysqli_query($conn, $sqlloss);
+				$status = 'Loss';
 		?>
-			<h2>Product Loss</h2>		
+			<h2>Product Loss</h2>
 
 		<div class="table-responsive" style="overflow-x:auto;">
 				<table id="tableDrop" class="table table-bordered table-striped table-sm">
 						<tr>
 							<th>Product</th>
 							<th>Quantity (in KG)</th>
+							<th>Status</th>
                             <th>Action</th>
 						</tr>
 						<tr class="dropdowns">
-							<td class="beansDropdown">							
+							<td class="beansDropdown">
 								<select name="prodname[]" id="prodname" class="beansDrop">
 									<?php
 										$row = mysqli_num_rows($result);
@@ -176,10 +192,13 @@ th, td{
 												echo "<option value='". $row['productid'] ."'>". $row['productname'] ."</option>";
 												}
 									?>
-								</select>				
+								</select>
 							</td>
 							<td id="quantity">
 								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" required>
+							</td>
+							<td id="status">
+								<?php echo $status; ?>
 							</td>
 							<td id="remove">
 								<input type="button" value="&#10006;" onclick="RemoveOrder(this)">
@@ -200,7 +219,7 @@ th, td{
 <form action="others-process.php" method="POST">
     <?php
 			if (isset($_POST['return'])) {
-				$sqlreturn = "SELECT DATE_FORMAT(solditem.time,'%b %d, %Y %r') as time, products.productname, solditem.solditemid, solditem.productid, solditem.quantity, solditem.branchid FROM 
+				$sqlreturn = "SELECT DATE_FORMAT(solditem.time,'%b %d, %Y %r') as time, products.productname, solditem.solditemid, solditem.productid, solditem.quantity, solditem.branchid FROM
 				(solditem left join products on solditem.productid = products.productid) where solditem.branchid=$branchid and solditem.time > DATE_SUB(NOW(), INTERVAL 24 HOUR)";
 				$result1 = mysqli_query($conn, $sqlreturn);
 
@@ -209,7 +228,7 @@ th, td{
 				$result2 = mysqli_query($conn, $sqlexchange);
 		?>
 
-			<h2>Customer's Order</h2>		
+			<h2>Customer's Order</h2>
 
 			<div class="table-responsive">
 				<table id="tableDrop" class="table table-bordered table-striped table-sm">
@@ -220,7 +239,7 @@ th, td{
                             <th>Action</th>
 						</tr>
 						<tr class="dropdowns">
-						<td class="beansDropdown">							
+						<td class="beansDropdown">
 								<select name="order[]" id="order" class="beansDrop">
 									<?php
 										$row = mysqli_num_rows($result1);
@@ -229,9 +248,9 @@ th, td{
 											}
 
 									?>
-								</select>				
+								</select>
 							</td>
-							<td class="beansDropdown">							
+							<td class="beansDropdown">
 								<select name="prodname[]" id="prodname" class="beansDrop">
 									<?php
 
@@ -242,9 +261,9 @@ th, td{
 
 												echo "<option value='". $row['productid'] ."'>". $row['productname'] ."</option>";
 												}
-										
+
 									?>
-								</select>			
+								</select>
 							</td>
 							<td id="quantity">
 								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" required>
@@ -259,9 +278,9 @@ th, td{
 				<input type="button" onclick="cloneRow(event)" name="add" id="add" value="Add" class="btn btn-secondary"/>
 			</div>
 
-			<h2>Exchange to</h2>				
+			<h2>Exchange to</h2>
 
-			
+
 			<div class="table-responsive">
 				<table id="TableDrop" class="table table-bordered table-striped table-sm">
 						<tr>
@@ -270,7 +289,7 @@ th, td{
                             <th>Action</th>
 						</tr>
 						<tr class="Dropdowns">
-							<td class="BeansDropdown">							
+							<td class="BeansDropdown">
 								<select name="prodname[]" id="prodname" class="BeansDrop">
 									<?php
 										$row = mysqli_num_rows($result2);
@@ -278,7 +297,7 @@ th, td{
 												echo "<option value='". $row['productid'] ."'>". $row['productname'] ."</option>";
 												}
 									?>
-								</select>				
+								</select>
 							</td>
 							<td id="quantity">
 								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" required>
@@ -294,12 +313,12 @@ th, td{
 				<input type="button" onclick="CloneRow(event)" name="add" id="add" value="Add" class="btn btn-secondary"/>
 				<button type="submit" class="btn btn-primary" name="return" id="return">Submit</button>
 			</div>
-			<?php	
+			<?php
 				}
 			?>
 	</form>
 
-	
+
 
 			<?php
 				if (isset($_POST['recon'])) {
@@ -323,7 +342,6 @@ th, td{
 							<th>Quantity (in Kg)</th>
 							<th>Action</th>
 						</tr>
-					<tbody>
 
 					<?php
 						if($result = mysqli_query($conn, $sql)) {
@@ -331,8 +349,8 @@ th, td{
 					?>
 						<tr>
 							<td> <?php echo $row["productname"]; ?> </td>
-							<td><input type="number" name="crit" id="crit" value="<?php echo $row["quantity"]; ?>" disabled></td>
-							<td><button type="button" name="edit" id="edit"><i class="fa fa-edit"></i></button></td>
+							<td><input type="number" name="crit" class="crit" value="<?php echo $row["quantity"]; ?>" disabled></td>
+							<td><button type="button" name="edit" class="edit"><i class="fa fa-edit"></i></button></td>
 						</tr>
 
 					<?php

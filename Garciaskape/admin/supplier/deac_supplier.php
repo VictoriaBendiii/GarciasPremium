@@ -1,14 +1,55 @@
-<?php include '../includes/connection.php';
-include '../includes/header.php';
+<?php
+session_start();
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
+include '../includes/connection.php';
 include 'update.php'; ?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Garcias Premium Coffee</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/datepicker3.css" rel="stylesheet">
+        <link href="../css/styles.css" rel="stylesheet">
+        <link href="../css/add.css" rel="stylesheet">
 
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.12/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+        <!-- <link href="../css/add.css" rel="stylesheet"> -->
+        <!--Custom Font-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+        <!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+    </head>
+    <body>
+        <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse"><span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span></button>
+                    <a class="navbar-brand" href="#"><span></span>Admin</a>
+                    <br>
+                    <p> <?php $f_name = $_SESSION['firstname']; $l_name = $_SESSION['lastname'];  echo "$f_name $l_name "; ?></p>
+                </div>
+            </div><!-- /.container-fluid -->
+        </nav>
     <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
         <div class="divider"></div>
         <ul class="nav menu">
            <li ><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
                 <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
                 <li><a href="../notification/notification.php"><em class="fa fa-bell">&nbsp;</em> Notification</a></li>
-                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Delivery</a></li>
+                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Order Request</a></li>
                 <li><a href="../inventory/inventory.php"><em class="fa fa-edit">&nbsp;</em> Inventory</a></li>
                 <li><a href="../branch/branch.php"><em class="fa fa-inbox">&nbsp;</em> Stock Request </a></li>
                 <li><a href="../product/product.php"><em class="fa fa-product-hunt">&nbsp;</em> Products</a></li>
@@ -49,7 +90,7 @@ include 'update.php'; ?>
         <div class="alert alert-<?=$_SESSION['msg_type']?>">
             <?php
                             echo $_SESSION['message'];
-                            unset($_SESSION['message']); 
+                            unset($_SESSION['message']);
                         ?>
         </div>
         <?php endif ?>
@@ -88,7 +129,7 @@ include 'update.php'; ?>
                                     <td> <?php echo $row["address"];?> </td>
                                     <td> <?php echo $row["status"];?> </td>
                                     <td>
-                                       
+
                                         <a href="update.php?activate=<?php echo $row['supplierid']; ?>"
                                             class="btn btn-info"> Activate </a>
 

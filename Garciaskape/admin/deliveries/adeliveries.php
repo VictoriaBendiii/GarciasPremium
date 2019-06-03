@@ -13,26 +13,22 @@ if(isset($_POST['submitproduct'])){
     
     //echo $supplierid;
     
-
     //separate post beans for products
     // $resultproduct = $_POST['beans'];
     // $resultproduct_explode = explode('/',implode($resultproduct));
     // $productname = $resultproduct_explode[0];
     // $productid = $resultproduct_explode[1];
-
     //get the inputted quantity
     // $arrayquantity = $_POST['quan'];
   
     // $quantity = $arrayquantity[0];
     // echo $quantity;
-
     $sql_req = "SELECT order_requestid from order_request order by order_requestid desc limit 1";
-				$result = mysqli_query($conn, $sql_req);
-				$row = mysqli_num_rows($result);
-				$row = mysqli_fetch_array($result);
-				$res = $row['order_requestid'];
-				$res++;
-
+                $result = mysqli_query($conn, $sql_req);
+                $row = mysqli_num_rows($result);
+                $row = mysqli_fetch_array($result);
+                $res = $row['order_requestid'];
+                $res++;
     foreach(array_combine($_POST['beans'], $_POST['quan']) as $prodname => $prodquan){
         $resultproduct_explode = explode('/',$prodname);
         $productname = $resultproduct_explode[0];
@@ -42,23 +38,23 @@ if(isset($_POST['submitproduct'])){
    
     $requestsql = "INSERT INTO order_request (order_requestid, productid, quantity, supplierid, branchid, accountid, time)
     values ('$res', '$productid', '$prodquan', '$supplierid','$branchid', '$accountid', now())";
-
 mysqli_query($conn, $requestsql);
     }
  
-
     // Authorisation details.
+<<<<<<< HEAD
     $username = "bugtongjohnjezreel14@gmail.com";
     $hash = "501c6c5e8fb35971710ea59b4634505c5c7923c64eddf5a87fbcbd53ba95ff5a";
 
+=======
+    $username = "aaronferrerquitoriano@gmail.com";
+    $hash = "4a95acef14a537bb3d32bc6aad8cb80baa9d18f9ac06b3158f50784e6735c4c6";
+>>>>>>> 1e66dcdace9ba1df3550919de34873cb4169e749
     // Config variables. Consult http://api.txtlocal.com/docs for more info.
     $test = "0";
-
     // Data for text message. This is the text message data.
     $sender = 'garsha'; // This is who the message appears to be from.
     $numbers = $resultsupplier_explode[0]; // A single number or a comma-seperated list of numbers
-
-
     foreach(array_combine($_POST['beans'], $_POST['quan']) as $beans=>$quan) {
         //For storing echos in a variable
      $resultproduct_explode = explode('/',$beans);
@@ -71,11 +67,9 @@ mysqli_query($conn, $requestsql);
         echo "\r";
         $myStr = ob_get_contents();
         ob_end_clean();
-
         //Adding the contents in an array
         $messageArray[] = $myStr;
     }
-
     $messageProds = implode(" ", $messageArray);
     $message = "Good day! I would like to order the following\r\n" . $messageProds;
     // 612 chars or less
@@ -88,36 +82,30 @@ mysqli_query($conn, $requestsql);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch); // This is the result from the API
     curl_close($ch);
+<<<<<<< HEAD
 
 
 
 
 
+=======
+>>>>>>> 1e66dcdace9ba1df3550919de34873cb4169e749
 }
 ?>
 
 <?php
-
-
-
 $query = "SELECT * FROM products ORDER by productname ASC";
-
 $result1 = mysqli_query($conn, $query);
-
 if (!$result1) {
     printf("Error: %s\n", mysqli_error($conn));
     exit();
 }
-
 $query2 = "SELECT * FROM supplier";
-
 $result2 = mysqli_query($conn, $query2);
-
 if (!$result2) {
     printf("Error: %s\n", mysqli_error($conn));
     exit();
 }
-
 ?>
 
 
@@ -141,7 +129,6 @@ if (!$result2) {
 <![endif]-->
 
         <script type="text/javascript">
-
             function cloneRow(e) {
                 e.preventDefault();
                 var row = document.querySelector(".dropdowns:last-child");
@@ -153,14 +140,11 @@ if (!$result2) {
                 if (lastDrop.selectedIndex != -1) clonedDrop.options[lastDrop.selectedIndex].disabled = true;
                 tableBody.appendChild(clone);
             }
-
-
             function RemoveOrder(ele) {
                 var rownumber = document.getElementById("tableDrop").rows.length;
                 if (rownumber == 2){
                     window.alert("You cannot remove the last order");
-                }	else {
-
+                }   else {
                     var row = ele.closest('tr');
                     var drop = row.querySelector('.beansDrop');
                     var alldrop = document.querySelectorAll('.beansDrop');
@@ -233,6 +217,7 @@ if (!$result2) {
                 <br> 
                 <br>
             </div>
+<<<<<<< HEAD
             <h1> Admin Order/s </h1>
 
             <?php
@@ -277,6 +262,9 @@ if (!$result2) {
                 </tr>
             </table>
         </div>
+=======
+           
+>>>>>>> 1e66dcdace9ba1df3550919de34873cb4169e749
 
             <!-- Modal -->
             <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">

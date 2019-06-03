@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (isset($_POST['accept'])){
   include 'include/connection.php';
 

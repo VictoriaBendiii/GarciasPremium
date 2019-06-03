@@ -1,0 +1,5 @@
+ErrorDocument 400 /Garciaskape/subadmin1/error.php
+ErrorDocument 401 /Garciaskape/subadmin1/error.php
+ErrorDocument 403 /Garciaskape/subadmin1/error.php
+ErrorDocument 404 /Garciaskape/subadmin1/error.php
+ErrorDocument 500 /Garciaskape/subadmin1/error.php

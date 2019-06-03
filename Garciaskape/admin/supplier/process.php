@@ -3,28 +3,11 @@
 <?php
 session_start();
 if (isset($_POST['add_supplier'])) {
-
     $supplier_name = mysqli_real_escape_string($conn, $_POST['supplier_name']);
     $contact_person = mysqli_real_escape_string($conn, $_POST['contact_person']);
     $contact_number = mysqli_real_escape_string($conn, $_POST['contact_number']);
     $address = mysqli_real_escape_string($conn, $_POST['address']);
     $status = 'active';
-    
-    //VALIDATION of SUPPLIER NAME AND CONTACT PERSON
-    if (preg_match("/^[a-zA-Z][0-9]/", $supplier_name)) {
-        $_SESSION['message']="Supplier name must contain alphabhets only!";
-        $_SESSION['msg_type']="danger";
-        header("location: addsupplier.php");
-        die();
-    }
-    
-    
-    if (preg_match("/^[a-zA-Z][0-9]/", $contact_person)) {
-        $_SESSION['message']="Contact person must contain alphabhets only!";
-        $_SESSION['msg_type']="danger";
-        header("location: addsupplier.php");
-        die();
-    }
     
     //Check for duplicates
     $query_supplier = "SELECT * FROM supplier WHERE supplier_name='$supplier_name'";
@@ -59,15 +42,10 @@ if (isset($_POST['add_supplier'])) {
     
     $sql = "INSERT INTO supplier (supplier_name, supplier_contact_person, contact_number, address, status) 
           VALUES('$supplier_name', '$contact_person', '$contact_number','$address', '$status')";
-
     mysqli_query($conn, $sql);
     $_SESSION['message']="Account of ".$supplier_name. " has been created!";
     $_SESSION['msg_type']="success";
-
     header('location: addsupplier.php'); 
-
-
     $conn->close();
 }
-
 ?>

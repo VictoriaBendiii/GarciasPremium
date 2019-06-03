@@ -1,14 +1,10 @@
 <?php
 session_start();
-
-
 if (isset($_POST['button'])){
     include 'dbh.inc.php';
-
     $uname = mysqli_real_escape_string($conn, $_POST['uname']);
     $pword = mysqli_real_escape_string($conn, $_POST['pword']);
     $stripedpwd = strip_tags(mysqli_real_escape_string($conn, trim($pword)));
-
     if (empty($uname) || empty($pword)) { //
       header("Location: ../index.php?login=empty"); // error
       $_SESSION['errMsg'] = 'Empty Credentials.';
@@ -17,7 +13,6 @@ if (isset($_POST['button'])){
       $sql = "SELECT * FROM accounts WHERE username ='$uname'";
       $result = mysqli_query($conn, $sql);
       $resultCheck = mysqli_num_rows($result);
-
       if($resultCheck < 1){
         header("Location: ../index.php?login=error1"); // error
         $_SESSION['errMsg'] = 'User does not exist.';
@@ -30,12 +25,10 @@ if (isset($_POST['button'])){
           echo '$realPwd';
           if(base64_decode($realPwd) == $stripedpwd){
             $hashedPwdCheck = true;
-
             if ($hashedPwdCheck == true) {
               //LOGIN USER
               // Session Variables, If needed, try this statement
               // <p><?php echo("{$_SESSION['test']}"."<br />"); *questionMark* *greaterThan*
-
               $_SESSION['u_name'] = $row['username'];
               $_SESSION['u_type'] = $row['user_type'];
               $_SESSION['status'] = $row['status'];
@@ -59,7 +52,6 @@ if (isset($_POST['button'])){
                 }
               }elseif ($_SESSION['status'] == "Deactivated") {
                   echo "<script type='text/javascript'>  alert('Account Deactivated'); </script>" ;
-
               }
            }else{
              $hashedPwdCheck = false;
@@ -70,18 +62,12 @@ if (isset($_POST['button'])){
             $_SESSION['errMsg'] = 'Wrong username or password';
             exit();
           }
-
         }
       }
-
     }
-
-
 }else {
   header("Location: index.php?login=error3");
   $_SESSION['errMsg'] = '';
   exit();
 }
-
-
  ?>

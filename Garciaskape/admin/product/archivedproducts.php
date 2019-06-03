@@ -1,4 +1,11 @@
-<?php include '../includes/connection.php'; 
+<?php
+session_start();
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
+
+include '../includes/connection.php';
 include '../includes/header.php';
 include 'update.php'; ?>
 
@@ -8,7 +15,7 @@ include 'update.php'; ?>
              <li><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
                 <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
                 <li><a href="../notification/notification.php"><em class="fa fa-bell">&nbsp;</em> Notification</a></li>
-                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Delivery</a></li>
+                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Order Request</a></li>
                 <li><a href="../inventory/inventory.php"><em class="fa fa-edit">&nbsp;</em> Inventory</a></li>
                 <li><a href="../branch/branch.php"><em class="fa fa-inbox">&nbsp;</em> Stock Request </a></li>
                 <li class="active"><a href="../product/product.php"><em class="fa fa-product-hunt">&nbsp;</em> Products</a></li>
@@ -25,7 +32,7 @@ include 'update.php'; ?>
                     <li><a href="product.php">
                         <em class="fa fa-home"></em>
                         </a></li>
-                    <li><a href="product.php">Product</a></li>
+                    <li><a href="product.php">Products</a></li>
                     <li class="active">Archive Product</li>
                 </ol>
         </div>
@@ -51,7 +58,7 @@ include 'update.php'; ?>
         <div class="alert alert-<?=$_SESSION['msg_type']?>">
             <?php
                             echo $_SESSION['message'];
-                            unset($_SESSION['message']); 
+                            unset($_SESSION['message']);
                         ?>
         </div>
         <?php endif ?>
@@ -84,8 +91,6 @@ include 'update.php'; ?>
                                     <td>
                                         <a href="update.php?activate=<?php echo $row['productid']; ?>"
                                             class="btn btn-warning"> Restore </a>
-                                        <a href="update.php?delete=<?php echo $row['productid']; ?>"
-                                            class="btn btn-danger"> Delete </a>
                                     </td>
                                 </form>
 

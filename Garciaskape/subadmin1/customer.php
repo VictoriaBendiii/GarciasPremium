@@ -1,4 +1,10 @@
-<?php $page = 'customer'; ?>
+<?php
+session_start();
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
+$page = 'customer'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 <style>
@@ -43,17 +49,18 @@ th, td{
 				<li class="active">Customer</li>
 			</ol>
 		</div><!--/.row-->
-		
+
 		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
 				<h1 class="h2">Customer's Order</h1>
 			</div>
-						
+
 		<form action="customer.php" method="POST">
         <?php
-				$sqlspoil = "SELECT * from ((stock left join products on stock.productid = products.productid)
+				$sqlsold = "SELECT * from ((stock left join products on stock.productid = products.productid)
 				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid AND products.status='Active'";
-				$result = mysqli_query($conn, $sqlspoil);
+				$result = mysqli_query($conn, $sqlsold);
+				$status = 'Loss';
 		?>
 
 			<div class="table-responsive" style="overflow-x:auto;">
@@ -61,10 +68,11 @@ th, td{
 						<tr>
 							<th>Product</th>
 							<th>Quantity (in KG)</th>
+							<th>Status</th>
                             <th>Action</th>
 						</tr>
 						<tr class="dropdowns">
-							<td class="beansDropdown">							
+							<td class="beansDropdown">
 								<select name="prodname[]" id="prodname" class="beansDrop">
 									<?php
 										$row = mysqli_num_rows($result);
@@ -72,10 +80,13 @@ th, td{
 												echo "<option value='". $row['productid'] ."'>". $row['productname'] ."</option>";
 												}
 									?>
-								</select>				
+								</select>
 							</td>
 							<td id="quantity">
 								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" required>
+							</td>
+							<td id="status">
+								<?php echo $status; ?>
 							</td>
 							<td id="remove">
 								<input type="button" value="&#10006;" onclick="RemoveOrder(this)">
@@ -122,18 +133,18 @@ th, td{
 					$sql_cust = "UPDATE stock SET quantity=$fin,stockout=$prodquan,date_out=SYSDATE() WHERE productid=$prodname and branchid=$branchid";
 					$sql_update = "INSERT INTO solditem (solditemid, productid, quantity, orderid, branchid, accountid, time, status)
 									VALUES('$res1', '$prodname', '$prodquan', '$res2', '$branchid', '$accountid', SYSDATE(), '$status')";
-					
+
 					mysqli_query($conn, $sql_cust);
 					mysqli_query($conn, $sql_update);
 
 				}
 			}
 	?>
-		
+
 		</main>
 
 		</div><!--/.row-->
 	</div>	<!--/.main-->
-		
+
 </body>
 </html>

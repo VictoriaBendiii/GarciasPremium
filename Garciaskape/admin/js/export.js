@@ -4,7 +4,7 @@ function exportToExcelAll(tableID, filename = ''){
                         var tableSelect = document.getElementById(tableID);
                         var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
 
-                        filename = filename?filename+'.xls':'MarketAllReport.xls';
+                        filename = filename?filename+'.xls':'AllReport.xls';
 
                         downloadurl = document.createElement("a");
 
@@ -29,7 +29,7 @@ function exportToExcelOrder(tableID, filename = ''){
                         var tableSelect = document.getElementById(tableID);
                         var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
 
-                        filename = filename?filename+'.xls':'MarketOrderReport.xls';
+                        filename = filename?filename+'.xls':'OrderReport.xls';
 
                         downloadurl = document.createElement("a");
 
@@ -54,7 +54,7 @@ function exportToExcelDelivery(tableID, filename = ''){
                         var tableSelect = document.getElementById(tableID);
                         var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
 
-                        filename = filename?filename+'.xls':'MarketDeliveryReport.xls';
+                        filename = filename?filename+'.xls':'DeliveryReport.xls';
 
                         downloadurl = document.createElement("a");
 
@@ -79,7 +79,7 @@ function exportToExcelSoldItem(tableID, filename = ''){
                         var tableSelect = document.getElementById(tableID);
                         var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
 
-                        filename = filename?filename+'.xls':'MarketSoldItemReport.xls';
+                        filename = filename?filename+'.xls':'SoldItemReport.xls';
 
                         downloadurl = document.createElement("a");
 
@@ -103,7 +103,7 @@ function exportToExcelRequest(tableID, filename = ''){
                         var tableSelect = document.getElementById(tableID);
                         var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
 
-                        filename = filename?filename+'.xls':'MarketOrderRequestReport.xls';
+                        filename = filename?filename+'.xls':'OrderRequestReport.xls';
 
                         downloadurl = document.createElement("a");
 

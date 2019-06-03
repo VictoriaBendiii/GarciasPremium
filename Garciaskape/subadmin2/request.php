@@ -1,4 +1,12 @@
-<?php $page = 'request'; ?>
+<?php
+session_start();
+// Check if there is a user logged in
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
+
+$page = 'request'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 <style>
@@ -83,7 +91,7 @@ th, td{
 										<th>Action</th>
 									</tr>
 									<tr class="dropdowns">
-										<td class="beansDropdown">								
+										<td class="beansDropdown">
 											<select name="prodname[]" id="prodname" class="beansDrop">
 												<?php
 													$sql = "SELECT * FROM products WHERE status='Active'";
@@ -93,7 +101,7 @@ th, td{
 															echo "<option value='". $row['productid'] ."'>". $row['productname'] ."</option>";
 															}
 												?>
-											</select>				
+											</select>
 										</td>
 										<td id="quantity">
 											<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="50" max="1000" size="20">
@@ -144,24 +152,24 @@ th, td{
 				foreach (array_combine($_POST['prodname'], $_POST['prodquan']) as $prodname => $prodquan){
 
 					$supplier = 2;
-					
+
 					$sql_sub = "INSERT INTO order_request(order_requestid, quantity, time, status, accountid, branchid, deliveryid, productid, supplierid)
 							VALUES ('$res1', '$prodquan', SYSDATE(), '$status', '$accountid', '$branchid', '$res2', '$prodname', '$supplier')";
-					
+
 					mysqli_query($conn, $sql_sub);
-					
+
 				}
 			}
 
 
 		?>
 
-		
+
 
 		<?php
 			if (isset($_POST['pending'])) {
-				$sql_pending = "SELECT order_request.idnumber, products.productname, order_request.order_requestid, order_request.quantity, order_request.status, order_request.time 
-				FROM order_request inner join products on order_request.productid = products.productid 
+				$sql_pending = "SELECT order_request.idnumber, products.productname, order_request.order_requestid, order_request.quantity, order_request.status, order_request.time
+				FROM order_request inner join products on order_request.productid = products.productid
 				WHERE order_request.branchid = $branchid AND order_request.status='pending' OR order_request.status='rejected' ORDER BY order_request.time desc";
 				$result = mysqli_query($conn, $sql_pending);
 		?>
@@ -198,9 +206,9 @@ th, td{
 			?>
 
 		<?php
-			if (isset($_POST['accepted'])) { 
-				$sql_accepted = "SELECT delivery.idnumber, products.productname, delivery.order_requestid, delivery.quantity, delivery.status, delivery.time 
-				FROM delivery inner join products on delivery.productid = products.productid 
+			if (isset($_POST['accepted'])) {
+				$sql_accepted = "SELECT delivery.idnumber, products.productname, delivery.order_requestid, delivery.quantity, delivery.status, delivery.time
+				FROM delivery inner join products on delivery.productid = products.productid
 				WHERE delivery.branchid=$branchid AND delivery.status='pending'";
 				$result = mysqli_query($conn, $sql_accepted);
 		?>
@@ -255,8 +263,8 @@ th, td{
 				$row = mysqli_fetch_array($result1);
 				$orderquan = $row['quantity'];
 
-				
-				$sql_get2 = "SELECT order_request.idnumber, stock.stockid, stock.productid, stock.quantity FROM stock 
+
+				$sql_get2 = "SELECT order_request.idnumber, stock.stockid, stock.productid, stock.quantity FROM stock
 				inner join order_request on stock.productid = order_request.productid
 				WHERE stock.branchid = $branchid AND order_request.idnumber=$id";
 				$result2 = mysqli_query($conn, $sql_get2);
@@ -268,7 +276,7 @@ th, td{
 
 				$final = $orderquan+$stockquan;
 
-				
+
 				$sql_update1 = "UPDATE delivery SET status='delivered',time=SYSDATE() WHERE idnumber=$id";
 				mysqli_query($conn, $sql_update1);
 

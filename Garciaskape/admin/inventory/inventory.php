@@ -1,63 +1,32 @@
-<?php session_start();
+<?php
+session_start();
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
 include '../includes/connection.php';
-include 'critical.php';  ?>
+include '../includes/header.php';
+include 'critical.php';
+include 'query.php';
+?>
+
 <?php
 //fetch query
 $sql = "SELECT products.productname, products.productid as pid, stock.quantity as stock, branch.branchid, products.status
-from ((stock left join products on stock.productid = products.productid) 
-left join branch on stock.branchid = branch.branchid) where (branch.branchid = 1  OR branch.branchid = 3) 
+from ((stock left join products on stock.productid = products.productid)
+left join branch on stock.branchid = branch.branchid) where (branch.branchid = 1  OR branch.branchid = 3)
 AND products.status = 'Active' ORDER BY products.productname ASC  ";
 $result = mysqli_query($conn, $sql);
 
 
 ?>
-
-
-<!DOCTYPE HTML>
-<html lang="en">
-
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Garcias Premium Coffee</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../css/datepicker3.css" rel="stylesheet">
-        <link href="../css/styles.css" rel="stylesheet">
-        <link href="../css/add.css" rel="stylesheet">
-
-
-        <!--Custom Font-->
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-        <!--[if lt IE 9]>
-<script src="js/html5shiv.js"></script>
-<script src="js/respond.min.js"></script>
-<![endif]-->
-
-    </head>
-    <body>
-        <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse"><span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span></button>
-                    <a class="navbar-brand" href="#"><span></span>Admin</a>
-                    <br>
-                    <p> <?php $f_name = $_SESSION['firstname']; $l_name = $_SESSION['lastname'];  echo "$f_name $l_name "; ?></p>
-
-
-                </div>
-            </div><!-- /.container-fluid -->
-        </nav>
         <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
             <div class="divider"></div>
             <ul class="nav menu">
                 <li ><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
                 <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
                 <li><a href="../notification/notification.php"><em class="fa fa-bell">&nbsp;</em> Notification</a></li>
-                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Delivery</a></li>
+                <li><a href="../deliveries/adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Order Request</a></li>
                 <li class="active"><a href="../inventory/inventory.php"><em class="fa fa-edit">&nbsp;</em> Inventory</a></li>
                 <li><a href="../branch/branch.php"><em class="fa fa-inbox">&nbsp;</em> Stock Request </a></li>
                 <li><a href="../product/product.php"><em class="fa fa-product-hunt">&nbsp;</em> Products</a></li>
@@ -70,16 +39,17 @@ $result = mysqli_query($conn, $sql);
         <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
             <div class="row">
                 <ol class="breadcrumb">
-                    <li><a href="#">
+                    <li><a href="inventory.php">
                         <em class="fa fa-home"></em>
                         </a></li>
-                    <li class="active">Inventory</li>
+                    <li><a href="inventory.php">Inventory</a></li>
+                    <li class="active">Market</li>
                 </ol>
             </div><!--/.row-->
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Inventory</h1>
+                    <h1 class="page-header">Inventory <?php echo $row['branch_name']; ?> </h1>
                 </div>
 
             </div><!--/.row-->
@@ -90,12 +60,12 @@ $result = mysqli_query($conn, $sql);
             <br>
             <br>
             <form action = "" method = "POST">
-            Critical Value: <input type="number" name="critical" autocomplete="off"> 
-            <input type="submit" name = "submitcritical" class ="btn btn-success btn-sm acceptbtn" min="0"  value="Change Value">
+            Critical Value: <input type="text" name="critical" autocomplete="off">
+            <input type="submit" name = "submitcritical" class ="btn btn-success btn-sm acceptbtn" value="Change Value">
             </form>
 
             <br>
-            <br> 
+            <br>
         <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
                 <tr>
@@ -111,13 +81,13 @@ $result = mysqli_query($conn, $sql);
                     If($result->num_rows > 0)
                     {
                         while($row=mysqli_fetch_array($result))
-                        {  
+                        {
                     ?>
 
-                    <td><?php echo $row['productname']; ?></td> 
-                    <td <?php if($row['stock'] <= $value): ?> style="background-color:#f9243f" <?php endif; ?>><?php echo $row['stock']; ?></td> 
+                    <td><?php echo $row['productname']; ?></td>
+                    <td <?php if($row['stock'] <= $value): ?> style="background-color:#f9243f" <?php endif; ?>><?php echo $row['stock']; ?></td>
                     <td> <button type="submit"  class="btn btn-success btn-sm acceptbtn " name="archive" > <?php echo $row['status']; ?></button>
-                    </td> 
+                    </td>
                 </tr>
 
                 <?php
@@ -135,13 +105,7 @@ $result = mysqli_query($conn, $sql);
 
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/chart.min.js"></script>
-<script src="../js/chart-data.js"></script>
-<script src="../js/easypiechart.js"></script>
-<script src="../js/easypiechart-data.js"></script>
-<script src="../js/bootstrap-datepicker.js"></script>
-<script src="../js/custom.js"></script>
+
 
 
 <script>

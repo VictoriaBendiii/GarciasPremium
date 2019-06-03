@@ -1,8 +1,5 @@
 <?php include('connection.php') ?>
-<?php 
 
-
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,8 +11,8 @@
         <link href="../css/datepicker3.css" rel="stylesheet">
         <link href="../css/styles.css" rel="stylesheet">
         <link href="../css/add.css" rel="stylesheet">
-        
-        
+
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.12/angular.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
         <!-- <link href="../css/add.css" rel="stylesheet"> -->
@@ -40,7 +37,7 @@
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
-    
+
     <script src="../js/jquery-1.11.1.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/chart.min.js"></script>

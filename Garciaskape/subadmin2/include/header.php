@@ -1,6 +1,6 @@
 <?php include('connection.php') ?>
 <?php
-session_start();
+
 $username = $_SESSION['u_name'];
 $branchid = $_SESSION['branch_id'];
 $accountid = $_SESSION['account_id'];

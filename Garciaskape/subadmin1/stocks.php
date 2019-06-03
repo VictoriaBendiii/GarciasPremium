@@ -1,4 +1,10 @@
-<?php $page = 'stocks'; ?>
+<?php
+session_start();
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
+$page = 'stocks'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 
@@ -37,7 +43,7 @@
 				<br>
 			</div>
 		</form>
-		
+
 		<label> Search for Product: <input type="text" id="input" onkeyup="myFunction()" placeholder="Product name"></label>
 		<br>
 
@@ -79,8 +85,8 @@
 								}
 								else {
 									echo "<td>". $row['quantity'] ."</td>";
-								}									
-							?> 
+								}
+							?>
 							<td> <?php echo $row["status"]; ?> </td>
 						</tr>
 					</tbody>

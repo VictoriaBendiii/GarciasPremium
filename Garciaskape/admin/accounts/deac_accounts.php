@@ -1,5 +1,11 @@
-<?php include '../includes/connection.php';
+<?php
+session_start();
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
 
+include '../includes/connection.php';
 include 'adduser.php';
 ?>
 <!DOCTYPE html>
@@ -13,8 +19,8 @@ include 'adduser.php';
         <link href="../css/datepicker3.css" rel="stylesheet">
         <link href="../css/styles.css" rel="stylesheet">
         <link href="../css/add.css" rel="stylesheet">
-        
-        
+
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.12/angular.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
         <!-- <link href="../css/add.css" rel="stylesheet"> -->
@@ -43,7 +49,7 @@ include 'adduser.php';
     <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
         <div class="divider"></div>
         <ul class="nav menu">
-           
+
                 <li><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
                 <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
                 <li><a href="../notification/notification.php"><em class="fa fa-bell">&nbsp;</em> Notification</a></li>
@@ -83,7 +89,7 @@ include 'adduser.php';
             </div>
             <br><br>
         <!-- ALERT -->
-        
+
         <?php require_once 'update.php' ?>
                         <?php
                                 if (isset($_SESSION['message'])): ?>
@@ -95,7 +101,7 @@ include 'adduser.php';
                         </div>
                         <?php endif ?>
         <!-- ALERT -->
-        
+
         <div class="row">
             <div class="col-lg-12">
                 <?php
@@ -134,14 +140,14 @@ include 'adduser.php';
                                     <td> <?php echo $row["status"]; ?> </td>
 
                                     <td>
-                                        
+
                                         <a href="update.php?activate=<?php echo $row['accountid']; ?>"
-                                        class="btn btn-info"> Activate </a> 
-                                        
-                                        
+                                        class="btn btn-info"> Activate </a>
+
+
                                         <a href="update.php?delete=<?php echo $row['accountid']; ?>"
-                                        class="btn btn-danger"> Delete </a> 
-                                        
+                                        class="btn btn-danger"> Delete </a>
+
                                     </td>
                                 </form>
 
@@ -156,8 +162,8 @@ include 'adduser.php';
 
                 </div>
                 <!--/.row-->
-                            
-                
+
+
             </div>
             <!--/.main-->
         </div>

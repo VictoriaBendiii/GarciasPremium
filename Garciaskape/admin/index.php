@@ -1,5 +1,11 @@
 <?php
 session_start();
+// Check if there is a user logged in
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
+
 include 'includes/connection.php';
 include 'inventory/query.php';
 ?>
@@ -98,6 +104,6 @@ include 'inventory/query.php';
     <script src="js/easypiechart-data.js"></script>
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/custom.js"></script>
-   
+
     </body>
 </php>

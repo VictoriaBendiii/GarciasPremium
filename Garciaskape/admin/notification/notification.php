@@ -1,5 +1,9 @@
 <?php
 session_start();
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
 include '../includes/connection.php';
 include '../includes/header.php';
 ?>

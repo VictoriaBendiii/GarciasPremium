@@ -1,5 +1,9 @@
 <?php
 session_start();
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
 include '../includes/connection.php';
 include '../includes/header.php';
 include '../includes/sidebar.php';
@@ -31,7 +35,7 @@ include '../inventory/query.php';
 
                     <form action="porta.php" method="POST">
                         <div class="btn-change btn-group-justified" role="group" aria-label="...">
-                          
+
                             <div class="btn-group" role="group">
                                 <button style="border-radius: 30px;" type="submit" class="btn btn-default" name="req_rep" id="req_rep">Order Request Reports</button>
                             </div>
@@ -48,7 +52,7 @@ include '../inventory/query.php';
                     </form>
                 </div>
 
-                
+
 
 
 <?php
@@ -84,7 +88,7 @@ include '../inventory/query.php';
                     <table id ="tableExport" class="table table-striped table-bordered">
                         <thead>
                             <!-- <th>Branch&nbsp;</th> -->
-                            <th>Branch&nbsp; &nbsp;<a ng-click="sort_with('branch_name');"></a></th> 
+                            <th>Branch&nbsp; &nbsp;<a ng-click="sort_with('branch_name');"></a></th>
                             <th>Account Name&nbsp; &nbsp;<a ng-click="sort_with('firstname');"><i class="glyphicon fa fa-sort"></i></a></th>
                             <th>Product Name&nbsp; &nbsp;<a ng-click="sort_with('productname');"><i class="glyphicon fa fa-sort"></i></a></th>
                             <th>Supplier&nbsp; &nbsp;<a ng-click="sort_with('supplier_name');"><i class="glyphicon fa fa-sort"></i></a></th>
@@ -98,7 +102,7 @@ include '../inventory/query.php';
                                 <td>{{data.branch_name}}</td>
                                 <td>{{data.firstname}}</td>
                                 <td>{{data.productname}}</td>
-                                <td>{{data.supplier_name}}</td> 
+                                <td>{{data.supplier_name}}</td>
                                 <td>{{data.quantity}}</td>
                                 <td>{{data.time}}</td>
                                 <td>{{data.status}}</td>
@@ -131,14 +135,14 @@ include '../inventory/query.php';
           function check(data){
             if(confirm("Are you sure? ")){
                 exportToExcelRequest(data);
-    
+
             }
           }
         </script>
 
-        <button onclick="check('tableExport')" class="btn btn-primary">Export Data To Excel File</button>    
+        <button onclick="check('tableExport')" class="btn btn-primary">Export Data To Excel File</button>
 
-        
+
         <br><br>
 
 
@@ -187,7 +191,7 @@ include '../inventory/query.php';
                     <table id ="tableExport" class="table table-striped table-bordered">
                         <thead>
                             <!-- <th>Branch&nbsp;</th> -->
-                            <th>Branch&nbsp; &nbsp;<a ng-click="sort_with('branch_name');"></a></th> 
+                            <th>Branch&nbsp; &nbsp;<a ng-click="sort_with('branch_name');"></a></th>
                             <th>Account Name&nbsp; &nbsp;<a ng-click="sort_with('firstname');"><i class="glyphicon fa fa-sort"></i></a></th>
                             <th>Product Name&nbsp; &nbsp;<a ng-click="sort_with('productname');"><i class="glyphicon fa fa-sort"></i></a></th>
                             <th>Quantity (in kg)&nbsp; &nbsp;<a ng-click="sort_with('quantity');"><i class="glyphicon fa fa-sort"></i></a></th>
@@ -230,12 +234,12 @@ include '../inventory/query.php';
           function check(data){
             if(confirm("Are you sure? ")){
                 exportToExcelOrder(data);
-    
+
             }
           }
         </script>
 
-        <button onclick="check('tableExport')" class="btn btn-primary">Export Data To Excel File</button>   
+        <button onclick="check('tableExport')" class="btn btn-primary">Export Data To Excel File</button>
         <br><br>
 
 
@@ -285,7 +289,7 @@ if (isset($_POST['del_rep'])) {
             <table id ="tableExport" class="table table-striped table-bordered">
                 <thead>
                     <!-- <th>Branch&nbsp;</th> -->
-                    <th>Branch&nbsp; &nbsp;<a ng-click="sort_with('branch_name');"></a></th> 
+                    <th>Branch&nbsp; &nbsp;<a ng-click="sort_with('branch_name');"></a></th>
                     <th>Account Name&nbsp; &nbsp;<a ng-click="sort_with('firstname');"><i class="glyphicon fa fa-sort"></i></a></th>
                     <th>Product Name&nbsp; &nbsp;<a ng-click="sort_with('productname');"><i class="glyphicon fa fa-sort"></i></a></th>
                     <th>Supplier&nbsp; &nbsp;<a ng-click="sort_with('supplier_name');"><i class="glyphicon fa fa-sort"></i></a></th>
@@ -334,12 +338,12 @@ if (isset($_POST['del_rep'])) {
           function check(data){
             if(confirm("Are you sure? ")){
                 exportToExcelDelivery(data);
-    
+
             }
           }
         </script>
 
-        <button onclick="check('tableExport')" class="btn btn-primary">Export Data To Excel File</button>   
+        <button onclick="check('tableExport')" class="btn btn-primary">Export Data To Excel File</button>
 <br><br>
 
 
@@ -355,7 +359,7 @@ if (isset($_POST['del_rep'])) {
 
 <?php
 if (isset($_POST['sold_rep'])) {
-    
+
 ?>
 
 <div ng-app="solditemtables" ng-controller="controller">
@@ -432,12 +436,12 @@ if (isset($_POST['sold_rep'])) {
           function check(data){
             if(confirm("Are you sure? ")){
                 exportToExcelSoldItem(data);
-    
+
             }
           }
         </script>
 
-        <button onclick="check('tableExport')" class="btn btn-primary">Export Data To Excel File</button>   
+        <button onclick="check('tableExport')" class="btn btn-primary">Export Data To Excel File</button>
 <br><br>
 
 

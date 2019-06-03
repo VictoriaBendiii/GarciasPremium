@@ -1,4 +1,10 @@
-<?php $page = 'reports'; ?>
+<?php
+session_start();
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
+$page = 'reports'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 
@@ -38,7 +44,7 @@
 		<?php
 			if (isset($_POST['ord_rep'])) {
 				$sqlord = "SELECT DATE_FORMAT(solditem.time,'%b %d, %Y %r') as time, products.productname, solditem.quantity
-				from ((solditem 
+				from ((solditem
 				left join products on solditem.productid = products.productid)
 				left join branch on solditem.branchid = branch.branchid)
 				where branch.branchid = $branchid";
@@ -132,7 +138,7 @@
 		<?php
 			if (isset($_POST['sold_rep'])) {
 				$sqlsold = "SELECT DATE_FORMAT(solditem.time,'%b %d, %Y %r') as time, products.productname, solditem.quantity, solditem.status
-				from ((solditem 
+				from ((solditem
 				left join products on solditem.productid = products.productid)
 				left join branch on solditem.branchid = branch.branchid)
 				where branch.branchid = $branchid";

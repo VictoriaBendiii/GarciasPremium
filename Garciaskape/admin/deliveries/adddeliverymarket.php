@@ -1,7 +1,12 @@
 <?php
 session_start();
-    include '../includes/connection.php';
-    include '../includes/header.php';
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
+
+include '../includes/connection.php';
+include '../includes/header.php';
 ?>
         <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
             <div class="divider"></div>

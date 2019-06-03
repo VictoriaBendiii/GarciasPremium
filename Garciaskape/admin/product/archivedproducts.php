@@ -1,6 +1,11 @@
-<?php 
+<?php
 session_start();
-include '../includes/connection.php'; 
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
+
+include '../includes/connection.php';
 include '../includes/header.php';
 include 'update.php'; ?>
 
@@ -53,7 +58,7 @@ include 'update.php'; ?>
         <div class="alert alert-<?=$_SESSION['msg_type']?>">
             <?php
                             echo $_SESSION['message'];
-                            unset($_SESSION['message']); 
+                            unset($_SESSION['message']);
                         ?>
         </div>
         <?php endif ?>

@@ -1,4 +1,12 @@
-<?php $page = 'stocks'; ?>
+<?php
+session_start();
+// Check if there is a user logged in
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
+
+$page = 'stocks'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 
@@ -78,9 +86,9 @@
 								}
 								else {
 									echo "<td>". $row['quantity'] ."</td>";
-								}									
+								}
 							?>
-							<td> <?php echo $row["status"]; ?> </td> 
+							<td> <?php echo $row["status"]; ?> </td>
 						</tr>
 					</tbody>
 					<?php

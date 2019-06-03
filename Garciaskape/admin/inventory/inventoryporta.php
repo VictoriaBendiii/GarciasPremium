@@ -1,13 +1,17 @@
-<?php 
+<?php
 session_start();
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
 include '../includes/connection.php';
-include 'critical.php'; 
+include 'critical.php';
 include 'query.php';
 ?>
-<?php 
+<?php
 $sql = "SELECT products.productname, stock.quantity as stock, branch.branchid, products.status
-from ((stock left join products on stock.productid = products.productid) 
-left join branch on stock.branchid = branch.branchid) where (branch.branchid = 2  OR branch.branchid = 3) 
+from ((stock left join products on stock.productid = products.productid)
+left join branch on stock.branchid = branch.branchid) where (branch.branchid = 2  OR branch.branchid = 3)
 AND products.status = 'Active' ORDER BY products.productname ASC  ";
 $result = mysqli_query($conn, $sql);
 
@@ -91,13 +95,13 @@ $result = mysqli_query($conn, $sql);
                 <button onclick="location.href='inventoryporta.php'"; style="width:33.3%; border-radius: 30px;">Porta</button>
             </div>
             <br>
-            <br> 
+            <br>
             <form action = "" method = "POST">
-            Critical Value: <input type="text" name="critical" autocomplete="off"> 
+            Critical Value: <input type="text" name="critical" autocomplete="off">
             <input type="submit" name = "submitcritical" class ="btn btn-success btn-sm acceptbtn" value="Change Value">
             </form>
             <br>
-            <br> 
+            <br>
 
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
@@ -114,16 +118,16 @@ $result = mysqli_query($conn, $sql);
                         If($result->num_rows > 0)
                         {
                             while($row=mysqli_fetch_array($result))
-                            {  
+                            {
 
                         ?>
 
 
 
-                        <td><?php echo $row['productname']; ?></td> 
-                        <td <?php if($row['stock'] <= $value): ?> style="background-color:#f9243f" <?php endif; ?>><?php echo $row['stock']; ?></td> 
+                        <td><?php echo $row['productname']; ?></td>
+                        <td <?php if($row['stock'] <= $value): ?> style="background-color:#f9243f" <?php endif; ?>><?php echo $row['stock']; ?></td>
                         <td> <button type="submit"  class="btn btn-success btn-sm acceptbtn " name="archive" > <?php echo $row['status']; ?></button>
-                        </td> 
+                        </td>
                     </tr>
 
                     <?php

@@ -47,10 +47,10 @@ if ($title == false || strlen($status) != 3) {
     <body>
         <div class="container h-100">
           <h2 style="color:red; text-align: center;"> <?php echo $title;?> </h2><br>
-          <h3 style="color:red; text-align: center;"> Please go back to the <a href = "includes/logout.inc.php"> login page</a></h3>
+          <h3 style="color:red; text-align: center;"> Please go back to the <a href = "../includes/logout.inc.php"> login page</a></h3>
           <br>
-          <center><img src="question.png"></center>
-          <center><img src="error.png"></center>
+          <center><img src="../question.png"></center>
+          <center><img src="../error.png"></center>
         </div>
     </div>
 

@@ -1,7 +1,7 @@
 <?php include '../includes/connection.php'; ?>
 <?php
 
-
+session_start();
 
 if(isset($_POST['edit_product'])){
     $id = mysqli_real_escape_string($conn, $_POST['productid']);
@@ -13,7 +13,7 @@ if(isset($_POST['edit_product'])){
     $_SESSION['message']="".$productname." has been edited!";
     $_SESSION['msg_type']="success";
 
-    header('location: products.php'); 
+    header('location: products.php');
 }
 
 if (isset($_GET['activate'])){
@@ -36,7 +36,7 @@ if (isset($_GET['deactivate'])){
     header("location: products.php");
 }
 
- 
+
 
 
 ?>

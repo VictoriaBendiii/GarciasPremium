@@ -1,4 +1,10 @@
-<?php $page = 'dashboard'; ?>
+<?php
+session_start();
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
+$page = 'dashboard'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
 

@@ -1,5 +1,11 @@
-<?php include '../includes/connection.php'; 
+<?php
+session_start();
+if(!isset($_SESSION['login_user'])){
+  header('Location: ../index.php');
+  exit;
+}
 
+include '../includes/connection.php';
 include 'update.php';
 ?>
 
@@ -14,8 +20,8 @@ include 'update.php';
         <link href="../css/datepicker3.css" rel="stylesheet">
         <link href="../css/styles.css" rel="stylesheet">
         <link href="../css/add.css" rel="stylesheet">
-        
-        
+
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.12/angular.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
         <!-- <link href="../css/add.css" rel="stylesheet"> -->
@@ -283,7 +289,7 @@ include 'update.php';
                 $('.modal:visible').find('.popuser').toggleClass('hide', !isUserNameCorrect);
                 $('.sub').prop('disabled', isUserNameCorrect);
             });
-            
+
             $('.firstname').blur(function() {
                 var regex =
                     /[&\/\\#,+=()@^$~%.'":*?<>{}]/;
@@ -310,7 +316,7 @@ include 'update.php';
                 var isNumberCorrect = $(this).val().match(regex);
                 $('.modal:visible').find('.popnum').toggleClass('hide', isNumberCorrect);
                 $('.sub').prop('disabled', !isNumberCorrect);
-            });            
+            });
         });
         </script>
     </body>

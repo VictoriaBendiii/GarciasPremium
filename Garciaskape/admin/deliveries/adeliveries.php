@@ -48,8 +48,8 @@ mysqli_query($conn, $requestsql);
  
 
     // Authorisation details.
-    $username = "aaronferrerquitoriano@gmail.com";
-    $hash = "4a95acef14a537bb3d32bc6aad8cb80baa9d18f9ac06b3158f50784e6735c4c6";
+    $username = "bugtongjohnjezreel14@gmail.com";
+    $hash = "501c6c5e8fb35971710ea59b4634505c5c7923c64eddf5a87fbcbd53ba95ff5a";
 
     // Config variables. Consult http://api.txtlocal.com/docs for more info.
     $test = "0";
@@ -61,8 +61,12 @@ mysqli_query($conn, $requestsql);
 
     foreach(array_combine($_POST['beans'], $_POST['quan']) as $beans=>$quan) {
         //For storing echos in a variable
+     $resultproduct_explode = explode('/',$beans);
+     $productname = $resultproduct_explode[0];
+     $productid = $resultproduct_explode[1];
+
         ob_start();
-        echo $beans;
+        echo $productname;
         echo $quan;
         echo "\r";
         $myStr = ob_get_contents();
@@ -84,6 +88,8 @@ mysqli_query($conn, $requestsql);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch); // This is the result from the API
     curl_close($ch);
+
+
 
 
 
@@ -186,14 +192,14 @@ if (!$result2) {
             <div class="divider"></div>
             <ul class="nav menu">
                 <li ><a href="../index.php"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-                <li ><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
-                <li ><a href="../notification/notification.php"><em class="fa fa-bar-chart">&nbsp;</em> Notification</a></li>
-                <li class="active"><a href="adeliveries.php"><em class="fa fa-toggle-off">&nbsp;</em> Deliveries</a></li>
-                <li><a href="../inventory/inventory.php"><em class="fa fa-toggle-off">&nbsp;</em> Inventory</a></li>
-                <li><a href="../branch/branch.php"><em class="fa fa-clone">&nbsp;</em> Stock Request </a></li>
-                <li><a href="../product/product.php"><em class="fa fa-toggle-off">&nbsp;</em> Products</a></li>
-                <li><a href="../accounts/accounts.php"><em class="fa fa-clone">&nbsp;</em> Accounts </a></li>
-                <li><a href="../supplier/supplier.php"><em class="fa fa-clone">&nbsp;</em> Suppliers </a></li>
+                <li><a href="../monitoring/product.php"><em class="fa fa-calendar">&nbsp;</em> Product Monitoring</a></li>
+                <li><a href="../notification/notification.php"><em class="fa fa-bell">&nbsp;</em> Notification</a></li>
+                <li class="active"><a href="adeliveries.php"><em class="fa fa-truck">&nbsp;</em> Order Request</a></li>
+                <li><a href="../inventory/inventory.php"><em class="fa fa-edit">&nbsp;</em> Inventory</a></li>
+                <li><a href="../branch/branch.php"><em class="fa fa-inbox">&nbsp;</em> Stock Request </a></li>
+                <li><a href="../product/product.php"><em class="fa fa-product-hunt">&nbsp;</em> Products</a></li>
+                <li><a href="../accounts/accounts.php"><em class="fa fa-user">&nbsp;</em> Accounts </a></li>
+                <li><a href="../supplier/supplier.php"><em class="fa fa-shopping-cart">&nbsp;</em> Suppliers </a></li>
                 <li><a href="../../includes/logout.inc.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
             </ul>
         </div><!--/.sidebar-->
@@ -204,13 +210,13 @@ if (!$result2) {
                     <li><a href="#">
                         <em class="fa fa-home"></em>
                         </a></li>
-                    <li class="active">Branch Stock Request</li>
+                    <li class="active">Order Request</li>
                 </ol>
             </div><!--/.row-->
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Branch Stock Request</h1>
+                    <h1 class="page-header">Order Request</h1>
                 </div>
             </div><!--/.row-->
 
@@ -227,7 +233,50 @@ if (!$result2) {
                 <br> 
                 <br>
             </div>
-            <p> wasappp </p>
+            <h1> Admin Order/s </h1>
+
+            <?php
+                    $sql = "SELECT order_request.status,quantity,time,products.productname, supplier.supplier_name from ((order_request left join products on order_request.productid = products.productid) 
+                    left join supplier on order_request.supplierid = supplier.supplierid) WHERE order_request.status IS NULL ORDER BY time";
+                    $resultdeliver = mysqli_query($conn, $sql);
+                   
+                    ?>
+            <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tr>
+                    <th>Productname</th>
+                    <th>Quantity(kg)</th>
+                    <th>Time </th>
+                    <th>Supplier </th>
+                </tr>
+                <tr>
+
+
+                    <?php
+                   
+
+                    if($resultdeliver = mysqli_query($conn, $sql)) {
+                        while($row = mysqli_fetch_assoc($resultdeliver)){ 
+                    ?>
+
+                    <td><?php echo $row['productname']; ?></td> 
+                    <td><?php echo $row['quantity']; ?></td> 
+                    <td><?php echo $row['time']; ?></td> 
+                    <td><?php echo $row['supplier_name']; ?></td> 
+                    
+                    
+                    </td> 
+                </tr>
+
+                <?php
+
+                        }
+                    }
+                ?>
+
+                </tr>
+            </table>
+        </div>
 
             <!-- Modal -->
             <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
@@ -274,7 +323,7 @@ if (!$result2) {
                                             <td class="beansDropdown">
                                                 <select name="beans[]" class="beansDrop">
                                                     <?php while($row1 = mysqli_fetch_array($result1)):;?>
-                                                    <option value="<?php echo $row1[1] . "/" . $row1['productid'];?>"><?php echo $row1[1];?></option>
+                                                    <option value="<?php echo $row1[1]," - " . "/" . $row1['productid'];?>"><?php echo $row1[1];?></option>
                                                     <?php endwhile;?>
                                                 </select>
                                             </td>

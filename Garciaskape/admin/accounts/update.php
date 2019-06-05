@@ -1,6 +1,5 @@
 <?php include '../includes/connection.php'; ?>
 <?php
-session_start();
 
 if (isset($_GET['activate'])) {
     $id = $_GET['activate'];

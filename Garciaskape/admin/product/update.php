@@ -1,7 +1,6 @@
 <?php include '../includes/connection.php'; ?>
 <?php
 
-session_start();
 
 if(isset($_POST['edit_product'])){
     $id = mysqli_real_escape_string($conn, $_POST['productid']);

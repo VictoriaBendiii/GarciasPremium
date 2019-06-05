@@ -54,10 +54,14 @@ session_start();
                                 <input type="password" name="pword" class="form-control input_pass" value="" placeholder="password">
                             </div>
                             <div class="form-group">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customControlInline">
-                                    <label class="custom-control-label" for="customControlInline" id="remember">Remember me</label>
-                                </div>
+                                <div id="errMsg">
+                                <?php
+                                  if (!empty($_SESSION['errMsg'])) {
+                                    echo '<center><div class="alert alert-danger" role="alert">';
+                                    echo ("{$_SESSION['errMsg']}"."");
+                                    echo '</div></center>';
+                                } ?>
+                              </div>
                             </div>
                             </div>
                         <div class="d-flex justify-content-center mt-3 login_container">

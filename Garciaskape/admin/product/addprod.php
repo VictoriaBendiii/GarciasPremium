@@ -1,6 +1,6 @@
 <?php include '../includes/connection.php'; ?>
 <?php
-session_start();
+
 if (isset($_POST['add_prod'])) {
     $prodname = mysqli_real_escape_string($conn, $_POST['prodname']);
     $status = "Active";

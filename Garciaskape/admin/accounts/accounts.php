@@ -5,6 +5,11 @@ if(!isset($_SESSION['login_user'])){
   exit;
 }
 
+include '../../expired.php';
+if(isLoginSessionExpired()) {
+  header("Location:../../index.php?session_expired=1");
+}
+
 include '../includes/connection.php';
 include 'update.php';
 ?>

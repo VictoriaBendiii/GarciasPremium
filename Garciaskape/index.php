@@ -60,7 +60,14 @@ session_start();
                                     echo '<center><div class="alert alert-danger" role="alert">';
                                     echo ("{$_SESSION['errMsg']}"."");
                                     echo '</div></center>';
-                                } ?>
+                                }
+                                if(isset($_GET["session_expired"])) {
+                                  $message = "Login Session is Expired. Please Login Again";
+                                  echo '<center><div class="alert alert-danger" role="alert">';
+                                  echo $message;
+                                  echo '</div></center>';
+                                }
+                                ?>
                               </div>
                                 <?php
                               unset($_SESSION['errMsg']);

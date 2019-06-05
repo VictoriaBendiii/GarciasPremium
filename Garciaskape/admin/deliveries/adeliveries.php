@@ -8,11 +8,11 @@ if(isset($_POST['submitproduct'])){
     //separate post num for suppliers
     $resultsupplier = $_POST['num'];
     $resultsupplier_explode = explode('/',$resultsupplier);
-    $resultsupplier_explode[0]; 
+    $resultsupplier_explode[0];
     $supplierid = $resultsupplier_explode[1];
-    
+
     //echo $supplierid;
-    
+
 
     //separate post beans for products
     // $resultproduct = $_POST['beans'];
@@ -22,7 +22,7 @@ if(isset($_POST['submitproduct'])){
 
     //get the inputted quantity
     // $arrayquantity = $_POST['quan'];
-  
+
     // $quantity = $arrayquantity[0];
     // echo $quantity;
 
@@ -39,13 +39,13 @@ if(isset($_POST['submitproduct'])){
         $productid = $resultproduct_explode[1];
         // $quantity=$prodquan[0];
          echo $prodquan;
-   
+
     $requestsql = "INSERT INTO order_request (order_requestid, productid, quantity, supplierid, branchid, accountid, time)
     values ('$res', '$productid', '$prodquan', '$supplierid','$branchid', '$accountid', now())";
 
 mysqli_query($conn, $requestsql);
     }
- 
+
 
     // Authorisation details.
     $username = "bugtongjohnjezreel14@gmail.com";
@@ -222,7 +222,7 @@ if (!$result2) {
 
         </div><!--/.row-->
 
-       
+
 
         <main role="main" class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
@@ -230,16 +230,16 @@ if (!$result2) {
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalCenter">
                     ADD DELIVERY TO MARKET
                 </button>
-                <br> 
+                <br>
                 <br>
             </div>
             <h1> Admin Order/s </h1>
 
             <?php
-                    $sql = "SELECT order_request.status,quantity,DATE_FORMAT(order_request.time, '%b %d, %Y %r') as time,products.productname, supplier.supplier_name from ((order_request left join products on order_request.productid = products.productid) 
+                    $sql = "SELECT order_request.status,quantity,DATE_FORMAT(order_request.time, '%b %d, %Y %r') as time,products.productname, supplier.supplier_name from ((order_request left join products on order_request.productid = products.productid)
                     left join supplier on order_request.supplierid = supplier.supplierid) WHERE order_request.status IS NULL ORDER BY time";
                     $resultdeliver = mysqli_query($conn, $sql);
-                   
+
                     ?>
             <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
@@ -253,19 +253,19 @@ if (!$result2) {
 
 
                     <?php
-                   
+
 
                     if($resultdeliver = mysqli_query($conn, $sql)) {
-                        while($row = mysqli_fetch_assoc($resultdeliver)){ 
+                        while($row = mysqli_fetch_assoc($resultdeliver)){
                     ?>
 
-                    <td><?php echo $row['productname']; ?></td> 
-                    <td><?php echo $row['quantity']; ?></td> 
-                    <td><?php echo $row['time']; ?></td> 
-                    <td><?php echo $row['supplier_name']; ?></td> 
-                    
-                    
-                    </td> 
+                    <td><?php echo $row['productname']; ?></td>
+                    <td><?php echo $row['quantity']; ?></td>
+                    <td><?php echo $row['time']; ?></td>
+                    <td><?php echo $row['supplier_name']; ?></td>
+
+
+                    </td>
                 </tr>
 
                 <?php
@@ -299,14 +299,14 @@ if (!$result2) {
                                                 <option value="<?php echo $row1[3] . "/" . $row1['supplierid'];?>"><?php echo $row1[1], " - " , $row1[3];?></option>
                                                 <?php endwhile;?>
                                             </select>
-                                           
+
                                         </td>
-                                        
+
                                     </tr>
                                 </table>
                                 <div style="overflow-x:auto;">
                                     <table id="tableDrop">
-                                        <tr>                                        
+                                        <tr>
                                             <th>
                                                 <h5>COFFEE BEAN</h5>
                                             </th>
@@ -319,7 +319,7 @@ if (!$result2) {
                                         </tr>
 
                                         <tr class="dropdowns">
-                                                                                
+
                                             <td class="beansDropdown">
                                                 <select name="beans[]" class="beansDrop">
                                                     <?php while($row1 = mysqli_fetch_array($result1)):;?>

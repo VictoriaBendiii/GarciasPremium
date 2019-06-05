@@ -1,7 +1,6 @@
 <?php include '../includes/connection.php'; ?>
 <?php
 
-session_start();
 
 if (isset($_GET['activate'])){
 
@@ -13,7 +12,7 @@ if (isset($_GET['activate'])){
     header("location: deac_supplier.php");
 
 
-} 
+}
 if (isset($_GET['deactivate'])){
 
     $id = $_GET['deactivate'];
@@ -46,16 +45,16 @@ if(isset($_POST['edit_supplier'])){
 
 
 
-    $sql = "UPDATE supplier SET supplier_name='$supplier_name', 
-          supplier_contact_person='$supplier_contact_person', 
+    $sql = "UPDATE supplier SET supplier_name='$supplier_name',
+          supplier_contact_person='$supplier_contact_person',
           contact_number='$contact_number',
-          address='$address' 
+          address='$address'
 		  WHERE supplierid='$id'";
 
     mysqli_query($conn, $sql);
     $_SESSION['message']="Account of ".$supplier_name. " has been edited!";
     $_SESSION['msg_type']="success";
-    header("location: supplier.php");  
+    header("location: supplier.php");
 
 
 

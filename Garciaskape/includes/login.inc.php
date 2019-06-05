@@ -1,4 +1,4 @@
-<?php
+ <?php
 session_start();
 if (isset($_POST['button'])){
     include 'dbh.inc.php';
@@ -36,6 +36,7 @@ if (isset($_POST['button'])){
               $_SESSION['branch_id'] = $row['branchid'];
               $_SESSION['firstname'] = $row['firstname'];
               $_SESSION['lastname'] = $row['lastname'];
+              $_SESSION['loggedin_time'] = time();
               $_SESSION['login_user'] = $uname;
               /*
               This part:

@@ -1,5 +1,4 @@
 <?php
-    session_start();
     // accept or reject
     if(isset($_REQUEST['accept'])){
         

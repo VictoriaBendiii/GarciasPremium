@@ -1,6 +1,6 @@
 <?php include '../includes/connection.php'; ?>
 <?php
-session_start();
+
 if (isset($_POST['add_user'])) {
 
     //GET DATA FROM FORM

@@ -62,6 +62,9 @@ session_start();
                                     echo '</div></center>';
                                 } ?>
                               </div>
+                                <?php
+                              unset($_SESSION['errMsg']);
+                               ?>
                             </div>
                             </div>
                         <div class="d-flex justify-content-center mt-3 login_container">

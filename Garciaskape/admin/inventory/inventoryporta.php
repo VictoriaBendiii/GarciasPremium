@@ -9,7 +9,7 @@ include 'critical.php';
 include 'query.php';
 ?>
 <?php
-$sql = "SELECT products.productname, stock.quantity as stock, branch.branchid, products.status
+$sql = "SELECT products.productid, products.productname, stock.quantity as stock, branch.branchid, products.status
 from ((stock left join products on stock.productid = products.productid)
 left join branch on stock.branchid = branch.branchid) where (branch.branchid = 2  OR branch.branchid = 3)
 AND products.status = 'Active' ORDER BY products.productname ASC  ";
@@ -92,7 +92,7 @@ $result = mysqli_query($conn, $sql);
             </div><!--/.row-->
             <div class="btn-group" style="width:100%">
                 <button onclick="location.href='inventory.php'"; style="width:33.3%; border-radius: 30px;">Market</button>
-                <button onclick="location.href='inventoryporta.php'"; style="width:33.3%; border-radius: 30px;">Porta</button>
+                <button class ="btn btn-primary active" onclick="location.href='inventoryporta.php'"; style="width:33.3%; border-radius: 30px;">Porta</button>
             </div>
             <br>
             <br>
@@ -124,24 +124,63 @@ $result = mysqli_query($conn, $sql);
 
 
 
-                        <td><?php echo $row['productname']; ?></td>
-                        <td <?php if($row['stock'] <= $value): ?> style="background-color:#f9243f" <?php endif; ?>><?php echo $row['stock']; ?></td>
-                        <td> <button type="submit"  class="btn btn-success btn-sm acceptbtn " name="archive" > <?php echo $row['status']; ?></button>
-                        </td>
-                    </tr>
+                    <form action = "updatestock.php" method ="POST">
+                    <td><?php echo $row['productname']; ?></td>
+                    <td <?php if($row['stock'] <= $value): ?> style="background-color:#f9243f" <?php endif; ?>><?php echo $row['stock']; ?></td>
 
-                    <?php
+                    <td> <a href="#edit<?php echo $row['productid'];?>" data-toggle="modal" class="btn btn-primary active" data-toggle="modal">Edit stock</a>
+                    <div id="edit<?php echo $row['productid']; ?>" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
 
-                            }
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close"
+                                                        data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Edit Product Stock</h4>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <div class="form-group">
+                                                        <input type="hidden" name="productidporta"
+                                                            value="<?php echo $row['productid']; ?>">
+                                                        <label>Product Stock</label>
+                                                        <input type="number" step="0.01" name="productstockporta"
+                                                            class="prodname form-control"
+                                                            value="<?php echo $row['stock']; ?>"
+                                                            placeholder="Enter Product Stock">
+
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="sub btn btn-success"
+                                                            name="edit_productporta" id="edit_product">Update</button>
+
+                                                        <button type="button" class="btn btn-default"
+                                                            data-dismiss="modal">Close</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- End of Modal -->
+                    </td>
+                </tr>
+                            </form>
+                <?php
+
                         }
-                    ?>
+                    }
+                ?>
 
-                    </tr>
-                </table>
+                </tr>
+            </table>
         </div>
 
-        </div><!--/.row-->
-    </div>	<!--/.main-->
+    </div><!--/.row-->
+</div>	<!--/.main-->
 
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>

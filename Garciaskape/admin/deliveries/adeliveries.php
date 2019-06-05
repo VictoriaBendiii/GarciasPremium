@@ -236,7 +236,7 @@ if (!$result2) {
             <h1> Admin Order/s </h1>
 
             <?php
-                    $sql = "SELECT order_request.status,quantity,time,products.productname, supplier.supplier_name from ((order_request left join products on order_request.productid = products.productid) 
+                    $sql = "SELECT order_request.status,quantity,DATE_FORMAT(order_request.time, '%b %d, %Y %r') as time,products.productname, supplier.supplier_name from ((order_request left join products on order_request.productid = products.productid) 
                     left join supplier on order_request.supplierid = supplier.supplierid) WHERE order_request.status IS NULL ORDER BY time";
                     $resultdeliver = mysqli_query($conn, $sql);
                    

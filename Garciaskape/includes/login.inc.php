@@ -52,7 +52,9 @@ if (isset($_POST['button'])){
                   header("Location: ../subadmin2/index.php");
                 }
               }elseif ($_SESSION['status'] == "Deactivated") {
-                  echo "<script type='text/javascript'>  alert('Account Deactivated'); </script>" ;
+                  header("Location: ../index.php?login=error2");
+                  $_SESSION['errMsg'] = 'Account is Deactivated. Please Contact Administrator';
+                  exit;
               }
            }else{
              $hashedPwdCheck = false;

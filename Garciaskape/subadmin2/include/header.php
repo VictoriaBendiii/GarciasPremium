@@ -1,9 +1,10 @@
 <?php include('connection.php') ?>
-<?php
+<?php 
 
 $username = $_SESSION['u_name'];
 $branchid = $_SESSION['branch_id'];
 $accountid = $_SESSION['account_id'];
+$subname2 =$_SESSION['firstname'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,7 +16,7 @@ $accountid = $_SESSION['account_id'];
 	<link href="css/font-awesome.min.css" rel="stylesheet">
 	<link href="css/datepicker3.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">
-
+	
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 	<!--[if lt IE 9]>
@@ -31,17 +32,16 @@ $accountid = $_SESSION['account_id'];
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
-				<a class="navbar-brand" href="#"><span></span> Sub Admin 1 </a>
+				<a class="navbar-brand" href="#"><span></span> Sub Admin 2 </a>
 					<br>
-               			        <p> <?php $f_name = $_SESSION['firstname']; $l_name = $_SESSION['lastname'];  echo "$f_name $l_name"; ?></p>
+					<p> <?php $f_name = $_SESSION['firstname']; $l_name = $_SESSION['lastname'];  echo "$f_name $l_name"; ?></p>
 
-
-
+				
 			</div>
 		</div><!-- /.container-fluid -->
     </nav>
-
-    <script src="js/jquery-1.11.1.min.js"></script>
+    
+	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/chart.min.js"></script>
 	<script src="js/chart-data.js"></script>

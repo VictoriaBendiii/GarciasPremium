@@ -27,7 +27,7 @@ if (isset($_POST['accept'])){
   // echo "window.alert('accepted!');";
 
 } else{
-  echo "mali";
+  echo "error";
 }
 
 

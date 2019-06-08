@@ -5,12 +5,10 @@ if(!isset($_SESSION['login_user'])){
   header('Location: ../index.php');
   exit;
 }
-
 include '../expired.php';
 if(isLoginSessionExpired()) {
   header("Location:../index.php?session_expired=1");
 }
-
 $page = 'dashboard'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
@@ -27,15 +25,15 @@ $page = 'dashboard'; ?>
 
 		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
-				<h1 class="h2">Hi Sub Admin!</h1>
+				<h1 class="h2">Hi! <?php echo $subname2; ?></h1>
 			</div>
 
-
 		<?php
-			$sql = "SELECT DATE_FORMAT(stock.date_in,'%b %d, %Y %r') as time, stock.quantity, products.status, products.productname
-					from ((stock left join products on stock.productid = products.productid)
-					left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid ORDER BY date_in desc limit 5";
-				$result = mysqli_query($conn, $sql);
+			$sql1 = "SELECT DATE_FORMAT(stock.date_in,'%b %d, %Y %r') as time, stock.stockin, stock.quantity, products.status, products.productname
+					FROM ((stock left join products on stock.productid = products.productid)
+					left join branch on stock.branchid = branch.branchid)
+					WHERE stock.branchid = $branchid ORDER BY stock.date_in desc limit 5";
+				$result1 = mysqli_query($conn, $sql1);
 		?>
 
 			<h2>Stocks In</h2>
@@ -47,19 +45,21 @@ $page = 'dashboard'; ?>
 							<th>Product</th>
 							<th>Quantity (in Kg)</th>
 							<th>Status</th>
+							<th>Stock in</th>
 							<th>Date in</th>
 						</tr>
 					</thead>
 					<tbody>
 
 					<?php
-						if($result = mysqli_query($conn, $sql)) {
-							while($row = mysqli_fetch_assoc($result)){
+						if($result1 = mysqli_query($conn, $sql1)) {
+							while($row = mysqli_fetch_assoc($result1)){
 					?>
 						<tr>
 							<td> <?php echo $row["productname"]; ?> </td>
 							<td> <?php echo $row["quantity"]; ?> </td>
 							<td> <?php echo $row["status"];?> </td>
+							<td> <?php echo $row["stockin"];?> </td>
 							<td> <?php echo $row["time"]; ?> </td>
 						</tr>
 					<?php
@@ -71,10 +71,11 @@ $page = 'dashboard'; ?>
 			</div>
 
 			<?php
-			$sql = "SELECT DATE_FORMAT(stock.date_out,'%b %d, %Y %r') as time, stock.quantity, products.status, products.productname
-					from ((stock left join products on stock.productid = products.productid)
-					left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid ORDER BY date_out desc limit 5";
-				$result = mysqli_query($conn, $sql);
+			$sql2 = "SELECT DATE_FORMAT(stock.date_out,'%b %d, %Y %r') as time, stock.stockout, stock.quantity, products.status, products.productname
+					FROM ((stock left join products on stock.productid = products.productid)
+					left join branch on stock.branchid = branch.branchid)
+					WHERE stock.branchid = $branchid ORDER BY stock.date_out desc limit 5";
+				$result2 = mysqli_query($conn, $sql2);
 		?>
 
 			<h2>Stocks Out</h2>
@@ -86,19 +87,21 @@ $page = 'dashboard'; ?>
 							<th>Product</th>
 							<th>Quantity (in Kg)</th>
 							<th>Status</th>
+							<th>Stock out</th>
 							<th>Date out</th>
 						</tr>
 					</thead>
 					<tbody>
 
 					<?php
-						if($result = mysqli_query($conn, $sql)) {
-							while($row = mysqli_fetch_assoc($result)){
+						if($result2 = mysqli_query($conn, $sql2)) {
+							while($row = mysqli_fetch_assoc($result2)){
 					?>
 						<tr>
 							<td> <?php echo $row["productname"]; ?> </td>
 							<td> <?php echo $row["quantity"]; ?> </td>
 							<td> <?php echo $row["status"];?> </td>
+							<td> <?php echo $row["stockout"];?> </td>
 							<td> <?php echo $row["time"]; ?> </td>
 						</tr>
 					<?php

@@ -51,10 +51,11 @@ $page = 'stocks'; ?>
 
 		<label> Search for Product: <input type="text" id="input" onkeyup="myFunction()" placeholder="Product name"></label>
 		<br>
+		<br>
 
 			<?php
 				$sql = "SELECT * FROM ((stock left join products on stock.productid = products.productid)
-				left join branch on stock.branchid = branch.branchid) WHERE branch.branchid = $branchid ORDER BY productname";
+				left join branch on stock.branchid = branch.branchid) WHERE stock.branchid = $branchid ORDER BY productname";
 				$result = mysqli_query($conn, $sql);
 			?>
 
@@ -89,9 +90,9 @@ $page = 'stocks'; ?>
 								}
 								else {
 									echo "<td>". $row['quantity'] ."</td>";
-								}
+								}									
 							?>
-							<td> <?php echo $row["status"]; ?> </td>
+							<td> <?php echo $row["status"]; ?> </td> 
 						</tr>
 					</tbody>
 					<?php

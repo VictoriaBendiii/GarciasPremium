@@ -1,10 +1,9 @@
-<?php
+<?php 
 session_start();
 if(!isset($_SESSION['login_user'])){
   header('Location: ../index.php');
   exit;
 }
-
 include '../expired.php';
 if(isLoginSessionExpired()) {
   header("Location:../index.php?session_expired=1");
@@ -54,18 +53,18 @@ th, td{
 				<li class="active">Customer</li>
 			</ol>
 		</div><!--/.row-->
-
+		
 		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
 				<h1 class="h2">Customer's Order</h1>
 			</div>
-
+						
 		<form action="customer.php" method="POST">
         <?php
-				$sqlsold = "SELECT * from ((stock left join products on stock.productid = products.productid)
-				left join branch on stock.branchid = branch.branchid) where branch.branchid = $branchid AND products.status='Active'";
+				$sqlsold = "SELECT * FROM ((stock left join products on stock.productid = products.productid)
+				left join branch on stock.branchid = branch.branchid)
+				WHERE stock.branchid = $branchid AND products.status='Active'";
 				$result = mysqli_query($conn, $sqlsold);
-				$status = 'Loss';
 		?>
 
 			<div class="table-responsive" style="overflow-x:auto;">
@@ -73,11 +72,10 @@ th, td{
 						<tr>
 							<th>Product</th>
 							<th>Quantity (in KG)</th>
-							<th>Status</th>
                             <th>Action</th>
 						</tr>
 						<tr class="dropdowns">
-							<td class="beansDropdown">
+							<td class="beansDropdown">							
 								<select name="prodname[]" id="prodname" class="beansDrop">
 									<?php
 										$row = mysqli_num_rows($result);
@@ -85,13 +83,10 @@ th, td{
 												echo "<option value='". $row['productid'] ."'>". $row['productname'] ."</option>";
 												}
 									?>
-								</select>
+								</select>				
 							</td>
 							<td id="quantity">
 								<input type="number" name="prodquan[]" id="prodquan" placeholder="Enter Quantity" min="1" max="1000" required>
-							</td>
-							<td id="status">
-								<?php echo $status; ?>
 							</td>
 							<td id="remove">
 								<input type="button" value="&#10006;" onclick="RemoveOrder(this)">
@@ -126,30 +121,38 @@ th, td{
 
 				foreach (array_combine($_POST['prodname'] , $_POST['prodquan']) as $prodname => $prodquan){
 
-					$sql1 = "SELECT quantity FROM stock WHERE productid=$prodname";
+					$sql1 = "SELECT quantity, stockid FROM stock WHERE productid=$prodname and branchid=$branchid";
 					$result1 = mysqli_query($conn, $sql1);
 					$row = mysqli_num_rows($result1);
 					$row = mysqli_fetch_array($result1);
 					$res = $row['quantity'];
+					$stock = $row['stockid'];
 					$fin = $res-$prodquan;
 
 					$status = "sold";
 
 					$sql_cust = "UPDATE stock SET quantity=$fin,stockout=$prodquan,date_out=SYSDATE() WHERE productid=$prodname and branchid=$branchid";
-					$sql_update = "INSERT INTO solditem (solditemid, productid, quantity, orderid, branchid, accountid, time, status)
-									VALUES('$res1', '$prodname', '$prodquan', '$res2', '$branchid', '$accountid', SYSDATE(), '$status')";
-
+					
 					mysqli_query($conn, $sql_cust);
-					mysqli_query($conn, $sql_update);
+
+					$sql_update1 = "INSERT INTO solditem (solditemid, quantity, time, status, accountid, branchid, orderid, productid, stockid)
+									VALUES('$res1', '$prodquan', SYSDATE(), '$status', '$accountid', '$branchid', '$res2', '$prodname', '$stock')";
+					
+					mysqli_query($conn, $sql_update1);
+
+					$sql_update2 = "INSERT INTO orders (orderid, quantity, time, accountid, branchid, productid, stockid)
+					VALUES('$res2', '$prodquan', SYSDATE(), '$accountid', '$branchid', '$prodname', '$stock')";
+
+					mysqli_query($conn, $sql_update2);
 
 				}
 			}
 	?>
-
+		
 		</main>
 
 		</div><!--/.row-->
 	</div>	<!--/.main-->
-
+		
 </body>
 </html>

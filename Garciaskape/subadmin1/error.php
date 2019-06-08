@@ -12,13 +12,11 @@ $codes = array(
        502 => array('502 Bad Gateway', 'The server received an invalid response from the upstream server while trying to fulfill the request.'),
        504 => array('504 Gateway Timeout', 'The upstream server failed to send a request in the time allowed by the server.'),
 );
-
 $title = $codes[$status][0];
 $message = $codes[$status][1];
 if ($title == false || strlen($status) != 3) {
        $message = 'Please supply a valid status code.';
 }
-
 ?>
 
 
@@ -31,7 +29,6 @@ if ($title == false || strlen($status) != 3) {
     .error{
         color: red;
     }
-
     #remember{
         color: white;
     }

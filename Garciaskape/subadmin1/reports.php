@@ -8,7 +8,6 @@ include '../expired.php';
 if(isLoginSessionExpired()) {
   header("Location:../index.php?session_expired=1");
 }
-
 $page = 'reports'; ?>
 <?php include('include/header.php'); ?>
 <?php include('include/sidebar.php'); ?>
@@ -48,11 +47,10 @@ $page = 'reports'; ?>
 
 		<?php
 			if (isset($_POST['ord_rep'])) {
-				$sqlord = "SELECT DATE_FORMAT(solditem.time,'%b %d, %Y %r') as time, products.productname, solditem.quantity
-				from ((solditem
-				left join products on solditem.productid = products.productid)
-				left join branch on solditem.branchid = branch.branchid)
-				where branch.branchid = $branchid";
+				$sqlord = "SELECT DATE_FORMAT(orders.time,'%b %d, %Y %r') as time, products.productname, orders.quantity
+				FROM ((orders left join products on orders.productid = products.productid)
+				left join branch on orders.branchid = branch.branchid)
+				WHERE orders.branchid = $branchid ORDER BY orders.time desc";
 				$result = mysqli_query($conn, $sqlord);
 		?>
 
@@ -94,11 +92,10 @@ $page = 'reports'; ?>
 		<?php
 			if (isset($_POST['del_rep'])) {
 				$sqldel = "SELECT DATE_FORMAT(delivery.time,'%b %d, %Y %r') as time, products.productname, delivery.quantity, delivery.status, supplier.supplier_name
-				from (((delivery
-				left join products on delivery.productid = products.productid)
+				FROM (((delivery left join products on delivery.productid = products.productid)
 				left join supplier on delivery.supplierid = supplier.supplierid)
 				left join branch on delivery.branchid = branch.branchid)
-				where branch.branchid = $branchid";
+				WHERE delivery.branchid = $branchid ORDER BY delivery.time desc";
 
 				$result = mysqli_query($conn, $sqldel);
 		?>
@@ -143,10 +140,9 @@ $page = 'reports'; ?>
 		<?php
 			if (isset($_POST['sold_rep'])) {
 				$sqlsold = "SELECT DATE_FORMAT(solditem.time,'%b %d, %Y %r') as time, products.productname, solditem.quantity, solditem.status
-				from ((solditem
-				left join products on solditem.productid = products.productid)
+				FROM ((solditem left join products on solditem.productid = products.productid)
 				left join branch on solditem.branchid = branch.branchid)
-				where branch.branchid = $branchid";
+				WHERE solditem.branchid = $branchid ORDER BY solditem.time desc";
 				$result = mysqli_query($conn, $sqlsold);
 		?>
 
@@ -190,9 +186,9 @@ $page = 'reports'; ?>
 		<?php
 			if (isset($_POST['order_req'])) {
 				$sqlreq = "SELECT DATE_FORMAT(order_request.time,'%b %d, %Y %r') as time, products.productname, order_request.quantity, order_request.status, supplier.supplier_name
-				from ((order_request left join products on order_request.productid = products.productid)
+				FROM ((order_request left join products on order_request.productid = products.productid)
 				left join supplier on order_request.supplierid = supplier.supplierid)
-				where order_request.branchid = $branchid";
+				WHERE order_request.branchid = $branchid ORDER BY order_request.time desc";
 				$result = mysqli_query($conn, $sqlreq);
 		?>
 

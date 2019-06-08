@@ -119,7 +119,7 @@ th, td{
 								<br>
 								<tr>
 									<td> <input type="button" onclick="cloneRow(event)" name="add" id="add" value="Add" class="btn btn-secondary"/> </td>
-									<td> <button type="submit" class="btn btn-primary" name="sub" id="sub">Submit</button> </td>
+									<td> <button type="submit" class="btn btn-primary" name="sub" id="sub" onclick = "return confirm('Are you sure with the request?')">Submit</button> </td>
 								</tr>
 							</table>
 						</form>

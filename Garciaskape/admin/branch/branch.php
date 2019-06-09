@@ -134,11 +134,14 @@ include 'updatestatus.php';
 
                     // get requests
 
-                    $get_branch_request = "SELECT products.productname, supplier.supplier_name, order_request.quantity, order_request.time, order_request.status, order_request.order_requestid from ((order_request inner join products on order_request.productid = products.productid) inner join supplier on order_request.supplierid = supplier.supplierid) WHERE order_request.status = 'accepted' OR order_request.status = 'rejected' OR order_request.status = 'pending'";
+                    $get_branch_request = "SELECT products.productname, supplier.supplier_name, order_request.quantity, order_request.order_requestid as order_requestid,
+                    DATE_FORMAT(order_request.time, '%b %d, %Y %r') as time, order_request.status, order_request.order_requestid from ((order_request inner join
+                     products on order_request.productid = products.productid) inner join supplier on order_request.supplierid = supplier.supplierid) 
+                     WHERE order_request.status = 'pending'";
 
                     $result = mysqli_query($conn, $get_branch_request);
 
-                    while($rows = mysqli_fetch_array($result)){
+                    while($rows = mysqli_fetch_assoc($result)){
                 ?>
                 <tr>
 

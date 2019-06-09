@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../includes/connection.php';
+include 'updateorder.php';
 $accountid = $_SESSION['account_id'];
 $branchid = $_SESSION['branch_id'];
 if(isset($_POST['submitproduct'])){
@@ -40,8 +41,8 @@ if(isset($_POST['submitproduct'])){
         // $quantity=$prodquan[0];
          echo $prodquan;
 
-    $requestsql = "INSERT INTO order_request (order_requestid, productid, quantity, supplierid, branchid, accountid, time)
-    values ('$res', '$productid', '$prodquan', '$supplierid','$branchid', '$accountid', now())";
+    $requestsql = "INSERT INTO order_request (order_requestid, productid, quantity, supplierid, branchid, accountid, time,deliveryid)
+    values ('$res', '$productid', '$prodquan', '$supplierid','$branchid', '$accountid', now(), '$res')";
 
 mysqli_query($conn, $requestsql);
     }
@@ -88,11 +89,6 @@ mysqli_query($conn, $requestsql);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch); // This is the result from the API
     curl_close($ch);
-
-
-
-
-
 }
 ?>
 
@@ -236,7 +232,7 @@ if (!$result2) {
             <h1> Admin Order/s </h1>
 
             <?php
-                    $sql = "SELECT order_request.status,quantity,DATE_FORMAT(order_request.time, '%b %d, %Y %r') as time,products.productname, supplier.supplier_name from ((order_request left join products on order_request.productid = products.productid)
+                    $sql = "SELECT order_request.idnumber as idnumber,order_request.order_requestid,order_request.status,quantity,DATE_FORMAT(order_request.time, '%b %d, %Y %r') as time,products.productname, supplier.supplier_name from ((order_request left join products on order_request.productid = products.productid)
                     left join supplier on order_request.supplierid = supplier.supplierid) WHERE order_request.status IS NULL ORDER BY time";
                     $resultdeliver = mysqli_query($conn, $sql);
 
@@ -263,7 +259,11 @@ if (!$result2) {
                     <td><?php echo $row['quantity']; ?></td>
                     <td><?php echo $row['time']; ?></td>
                     <td><?php echo $row['supplier_name']; ?></td>
+                    <td>
 
+                    <a href="adeliveries.php?accept=<?php echo $row['idnumber']; ?>" class="btn btn-success"> Accept </a>
+
+                    <a href="adeliveries.php?reject=<?php echo $row['idnumber']; ?>" class="btn btn-danger"> Reject </a>
 
                     </td>
                 </tr>
@@ -363,6 +363,7 @@ if (!$result2) {
         <script src="../js/easypiechart-data.js"></script>
         <script src="../js/bootstrap-datepicker.js"></script>
         <script src="../js/custom.js"></script>
+        <script src="../js/status.js"></script>
         <script>
             window.onload = function () {
                 var chart1 = document.getElementById("line-chart").getContext("2d");
@@ -373,7 +374,6 @@ if (!$result2) {
                     scaleFontColor: "#c5c7cc"
                 });
             };
-        </script>
-
+        </script>\
     </body>
 </html>
